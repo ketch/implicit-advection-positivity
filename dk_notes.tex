@@ -1,0 +1,143 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Positivity of advection discretizations based on a Fourier representation}
+\author{David I. Ketcheson}
+
+\begin{document}
+\maketitle
+
+\section{Background}
+Here we investigate the positivity of some discretizations of the advection equation
+
+$$ U_t = a U_x.$$
+
+If our spatial discretization is $U_x \approx \frac{1}{\Delta x} L u$ and we use the backward Euler method in time, we have
+$$u^{n+1} = u^n + \frac{\Delta t}{\Delta x} L u^{n+1}$$
+or
+$$u^{n+1} = (I-\nu L)^{-1} u^n,$$
+where $\nu = \Delta t/\Delta x$ is the CFL number.  The method will be positivity preserving if the matrix
+$(I-\nu L)^{-1}$ has non-negative entries.
+
+We consider the 3-point centered difference in space so that $L$ is a
+circulant matrix with entries $(-1/2, 0, 1/2)$ on the central three diagonals.
+
+\section{Eigenvalue decomposition and the inverse}
+The eigenvalues of $M=(I-\nu L)^{-1}$ are $1-\nu i \sin(2\pi (j-1)/m)$,
+where $m$ is the dimension of the matrix and $j$ is any integer from 1 to $m$.
+
+Meanwhile, the matrix of eigenvectors has entries
+
+$$f_{jk} = \exp(2\pi i (j-1) (k-1)/m).$$
+
+These eigenvectors are orthogonal with length $\sqrt{m}$; i.e.
+this matrix satisfies the equation $F^* F = m I$, so
+that $F^{-1} = (1/m)F^*$.  Since $F$ is symmetric, $F^*$ is just the
+complex conjugate of $F$.
+
+Thus we have
+
+$$I - \nu L = \frac{1}{m} F^* D F$$
+and
+$$M = F^* D^{-1} F$$
+where $D^{-1}$ is diagonal with entries
+
+$$d^{-1}_{jj} = (1-\nu i \sin(\theta_j))^{-1}$$
+where the $m$th roots of unity are denoted by
+$$\theta_j = \frac{2 \pi (j-1)}{m}.$$
+
+Since $M$ is also a circulant matrix, we only need to find its
+first row.  Substitution of the formulas above gives that the $j$th
+entry of the first row is
+
+\begin{align} \label{firstrow}
+    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{\exp\left(i(j-1)\theta_k\right)}{1-\nu i \sin\theta_k}.
+\end{align}
+
+\section{Relation between the second and last entries}
+We now show that, if $m$ is even, then $M_{1,2} = -M_{1,m}$.
+We have from \eqref{firstrow} that
+\begin{align*} 
+    M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(i(m-1)\theta_k)}{1-\nu i \sin\theta_k}
+            & = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(-i\theta_k)}{1-\nu i \sin\theta_k}
+\end{align*}
+while
+\begin{align*} 
+    M_{1,2} & = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(i\theta_k)}{1-\nu i \sin\theta_k}
+\end{align*}
+Furthermore, we know that both sums are real, since $M$ is a real matrix.
+
+Multiplying by the complex conjugate of the denominator and taking
+the real part, we find
+\begin{subequations}
+\begin{align}
+    M_{1,2} & = \frac{1}{m} \sum_{k=1}^m \frac{\cos \theta_k - \nu \sin^2 \theta_k}{1+\nu^2 \sin^2 \theta_k} \label{m12} \\
+    M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{\cos \theta_k + \nu \sin^2 \theta_k}{1+\nu^2 \sin^2 \theta_k}
+\end{align}
+\end{subequations}
+
+Finally, we observe that by symmetry, when $m$ is even,
+$$ \sum_{k=1}^m \frac{\cos \theta_k}{1+\nu^2\sin^2\theta_k} = 0,$$
+since adding $\pi$ to $\theta_k$ preserves the denominator and changes the sign of the numerator.
+Thus $M_{1,2} = -M_{1,m}$.  
+Furthermore, we see from this that  $M_{1,2}$ is strictly negative.
+From \eqref{m12} we also see that $M_{1,2}$ approaches zero
+(from below) as $\nu \to \infty$.
+
+The last equality above does not hold when $m$ is odd since then
+the $m$th roots of unity do not come in  pairs $\pm e^{i\theta_k}$.
+
+Meanwhile, let us consider \eqref{m12} for $m$ odd.  For large $\nu$,
+all terms with $k\ne 1$ will be $O(1/\nu)$, whereas for $k=1$ we get $1$,
+which implies that the sum will be positive for large enough $\nu$.  With a
+little more work we can estimate how large is large enough.
+
+\section{Further observations}
+More generally, we have that
+\begin{align*}
+    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{\cos ((j-1)\theta_k) - \nu \sin( \theta_k) \sin((j-1)\theta_k)}{1+\nu^2 \sin^2 \theta_k} \\
+\end{align*}
+
+For fixed $m$ odd and large $\nu$, we once again see that the $k=1$ term (=1)
+will dominate and all entries will be positive.
+
+\section{Extension to other discretizations}
+We can (in principle) analyze positivity of any other combination of spatial and (one-step) time discretization in the same manner.  We
+will have some circulant matrix $L = (1/m) F^* D F$ but where
+the eigenvalues (entries of $D$) are different from the values
+$\lambda_j = i\sin \theta_j$ above.  For instance, in a spectral collocation
+method the eigenvalues will be simply $\lambda_j = i \theta_j$.  The time
+discretization will possess a stability function $R(z)$, and
+we are interested in positivity of the entries of the (real, circulant)
+matrix $M=F^* R(\nu D) F$.  The first row of this matrix is given by
+
+$$M_{1,j} = \frac{1}{m} \sum_{k=1}^m R(\nu\lambda_k) \exp(i(j-1)\theta_k).$$
+
+Looking at it from the opposite direction, one could try to choose a spatial
+discretization (by choosing the $\lambda_j$) and time discretization
+(by choosing $R(z)$) so as to obtain a positive scheme, under some constraints on the accuracy.  To have order $p$ accuracy in time,
+we require $R(z) = \exp(z) + O(z^{p+1})$, while to have order $q$
+accuracy in space we require $\lambda_j = i \theta_j + O(m^{-(q+1)}).$
+
+\section{Further interesting questions}
+\begin{itemize}
+  \item Higher order time discretizations (starting with theta methods or trapezoidal rule)
+  \item Fourier spectral collocation in space
+  \item Higher order finite differences in space (compact or wider stencils)
+  \item What about the heat equation?  Are there open questions we could attack in the same way?
+\end{itemize}
+
+\end{document}
