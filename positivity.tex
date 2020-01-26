@@ -1,0 +1,103 @@
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath,amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\newtheorem{theorem}{Theorem}
+
+\newcommand{\dt}{\Delta t}
+
+\title{Positivity of implicit discretizations of the advection equation}
+\author{Yiannis Hadjimichael \and David I. Ketcheson \and Lajos Loczi}
+
+\begin{document}
+\maketitle
+
+\section{Background and motivation}
+Here we investigate the positivity of some discretizations of the advection equation
+\begin{align} \label{advection}
+U_t = a U_x.
+\end{align}
+The advection equation is a fundamental PDE, and herein we focus on
+some of the simplest and most fundamental discretizations of it.
+
+Any linear one-step discretization of a time-dependent PDE in one spatial
+dimention with $m$ grid points in space yields an approximate solution given by
+an iteration of the form
+\begin{align} \label{M}
+    U^{n+1} = Mu^n
+\end{align}
+where $M$ is a fixed $m\times m$ matrix.
+
+
+\subsection{Discrete Fourier analysis}
+We can (in principle) analyze positivity of any other combination of spatial and (one-step) time discretization in the same manner.  We
+will have some circulant matrix $L = (1/m) F^* D F$ but where
+the eigenvalues (entries of $D$) are different from the values
+$\lambda_j = i\sin \theta_j$ above.  For instance, in a spectral collocation
+method the eigenvalues will be simply $\lambda_j = i \theta_j$.  The time
+discretization will possess a stability function $R(z)$, and
+we are interested in positivity of the entries of the (real, circulant)
+matrix $M=F^* R(\nu D) F$.  The first row of this matrix is given by
+
+$$M_{1,j} = \frac{1}{m} \sum_{k=1}^m R(\nu\lambda_k) \exp(i(j-1)\theta_k).$$
+
+Looking at it from the opposite direction, one could try to choose a spatial
+discretization (by choosing the $\lambda_j$) and time discretization
+(by choosing $R(z)$) so as to obtain a positive scheme, under some constraints on the accuracy.  To have order $p$ accuracy in time,
+we require $R(z) = \exp(z) + O(z^{p+1})$, while to have order $q$
+accuracy in space we require $\lambda_j = i \theta_j + O(m^{-(q+1)}).$
+
+
+\section{Backward in time, centered in space}
+A finite difference spatial discretization of \eqref{advection} yields a system
+of ODEs
+\begin{align} \label{semi-discrete}
+    U'(t) = LU(t)
+\end{align}
+where $U$ is the vector whose entries are the values of the solution
+at the grid points, as a function of time, and $U_x \approx \frac{1}{\Delta x} L u$.
+We first consider the 3-point centered difference in space so that $L$ is a
+circulant matrix with entries $(-1/2, 0, 1/2)$ on the central three diagonals.
+It is straightforward to show that the system \eqref{semi-discrete} can
+give negative values even if the initial values are positive.
+
+If we use the backward Euler method in time, we have
+$$u^{n+1} = u^n + \frac{\Delta t}{\Delta x} L u^{n+1}$$
+or
+$$u^{n+1} = (I-\nu L)^{-1} u^n,$$
+where $\nu = \Delta t/\Delta x$ is the CFL number.  The method will be positivity preserving if the matrix
+$(I-\nu L)^{-1}$ has non-negative entries.
+
+
+The results we already have for backward Euler + centered differences go here.
+
+\begin{theorem}
+Consider the backward in time, centered in space discretization of the
+advection equation with periodic boundary conditions and $m$ spatial grid
+points.  The discretization takes the form \eqref{M},
+where (i) if $m$ is even, then $M$ has at least one negative entry;
+(ii) if $m$ is odd, then for $\dt>\dt_*$ all entries of $M$ are nonnegative.
+
+(add details about $\dt_*$)
+\end{theorem}
+
+\subsection{Discrete Fourier analysis}
+David's work here.
+
+\subsection{Detailed analysis of the matrix entries}
+Lajos' work here.
+
+\section{Other discretizations}
+
+\end{document}
