@@ -92,7 +92,7 @@ it is possible to ensure positive invariance for large time steps.
 Let us consider first the backward Euler method.
 The eigenvalues for this semi-discretization are $\lambda_j = i\sin\xi_j$.
 If we use the backward Euler method in time, we have $R(z) = (1-z)^{-1}$, so
-\eqref{firstrow} gives the entries of $M$ as
+\eqref{M-entries} gives the entries of $M$ as
 \begin{align} \label{firstrow}
     M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{\exp\left(-i(j-1)\xi_k\right)}{1-\nu i \sin\xi_k}.
 \end{align}
@@ -125,6 +125,24 @@ the entries of $M$ are negative, no matter the value of $\nu$.  All of these
 negative entries tend to zero as $\nu \to \infty$.
 
 Meanwhile, if $m$ is odd...
+
+
+Next we generalize the above results to the theta method.  In this case we have
+\begin{align}
+    R(z) & = \frac{1+(1-\theta)z}{1-\theta z}
+\end{align}
+so with the centered difference in space we get
+\begin{align} \label{firstrow-theta}
+    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{1+(1-\theta)\nu i\sin\xi_k}{1-\theta\nu i \sin\xi_k}\exp\left(-i(j-1)\xi_k\right).
+\end{align}
+This leads to
+\begin{align*} 
+    M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{\cos\xi_k(1-\theta(1-\theta)\nu^2\sin^2\xi_k)- \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k}.
+\end{align*}
+For even $m$, the sum over the first term in the numerator vanishes due to symmetry and we have
+\begin{align*}
+    M_{1,m} & =  \frac{1}{m} \sum_{k=1}^m \frac{- \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k} < 0.
+\end{align*}
 
 \begin{theorem}
 Consider the backward in time, centered in space discretization of the
