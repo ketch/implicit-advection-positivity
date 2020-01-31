@@ -47,17 +47,17 @@ periodic boundary conditions yields a system of ODEs
 \end{align}
 where $L$ is a circulant matrix, which has the eigendecomposition
 \begin{align}
-    L & = F^* \Lambda F
+    L & = F \Lambda F^*
 \end{align}
 where the (unitary) matrix of eigenvectors has entries
 \begin{align}
-    f_{jk} & = \exp(i \theta_k (j-1))/\sqrt{m}  & 1 \le j, k \le m
+    f_{jk} & = \exp(i \xi_k (j-1))/\sqrt{m}  & 1 \le j, k \le m
 \end{align}
 and $\Lambda$ is the diagonal matrix of eigenvalues, which depends on the
-particular finite difference method chosen.  Here $\theta_k$ are the
+particular finite difference method chosen.  Here $\xi_k$ are the
 $m$th roots of unity:
 \begin{align}
-    \theta_k & = \frac{2\pi(k-1)}{m} & 1 \le k \le m.
+    \xi_k & = \frac{2\pi(k-1)}{m} & 1 \le k \le m.
 \end{align}
 
 Applying a one-step time
@@ -74,7 +74,7 @@ Note that $M$ is also a real, circulant matrix.
 Thus it is defined completely by the entries of its first row, which
 are given by
 \begin{align} \label{M-entries}
-    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m R(\nu\lambda_k) \exp(i(j-1)\theta_k).
+    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m R(\nu\lambda_k) \exp(-i(j-1)\xi_k).
 \end{align}
 
 \section{Backward in time, centered in space}
@@ -90,32 +90,33 @@ negative values for small enough time steps.  Here we investigate whether
 it is possible to ensure positive invariance for large time steps.
 
 Let us consider first the backward Euler method.
-The eigenvalues for this semi-discretization are $\lambda_j = i\sin\theta_j$.
+The eigenvalues for this semi-discretization are $\lambda_j = i\sin\xi_j$.
 If we use the backward Euler method in time, we have $R(z) = (1-z)^{-1}$, so
-\eqref{} gives the entries of $M$ as
+\eqref{M-entries} gives the entries of $M$ as
 \begin{align} \label{firstrow}
-    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{\exp\left(i(j-1)\theta_k\right)}{1-\nu i \sin\theta_k}.
+    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{\exp\left(-i(j-1)\xi_k\right)}{1-\nu i \sin\xi_k}.
 \end{align}
 If $m$ is even, then these entries cannot all be positive.
 
 \begin{lemma}
-    If $m$ is even, then $M_{1,2} < 0$.
+    If $m$ is even, then $M_{1,m} < 0$.
 \end{lemma}
 \begin{proof}
     From \eqref{firstrow} we have
     \begin{align}  \label{M12}
-        M_{1,2} & = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(i\theta_k)}{1-\nu i \sin\theta_k}
-                  = \frac{1}{m} \sum_{k=1}^m \frac{\cos \theta_k - \nu \sin^2 \theta_k}{1+\nu^2 \sin^2 \theta_k}.
+        M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(-i(m-1)\xi_k)}{1-\nu i \sin\xi_k}
+                  = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(i\xi_k)}{1-\nu i \sin\xi_k}
+                  = \frac{1}{m} \sum_{k=1}^m \frac{\cos \xi_k - \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k}.
     \end{align}
     The expression on the right is obtained by multiplying by the complex
     conjugate of the denominator and taking the real part (since $M$ is a real matrix).
     Due to symmetry, when $m$ is even,
     \begin{align*}
-        \sum_{k=1}^m \frac{\cos \theta_k}{1+\nu^2\sin^2\theta_k}  = \sum_{k=1}^{m/2} \frac{\cos \theta_k + cos(\theta_k+\pi)}{1+\nu^2\sin^2\theta_k} = 0,
+        \sum_{k=1}^m \frac{\cos \xi_k}{1+\nu^2\sin^2\xi_k}  = \sum_{k=1}^{m/2} \frac{\cos \xi_k + cos(\xi_k+\pi)}{1+\nu^2\sin^2\xi_k} = 0,
     \end{align*}
     Thus 
     \begin{align*} 
-        M_{1,2} & = \frac{1}{m} \sum_{k=1}^m \frac{- \nu \sin^2 \theta_k}{1+\nu^2 \sin^2 \theta_k} < 0.
+        M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{- \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k} < 0.
     \end{align*}
 \end{proof}
 Using similar expressions, it can in fact be shown that, for $m$ even, we have
@@ -124,6 +125,24 @@ the entries of $M$ are negative, no matter the value of $\nu$.  All of these
 negative entries tend to zero as $\nu \to \infty$.
 
 Meanwhile, if $m$ is odd...
+
+
+Next we generalize the above results to the theta method.  In this case we have
+\begin{align}
+    R(z) & = \frac{1+(1-\theta)z}{1-\theta z}
+\end{align}
+so with the centered difference in space we get
+\begin{align} \label{firstrow-theta}
+    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{1+(1-\theta)\nu i\sin\xi_k}{1-\theta\nu i \sin\xi_k}\exp\left(-i(j-1)\xi_k\right).
+\end{align}
+This leads to
+\begin{align*} 
+    M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{\cos\xi_k(1-\theta(1-\theta)\nu^2\sin^2\xi_k)- \nu \sin^2 \xi_k}{1+\theta^2\nu^2 \sin^2 \xi_k}.
+\end{align*}
+For even $m$, the sum over the first term in the numerator vanishes due to symmetry and we have
+\begin{align*}
+    M_{1,m} & =  \frac{1}{m} \sum_{k=1}^m \frac{- \nu \sin^2 \xi_k}{1+\theta^2\nu^2 \sin^2 \xi_k} < 0.
+\end{align*}
 
 \begin{theorem}
 Consider the backward in time, centered in space discretization of the
