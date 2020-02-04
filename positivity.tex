@@ -126,7 +126,7 @@ If $m$ is even, then these entries cannot all be positive.
     conjugate of the denominator and taking the real part (since $M$ is a real matrix).
     Due to symmetry, when $m$ is even,
     \begin{align*}
-        \sum_{k=1}^m \frac{\cos \xi_k}{1+\nu^2\sin^2\xi_k}  = \sum_{k=1}^{m/2} \frac{\cos \xi_k + cos(\xi_k+\pi)}{1+\nu^2\sin^2\xi_k} = 0,
+        \sum_{k=1}^m \frac{\cos \xi_k}{1+\nu^2\sin^2\xi_k}  = \sum_{k=1}^{m/2} \frac{\cos \xi_k + \cos(\xi_k+\pi)}{1+\nu^2\sin^2\xi_k} = 0,
     \end{align*}
     Thus 
     \begin{align*} 
@@ -183,9 +183,9 @@ M(m,\te,\nu):=(I-\te\nu L)^{-1}(I+(1-\te)\nu L),
 \]
 where $I\in\rr^{m\times m}$ is the identity matrix.\\
 
-$M\ge 0$ every entry $M_{i,j}\ge 0$\\
+$M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$.\\
 
-$M\not\ge 0$ there is at least entry $M_{i,j}<0$\\
+$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
 
 dependence on size, discretization parameter and CFL number: $M(m,\te,\nu)$\\
 
@@ -219,12 +219,20 @@ As a special case, we set
 \]
 in other words we have
 \[\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1.\]
-Here, the subscript $R$ refers to \textit{right}.
+(Here, the subscript $R$ refers to \textit{right}.)
+
+\begin{lemma}
+ABOUT ITS UNIQUE ROOT.
+\end{lemma}
 The unique $y\in(0,1)$ for which $\Por=0$ is denoted by $\yr$. 
 
 $\bullet$ For any $k\in\nplus$ and $0<\te\le 1$ we define
 \[\Pol:=-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta \]
-Here, the subscript $L$ refers to \textit{left}. The unique $y\in(0,1)$ for which $\Pol=0$ is denoted by $\yl$. 
+(Here, the subscript $L$ refers to \textit{left}.) 
+\begin{lemma}
+ABOUT ITS UNIQUE ROOT.
+\end{lemma}
+The unique $y\in(0,1)$ for which $\Pol=0$ is denoted by $\yl$. 
 
 $\bullet$ For any $k\in\nplus$ and $0<\te\le 1$ we define
 \[\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te}.\]
@@ -234,34 +242,35 @@ $\bullet$ For any $k\in\nplus$ and $0<\te\le 1$ we define
  \frac{2\yl}{1-\yl^2}\cdot \frac{1}{\te} & \text{for } 0<\te<\frac{2k}{2k+1}\\
  +\infty & \text{for } \frac{2k}{2k+1}\le \te<1.
 \end{cases}\]
+The value $+\infty$ is introduced for convenience so as to make our later descriptions shorter.
 
 
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_variousk.pdf}
-\caption{The set of parameters ensuring $M(2k+1,\te,\nu)\ge 0$ in the $(\te,\nu)$ parameter plane}\label{fig_variousk}
+\caption{The set of parameters ensuring $M(2k+1,\te,\nu)\ge 0$ in the $(\te,\nu)$ parameter plane for $k=1, 2, \ldots, 6$. The regions continue to extend to infinity ``upward'', but ``shrink'' in the horizontal direction as $k$ is increased.}\label{fig_variousk}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.5\textwidth]{fig_excepttopleft.pdf}
-\caption{The polynomials in the first row of $M$, except the top left polynomial}\label{fig_excepttopleft}
+\caption{The polynomials in the first row of $M$, except for the top left polynomial}\label{fig_excepttopleft}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.5\textwidth]{fig_someplpr.pdf}
-\caption{The red group ..., the black group ...}\label{fig_someplpr}
+\caption{The red group ..., the black group .... Dotted red, solid red, dashed black, solid black curve.}\label{fig_someplpr}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_boundary.pdf}
-\caption{Boundary curves for $m=3$ in the $(\te,\nu)$ parameter plane}\label{fig_boundary}
+\caption{Boundary curves for $m=3$ in the $(\te,\nu)$ parameter plane. The shaded region shows the parameter values in this window for which $M(3,\te,\nu)\ge 0$.}\label{fig_boundary}
 \end{center}
 \end{figure}
 
@@ -276,6 +285,9 @@ and
 M_{1,2k+1}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \nu\ge\nur.
 \] 
 \end{lemma}
+\begin{proof}
+\end{proof}
+
 
 
 ... a necessary and sufficient condition for the non-negativity of the matrix $M$ for odd sizes.
@@ -285,6 +297,9 @@ For any $k\in\nplus$ and $\te\in(0,1]$ we have
 M(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \nur\le\nu\le\nul.
 \] 
 \end{lemma}
+\begin{proof}
+\end{proof}
+
 
 ... to explain Figure \ref{fig_variousk} we use the following result.
 \begin{lemma}
@@ -293,6 +308,19 @@ For any $k\in\nplus$ and $\te\in\left(0,\frac{1}{2}\right)$ we have
  \nur>\nul.
 \] 
 \end{lemma}
+\begin{proof}
+\end{proof}
+
+\begin{theorem}
+DESCRIBING $M(2k+1,\te,\nu)\ge 0 $ FOR FIXED VALUES OF $\te$.
+DIFFERENT CASES TO MENTION:
+$\te=0$ (the explicit Euler method), $0<\te<1/2$, $\te=1/2$ (second order method), $1/2<\te<1$, $\te=1$ (the implicit Euler method). FINITELY MANY $k$ VALUES.
+\end{theorem}
+
+
+
+
+
 
 \section{Other discretizations}
 
