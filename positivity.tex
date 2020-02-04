@@ -9,7 +9,7 @@
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 %% Useful packages
-\usepackage{amsmath,amsthm}
+\usepackage{amsmath,amsthm,amssymb}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
@@ -18,6 +18,20 @@
 
 \newcommand{\dt}{\Delta t}
 \newcommand{\dx}{\Delta x}
+\newcommand{\te}{\theta}
+\newcommand{\nul}{\nu_L(k,\theta)}
+\newcommand{\nur}{\nu_R(k,\theta)}
+\newcommand{\yl}{y_L(k,\theta)}
+\newcommand{\yr}{y_R(k)}
+\newcommand{\nplus}{\mathbb{N}^+}
+\newcommand{\rr}{\mathbb{R}}
+\newcommand{\Por}{P_{R,k}(y)}
+\newcommand{\Pol}{P_{L,k,\te}(y)}
+
+
+
+
+
 
 \title{Positivity of implicit discretizations of the advection equation}
 \author{Yiannis Hadjimichael \and David I. Ketcheson \and Lajos Loczi}
@@ -158,7 +172,53 @@ where (i) if $m$ is even, then $M$ has at least one negative entry;
 David's work here.
 
 \subsection{Detailed analysis of the matrix entries}
-Lajos' work here.
+Some notation \\
+
+$\imath^2=1$ 
+
+\[
+M(m,\te,\nu):=(I-\te\nu L)^{-1}(I+(1-\te)\nu L),
+\]
+where $I\in\rr^{m\times m}$ is the identity matrix.\\
+
+$M\ge 0$ every entry $M_{i,j}\ge 0$\\
+
+$M\not\ge 0$ there is at least entry $M_{i,j}<0$\\
+
+dependence on size, discretization parameter and CFL number: $M(m,\te,\nu)\ge 0$\\
+
+lacunary polynomials (sparse polynomials, fewnomials)\\
+
+$\mu:=\te^2\nu^2$
+
+The non-linear transformation, for $\nu>0$, $0<\te\le 1$
+\[
+y:=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}=\frac{\sqrt{1+\mu}-1}{\sqrt{\mu}}
+\]
+Its inverse, for $0<y<1$, $0<\te\le 1$
+\[
+\nu=\frac{2y}{1-y^2}\cdot\frac{1}{\te}
+\]
+So for any $0<y<1$ we have
+\[
+\mu=\left(\frac{2y}{1-y^2}\right)^2
+\]
+Then
+\[\mu y^2=2+\mu-2\sqrt{1+\mu}\]
+\[\mu/y^2=2+\mu+2\sqrt{1+\mu}\]
+
+
+For any $k\in\nplus$ and $0<\te\le 1$ we define
+\[\Pol:=\theta +(\theta -2) y^2-(\theta -2) y^{4 k+2}-\theta  y^{4 k+4}\]
+\[\Por:=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1\]
+Their roots: $\yl$ and $\yr$\\
+For any $k\in\nplus$ and $0<\te\le 1$ we define
+\[\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te}\]
+For any $k\in\nplus$ and $0<\te\le 1$ we define
+\[\nul:=\begin{cases}
+ \frac{2\yl}{1-\yl^2}\cdot \frac{1}{\te} & \text{for } 0<\te<\frac{2k}{2k+1}\\
+ +\infty & \text{for } \frac{2k}{2k+1}\le \te<1
+\end{cases}\]
 
 \section{Other discretizations}
 
