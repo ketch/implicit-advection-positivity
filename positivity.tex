@@ -17,6 +17,8 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{remark}{Remark}
 \newtheorem{example}{Example}
+\newtheorem{corollary}{Corollary}
+
 
 
 
@@ -31,6 +33,8 @@
 \newcommand{\rr}{\mathbb{R}}
 \newcommand{\Por}{P_{R,k}(y)}
 \newcommand{\Pol}{P_{L,k,\te}(y)}
+\newcommand{\cP}{{\cal{P}}}
+\newcommand{\cD}{{\cal{D}}}
 
 
 
@@ -179,22 +183,29 @@ David's work here.
 
 The explicit forms of the matrix $M$ obtained so far are independent of the question of non-negativity, and may be applicable in other contexts as well. The main theme is low-order recursions. As we will see, these appear throughout our work.
 
-Mention: enough to focus on the 1st row.
-Financial support: TKP project
+Mention: enough to focus on the 1st row: the sum/product/inverse of circulant matrices is circulant [REFERENCE: Fact 5.16.7. in Berstein MATRIX MATHEMATICS]. Since $L$ and $I$ are circulant, the matrix $M$ is circulant, too.\\
+Financial support: TKP project + KAUST
 
 We used Wolfram \textit{Mathematica} (version 11) for the computations in this work.
-\begin{remark}
-The  \textit{Mathematica}  command {\tt{FindLinearRecurrence}} proved to be extremely useful for conjecturing and setting up the above linear recursions between different-sized matrices. 
-\end{remark}
 
-For odd $m$ we write $m=2k+1$ ($k\in\nplus$).\\
+
+
+Some notation \\
+
+ We need the explicit form of $L$---the first row.\\
+
+$M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$.\\
+
+$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
+
+
 
 $\imath^2=-1$ 
 
 \begin{equation}\label{Mdef}
 M(m,\te,\nu):=(I-\te\nu L)^{-1}(I+(1-\te)\nu L),
 \end{equation}
-where $I\in\rr^{m\times m}$ is the identity matrix. The dependence of $M$ on its parameters will often be suppressed. To emphasize the dimensions of a matrix, we will sometimes write $L_{m\times m}$.
+where $I\in\rr^{m\times m}$ is the identity matrix. The dependence of $M$ on its parameters will often be suppressed. To emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
 
 
 
@@ -203,17 +214,19 @@ HANDLE THE TRIVIAL CASE $\te=0$ FIRST.\\
 
 MENTION THAT $M_{1,2}=-M_{1,2k}$\\
 
-
-
-
-\begin{example}\label{example1} To illustrate the problem, we present the first rows of $M$ in the first few cases. For $m=2$, the first row of the matrix \eqref{Mdef} is the following:
+Throughout this section we can thus assume that 
+\[
+\boxed{m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
+\]
+As an initial illustration, we present the first row of $M$ for some small values of $m$. 
+\begin{example}\label{example1} For $m=2$, the first row of \eqref{Mdef} is
 \[\frac{1}{{\theta ^2 \nu ^2}/{4}+1}\left(-\frac{1}{4} \theta ^2 \nu ^2+\frac{\theta  \nu ^2}{4}+1,\theta  \nu -\frac{\nu }{2}\right),\]
 for $m=3$ we have
 \[
 \frac{1}{{3 \theta ^2 \nu ^2}/{4}+1}\left(-\frac{1}{4} \theta ^2 \nu ^2+\frac{\theta  \nu ^2}{2}+1,\frac{\theta ^2 \nu ^2}{2}-\frac{\theta  \nu ^2}{4}-\theta  \nu +\frac{\nu
    }{2},\frac{\theta ^2 \nu ^2}{2}-\frac{\theta  \nu ^2}{4}+\theta  \nu -\frac{\nu }{2}\right),
 \]
-and, say, for $m=5$, one has
+and for $m=5$ one has
 \[
 \frac{1}{{5 \theta ^4 \nu ^4}/{16}+{5 \theta ^2 \nu ^2}/{4}+1}\left(-\frac{3}{16} \theta ^4 \nu ^4+\frac{\theta ^3 \nu^4}{4}+\frac{\theta ^2 \nu ^2}{4}+\frac{\theta  \nu ^2}{2}+1,\right.
 \]
@@ -226,69 +239,106 @@ and, say, for $m=5$, one has
    \nu -\frac{\nu }{2}\right).
 \]
 \end{example}
-As already suggested by the above special cases, introducing the variable
-\[
-\mu:=\te^2\nu^2
-\]
-will be convenient when describing the denominators (which we displayed separately in the front).
-In the present situation we clearly have $\mu>0$.
 
-Each element of $M$ is a rational function in the variables $\te$ and $\nu$. From \eqref{Mdef} it is clear that  entry $M_{i,j}$ can be written as a polinomial (in $\te$ and $\nu$) divided by the determinant of the matrix 
-$I-\te\nu L$. 
 
-For $m=2k+1$, let us set
+Each element of $M$ is a rational function in the variables $\te$ and $\nu$. From \eqref{Mdef} it is clear that 
 \[
-D(k):=\det\left(I_{(2k+1)\times(2k+1)}-\te\nu L_{(2k+1)\times(2k+1)}\right)
+M_{1,j}=\frac{\cP_{j,k}(\te,\nu) }{\cD_k(\te,\nu)}\quad\quad(j=1,2,\ldots,2k+1),
 \]
-Then, after performing some determinant expansions, we see that the determinants obey the following second-order linear recursion with constant coefficients:
+where $\cP_{j,k}$ and $\cD_{k}$ are certain bivariate polynomials in $\te$ and $\nu$, and 
+\begin{equation}\label{dendet}
+\cD_k:=\det\left(I_{(2k+1)\times(2k+1)}-\te\nu L_{(2k+1)\times(2k+1)}\right).
+\end{equation}
+
+The key observation is that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. 
+
+\begin{remark}
+ \textit{Mathematica}'s  {\tt{FindLinearRecurrence}} command proved to be extremely useful for conjecturing and setting up these linear recursions. 
+\end{remark}
+At this point, as already suggested by Example \ref{example1}, it seems convenient to introduce the variable
 \[
-D(k+2)=\left(1+\frac{\mu}{2}\right)D(k+1)-\frac{\mu^2}{16}D(k)
+\mu:=\te^2\nu^2>0.
+\]
+
+On the one hand, as it turns out, $\cP_{1,k}$ and $\cD_{k}$ satisfy the same second-order recursion
+in the variable $k$ (with different initial conditions), with characteristic polynomial 
+\[
+\kappa ^2-\kappa  \left(1+\frac{\mu }{2}\right)+\frac{\mu ^2}{16},
+\]
+where  $\kappa$  denotes the dummy variable. The roots of this polynomial are
+\begin{equation}\label{kappa12}
+\kappa_{1,2}=\frac{2+\mu \pm 2 \sqrt{\mu +1}}{4}=\left(\frac{\sqrt{1+\mu}\pm 1}{2}\right)^2.
+\end{equation}
+
+
+On the other hand, for any fixed $j=2, \ldots, 2k+1$, each polynomial $\cP_{j,k}$ satisfies the same third-order recursion in the variable $k$ (with initial conditions depending on $j$), with characteristic polynomial 
+\[
+\kappa ^3-\kappa ^2 \left(1+\frac{3 \mu }{4}\right)+\kappa  \left(\frac{\mu }{4}+\frac{3 \mu ^2}{16}\right)-\frac{\mu ^3}{64}=\left(\kappa-\frac{\mu }{4}\right)\left(\kappa ^2-\kappa  \left(1+\frac{\mu }{2}\right)+\frac{\mu ^2}{16}\right),
+\]
+hence the characteristic roots are $\kappa_{1,2}$ as in \eqref{kappa12}, and $\kappa_3={\mu }/{4}$.
+
+Before proceeding, let us introduce yet another variable, which will further simplify our exposition by eliminating the square roots in \eqref{kappa12}. We set
+\[
+y:=\frac{\sqrt{1+\mu}-1}{\sqrt{\mu}}=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}\in (0,1).
+\]
+It is easily seen that the transformation
+\[
+(0,+\infty)\ni\mu \longleftrightarrow y\in(0,1)
+\]
+is bijective. Moreover, the following (inverse) relations will be useful:
+\[
+\mu=\left(\frac{2y}{1-y^2}\right)^2,
+\]
+\[\mu y^2=2+\mu-2\sqrt{1+\mu},\]
+\[\mu/y^2=2+\mu+2\sqrt{1+\mu},\]
+and
+\[
+\nu=\frac{2y}{1-y^2}\cdot\frac{1}{\te}.
+\]
+
+First we deal with the polynomials $\cD_k$. By carrying out some determinant expansions, we see that the determinants \eqref{dendet} obey the recursion
+\[
+\cD_{k+2}=\left(1+\frac{\mu}{2}\right)\cD_{k+1}-\frac{\mu^2}{16}\cD_k
 \]
 with initial conditions
 \[
-D(1)=1+\frac{3\mu}{4}, \quad D(2)=1+\frac{5\mu}{4}+\frac{5\mu^2}{16}.
+\cD_1=1+\frac{3\mu}{4}, \quad \cD_2=1+\frac{5\mu}{4}+\frac{5\mu^2}{16}.
 \]
-After solving this recursion, one obtains
+After solving this recursion, we obtain
 \[
-D(k)=-\frac{2^{1-2 k}}{\mu } \left(\left(1+\sqrt{1+\mu }\right) \left(2+\mu -2 \sqrt{1+\mu }\right)^k+\left(1-\sqrt{1+\mu }\right) \left(2+\mu +2 \sqrt{1+\mu}\right)^k\right),
+\cD_k=\left(\frac{\sqrt{1+\mu}+1}{2}\right)^{2 k+1}- \left(\frac{\sqrt{1+\mu}-1}{2}\right)^{2 k+1},
 \]
-which, by making use of some perfect squares and using the identity $1+\sqrt{\mu +1}=\frac{\mu }{\sqrt{\mu +1}-1}$, can also be written as
+or, in terms of the variable $y$, 
 \begin{equation}\label{expldet}
-D(k)=\left(\frac{\sqrt{1+\mu}+1}{2}\right)^{2 k+1}- \left(\frac{\sqrt{1+\mu}-1}{2}\right)^{2 k+1}.
+\cD_k=\frac{1-y^{4 k+2}}{\left(1-y^2\right)^{2 k+1} }.
 \end{equation}
 
-\bigskip
+Regarding the polynomials $\cP_{1,k}$, they satisfy the recursion 
+\[
+\cP_{1,k+2}=\left(1+\frac{\mu}{2}\right)\cP_{1,k+1}-\frac{\mu^2}{16}\cP_{1,k}
+\]
+with initial conditions
+\[
+\cP_{1,1}=1+\frac{3 \mu }{4}-\frac{\mu /\theta}{2  }, \quad \cP_{1,2}=1+\frac{5 \mu }{4}+\frac{5 \mu ^2}{16}-\frac{\mu/\theta }{2  }-\frac{\mu ^2/\theta}{4  }.
+\]
+From this recursion, by following the same approach as with the polynomials $\cD_k$, we derive that
+\[
+\cP_{1,k}=\frac{\Pol}{  \left(1+y^2\right)\left(1-y^2\right)^{2 k+1}\theta},
+\] 
+where the numerator is 
+\[\Pol:=-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta.\]
+Here, the subscript $L$ abbreviates \textit{leftmost} (since $\cP_{1,k}$ appears in that position of the first row of $M$).
 
 It is more challenging to describe the polynomials appearing in the numerator of the rational function in each matrix entry. 
 
-Some notation \\
 
- We need the explicit form of $L$---the first row.\\
-
-$M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$.\\
-
-$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
-
-dependence on size, discretization parameter and CFL number: $M(m,\te,\nu)$\\
 
 Unlike in Example \ref{example1}, we will have lacunary polynomials (sparse polynomials, fewnomials)---define.\\
 
 
-$\bullet$ The non-linear transformation, for $\nu>0$, $0<\te\le 1$
-\[
-y:=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}=\frac{\sqrt{1+\mu}-1}{\sqrt{\mu}}
-\]
-Its inverse, for $0<y<1$, $0<\te\le 1$
-\[
-\nu=\frac{2y}{1-y^2}\cdot\frac{1}{\te}
-\]
-So for any $0<y<1$ we have
-\[
-\mu=\left(\frac{2y}{1-y^2}\right)^2
-\]
-Then
-\[\mu y^2=2+\mu-2\sqrt{1+\mu}\]
-\[\mu/y^2=2+\mu+2\sqrt{1+\mu}\]
+
+
+
 
 $\bullet$ For any $k\in\nplus$ and integer $2\le j\le 2k+1$, we define the polynomials
 \[
@@ -302,23 +352,37 @@ in other words we have
 \[\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1.\]
 (Here, the subscript $R$ refers to \textit{right}.)
 
-By comparing the trigonometric and algebraic representations presented above, we have thus obtained the following set of identities. 
-\begin{lemma}
-"EXPLICIT" FORMS OF THE TRIG FORMULAE VIA THE RECURSIONS.
-\end{lemma}
+As a by-product, by comparing the trigonometric and algebraic representations presented above, we have obtained the following set of identities. 
+\begin{corollary}
+With $M$ defined in \eqref{Mdef}, $y=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}$, $\xi_\ell  = \frac{2\pi(\ell-1)}{2k+1}$, $\te>0$, $\nu>0$, and $k\in\nplus$, we have that
+\[
+M_{1,1}=\frac{\cP_{1,k}}{\cD_k}=\frac{-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta}{  \left(1+y^2\right)\left(1-y^{4 k+2}\right)\theta}=
+\]
+\[
+ \frac{1}{2k+1} \sum_{\ell=1}^{2k+1} \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu  \sin(\xi_\ell)}.
+\]
+Moreover, for $j=2, 3, \ldots, 2k+1$ we have that
+\[
+M_{1,j}=\frac{\cP_{j,k}}{\cD_k}=\frac{\nu  \left(1-y^2\right)^2 \left((-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}\right)}{2 \left(1+y^2\right) \left(1-y^{4 k+2}\right)}=
+\]
+\[
+\frac{1}{2k+1} \sum_{\ell=1}^{2k+1} \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu \sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right).
+\]
+
+\end{corollary}
 
 \subsection{Non-negativity of the matrix entries}
 
 In this section we present a detailed description of the non-negativity properties of the matrix $M$, thanks to the explicit forms for the entries $M_{1,j}$ obtained in Section \ref{explsect}.
+
+From \eqref{expldet} it is evident that $D(k)>0$ for any $\mu>0$ and $k\in\nplus$.
 
 \begin{lemma}
 ABOUT ITS UNIQUE ROOT.
 \end{lemma}
 The unique $y\in(0,1)$ for which $\Por=0$ is denoted by $\yr$. 
 
-$\bullet$ For any $k\in\nplus$ and $0<\te\le 1$ we define
-\[\Pol:=-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta \]
-(Here, the subscript $L$ refers to \textit{left}.) 
+
 \begin{lemma}
 ABOUT ITS UNIQUE ROOT.
 \end{lemma}
