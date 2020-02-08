@@ -214,30 +214,29 @@ HANDLE THE TRIVIAL CASE $\te=0$ FIRST.\\
 
 MENTION THAT $M_{1,2}=-M_{1,2k}$\\
 
-Throughout this section we can thus assume that 
+Throughout the rest of this section we can thus assume that 
 \[
-\boxed{m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
+%\boxed{ }
+m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.
 \]
-As an initial illustration, we present the first row of $M$ for some small values of $m$. 
-\begin{example}\label{example1} For $m=2$, the first row of \eqref{Mdef} is
-\[\frac{1}{{\theta ^2 \nu ^2}/{4}+1}\left(-\frac{1}{4} \theta ^2 \nu ^2+\frac{\theta  \nu ^2}{4}+1,\theta  \nu -\frac{\nu }{2}\right),\]
-for $m=3$ we have
+As an initial illustration, we present the first row of $M$ for the smallest values of $m$. 
+\begin{example}\label{example1} 
+%For $m=2$, 
+%\[\frac{1}{{\theta ^2 \nu ^2}/{4}+1}\left(-\frac{1}{4} \theta ^2 \nu ^2+\frac{\theta  \nu ^2}{4}+1,\theta  \nu -\frac{\nu }{2}\right),\]
+For $m=3$ the first row of \eqref{Mdef} is 
 \[
-\frac{1}{{3 \theta ^2 \nu ^2}/{4}+1}\left(-\frac{1}{4} \theta ^2 \nu ^2+\frac{\theta  \nu ^2}{2}+1,\frac{\theta ^2 \nu ^2}{2}-\frac{\theta  \nu ^2}{4}-\theta  \nu +\frac{\nu
-   }{2},\frac{\theta ^2 \nu ^2}{2}-\frac{\theta  \nu ^2}{4}+\theta  \nu -\frac{\nu }{2}\right),
+\frac{1}{{3 \theta ^2 \nu ^2}/{4}+1}\left(\frac{3 \theta ^2 \nu ^2}{4}-\frac{\theta  \nu ^2}{2}+1,\frac{\theta  \nu ^2}{4}+\frac{\nu }{2},\frac{\theta  \nu ^2}{4}-\frac{\nu }{2}\right),
 \]
-and for $m=5$ one has
+while for $m=5$ we have 
 \[
-\frac{1}{{5 \theta ^4 \nu ^4}/{16}+{5 \theta ^2 \nu ^2}/{4}+1}\left(-\frac{3}{16} \theta ^4 \nu ^4+\frac{\theta ^3 \nu^4}{4}+\frac{\theta ^2 \nu ^2}{4}+\frac{\theta  \nu ^2}{2}+1,\right.
-\]
-\[  
-\frac{\theta ^4 \nu^4}{8}-\frac{\theta ^3 \nu ^4}{16}-\frac{\theta ^3 \nu ^3}{2}+\frac{\theta ^2 \nu ^3}{4}-\theta  \nu +\frac{\nu }{2},\frac{\theta ^4 \nu^4}{8}-\frac{\theta ^3 \nu ^4}{16}+\frac{\theta ^3 \nu ^3}{4}-\frac{\theta ^2 \nu ^3}{8}+\frac{\theta ^2 \nu ^2}{2}-\frac{\theta  \nu^2}{4},
+\frac{1}{{5 \theta ^4 \nu ^4}/{16}+{5 \theta ^2 \nu ^2}/{4}+1}\left(\frac{5 \theta ^4 \nu ^4}{16}-\frac{\theta ^3 \nu ^4}{4}+\frac{5 \theta ^2 \nu ^2}{4}-\frac{\theta  \nu ^2}{2}+1,\right.
 \]
 \[
-\left.
-\frac{\theta ^4 \nu ^4}{8}-\frac{\theta ^3 \nu ^4}{16}-\frac{\theta ^3 \nu ^3}{4}+\frac{\theta ^2 \nu ^3}{8}+\frac{\theta ^2 \nu^2}{2}-\frac{\theta  \nu ^2}{4},\frac{\theta ^4 \nu ^4}{8}-\frac{\theta ^3 \nu ^4}{16}+\frac{\theta ^3 \nu ^3}{2}-\frac{\theta ^2 \nu ^3}{4}+\theta 
-   \nu -\frac{\nu }{2}\right).
+\left.\frac{\theta ^3 \nu
+   ^4}{16}+\frac{\theta ^2 \nu ^3}{4}+\frac{\nu }{2},\frac{\theta ^3 \nu ^4}{16}-\frac{\theta ^2 \nu ^3}{8}+\frac{\theta  \nu ^2}{4},\frac{\theta ^3
+   \nu ^4}{16}+\frac{\theta ^2 \nu ^3}{8}+\frac{\theta  \nu ^2}{4},\frac{\theta ^3 \nu ^4}{16}-\frac{\theta ^2 \nu ^3}{4}-\frac{\nu }{2}\right).
 \]
+
 \end{example}
 
 
@@ -249,43 +248,38 @@ where $\cP_{j,k}$ and $\cD_{k}$ are certain bivariate polynomials in $\te$ and $
 \begin{equation}\label{dendet}
 \cD_k:=\det\left(I_{(2k+1)\times(2k+1)}-\te\nu L_{(2k+1)\times(2k+1)}\right).
 \end{equation}
+\begin{remark}
+The subscripts of $\cP_{j,k}$ thus refer to the position of the polynomial within the first row of $M$, and the size of $M\in\mathbb{R}^{(2k+1)\times(2k+1)}$, respectively.
+\end{remark}
 
-The key observation is that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. 
+
+The key to describing $M$ is the observation that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. Interestingly, the leftmost entry ($j=1$) behaves differently than the rest ($2\le j\le 2k+1$).
+
 
 \begin{remark}
- \textit{Mathematica}'s  {\tt{FindLinearRecurrence}} command proved to be extremely useful for conjecturing and setting up these linear recursions. 
+ \textit{Mathematica}'s  {\tt{FindLinearRecurrence}} command proved to be an efficient tool for discovering these linear recursions. 
 \end{remark}
-At this point, as already suggested by Example \ref{example1}, it seems convenient to introduce the variable
+First, let us introduce some new variables. On the one hand, as suggested by Example \ref{example1}, it seems convenient to set
 \[
 \mu:=\te^2\nu^2>0.
 \]
-
-On the one hand, as it turns out, $\cP_{1,k}$ and $\cD_{k}$ satisfy the same second-order recursion
-in the variable $k$ (with different initial conditions), with characteristic polynomial 
+Then, due to the sign assumptions, $\sqrt{\mu}=\te\nu$. On the other hand, as we will soon see, the polynomial 
 \[
-\kappa ^2-\kappa  \left(1+\frac{\mu }{2}\right)+\frac{\mu ^2}{16},
+\kappa ^2-\kappa  \left(1+\frac{\mu }{2}\right)+\frac{\mu ^2}{16}
 \]
-where  $\kappa$  denotes the dummy variable. The roots of this polynomial are
+will appear as a (factor of a) characteristic polynomial, and its roots are
 \begin{equation}\label{kappa12}
 \kappa_{1,2}=\frac{2+\mu \pm 2 \sqrt{\mu +1}}{4}=\left(\frac{\sqrt{1+\mu}\pm 1}{2}\right)^2.
 \end{equation}
-
-
-On the other hand, for any fixed $j=2, \ldots, 2k+1$, each polynomial $\cP_{j,k}$ satisfies the same third-order recursion in the variable $k$ (with initial conditions depending on $j$), with characteristic polynomial 
-\[
-\kappa ^3-\kappa ^2 \left(1+\frac{3 \mu }{4}\right)+\kappa  \left(\frac{\mu }{4}+\frac{3 \mu ^2}{16}\right)-\frac{\mu ^3}{64}=\left(\kappa-\frac{\mu }{4}\right)\left(\kappa ^2-\kappa  \left(1+\frac{\mu }{2}\right)+\frac{\mu ^2}{16}\right),
-\]
-hence the characteristic roots are $\kappa_{1,2}$ as in \eqref{kappa12}, and $\kappa_3={\mu }/{4}$.
-
-Before proceeding, let us introduce yet another variable, which will further simplify our exposition by eliminating the square roots in \eqref{kappa12}. We set
+This motivates us to introduce yet another variable, which will further simplify our exposition. We set
 \[
 y:=\frac{\sqrt{1+\mu}-1}{\sqrt{\mu}}=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}\in (0,1).
 \]
-It is easily seen that the transformation
+It is seen that the transformation
 \[
 (0,+\infty)\ni\mu \longleftrightarrow y\in(0,1)
 \]
-is bijective. Moreover, the following (inverse) relations will be useful:
+is a bijection. Moreover, the following (inverse) relations 
 \[
 \mu=\left(\frac{2y}{1-y^2}\right)^2,
 \]
@@ -293,87 +287,143 @@ is bijective. Moreover, the following (inverse) relations will be useful:
 \[\mu/y^2=2+\mu+2\sqrt{1+\mu},\]
 and
 \[
-\nu=\frac{2y}{1-y^2}\cdot\frac{1}{\te}.
+\nu=\frac{2y}{1-y^2}\cdot\frac{1}{\te}
 \]
-
-First we deal with the polynomials $\cD_k$. By carrying out some determinant expansions, we see that the determinants \eqref{dendet} obey the recursion
-\[
+are easily verified. We can now start describing the entries of the first row of $M$.
+\begin{remark}
+Although the expressions $\cP_{j,k}$ and $\cD_{k}$ will become in general rational functions in the variable $y$, we still call them polynomials (referring to their structure in the original variables $\te$ and $\nu$). 
+\end{remark}
+$\bullet$ The polynomials $\cD_k$. By carrying out some determinant expansions, we see that the determinants \eqref{dendet} obey the recursion
+\begin{equation}\label{Dkrec}
 \cD_{k+2}=\left(1+\frac{\mu}{2}\right)\cD_{k+1}-\frac{\mu^2}{16}\cD_k
-\]
+\end{equation}
 with initial conditions
 \[
-\cD_1=1+\frac{3\mu}{4}, \quad \cD_2=1+\frac{5\mu}{4}+\frac{5\mu^2}{16}.
+\cD_1=1+\frac{3\mu}{4}, \quad \cD_2=1+\frac{5\mu}{4}+\frac{5\mu^2}{16}
 \]
-After solving this recursion, we obtain
+(cf.~Example \ref{example1}). After solving this recursion, we obtain
 \[
 \cD_k=\left(\frac{\sqrt{1+\mu}+1}{2}\right)^{2 k+1}- \left(\frac{\sqrt{1+\mu}-1}{2}\right)^{2 k+1},
 \]
-or, in terms of the variable $y$, 
+which, in terms of the variable $y$, becomes
 \begin{equation}\label{expldet}
 \cD_k=\frac{1-y^{4 k+2}}{\left(1-y^2\right)^{2 k+1} }.
 \end{equation}
 
-Regarding the polynomials $\cP_{1,k}$, they satisfy the recursion 
+$\bullet$  The polynomials $\cP_{1,k}$. They satisfy the recursion 
 \[
-\cP_{1,k+2}=\left(1+\frac{\mu}{2}\right)\cP_{1,k+1}-\frac{\mu^2}{16}\cP_{1,k}
+\cP_{1,k+2}=\left(1+\frac{\mu}{2}\right)\cP_{1,k+1}-\frac{\mu^2}{16}\cP_{1,k},
 \]
-with initial conditions
+that is, with coefficients being the same as in \eqref{Dkrec}, but with initial conditions
 \[
-\cP_{1,1}=1+\frac{3 \mu }{4}-\frac{\mu /\theta}{2  }, \quad \cP_{1,2}=1+\frac{5 \mu }{4}+\frac{5 \mu ^2}{16}-\frac{\mu/\theta }{2  }-\frac{\mu ^2/\theta}{4  }.
+\cP_{1,1}=1+\frac{3 \mu }{4}-\frac{\mu /\theta}{2  }, \quad \cP_{1,2}=1+\frac{5 \mu }{4}+\frac{5 \mu ^2}{16}-\frac{\mu/\theta }{2  }-\frac{\mu ^2/\theta}{4  }
 \]
-From this recursion, by following the same approach as with the polynomials $\cD_k$, we derive that
+(cf.~Example \ref{example1}). By solving this recursion we derive that
 \[
 \cP_{1,k}=\frac{\Pol}{  \left(1+y^2\right)\left(1-y^2\right)^{2 k+1}\theta},
 \] 
 where the numerator is 
 \[\Pol:=-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta.\]
-Here, the subscript $L$ abbreviates \textit{leftmost} (since $\cP_{1,k}$ appears in that position of the first row of $M$).
-
-It is more challenging to describe the polynomials appearing in the numerator of the rational function in each matrix entry. 
-
-
-
-Unlike in Example \ref{example1}, we will have lacunary polynomials (sparse polynomials, fewnomials)---define.\\
+\begin{remark}
+Here, the subscript $L$ stands for \emph{leftmost}. This polynomial will play a special role in the next section.
+\end{remark}
 
 
-
-
-
-
-$\bullet$ For any $k\in\nplus$ and integer $2\le j\le 2k+1$, we define the polynomials
+$\bullet$  The polynomials $\cP_{2,k}$. They satisfy a third-order recursion in the variable $k$,
+\begin{equation}\label{cP2rec}
+\cP_{2,k+3}=\left(1+\frac{3\mu}{4}\right)\cP_{2,k+2}-\left(\frac{\mu }{4}+\frac{3 \mu ^2}{16}\right)\cP_{2,k+1}+\frac{\mu ^3}{64}\cP_{2,k},
+\end{equation}
+with initial conditions 
 \[
-P_{j,k}(y):=(-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}.
+\cP_{2,1}=\left(\frac{1}{2}+\frac{\sqrt{\mu }}{4}\right) \nu, \quad \cP_{2,2}=\left(\frac{1}{2}+\frac{\mu }{4}+\frac{\mu ^{3/2}}{16}\right) \nu,
 \]
+\[
+\cP_{2,3}=\left(\frac{1}{2}+\frac{\mu }{2}+\frac{3 \mu ^2}{32}+\frac{\mu ^{5/2}}{64}\right) \nu.
+\]
+The  characteristic polynomial of recursion \eqref{cP2rec} is 
+\[
+\kappa ^3-\kappa ^2 \left(1+\frac{3 \mu }{4}\right)+\kappa  \left(\frac{\mu }{4}+\frac{3 \mu ^2}{16}\right)-\frac{\mu ^3}{64}=\left(\kappa-\frac{\mu }{4}\right)\left(\kappa ^2-\kappa  \left(1+\frac{\mu }{2}\right)+\frac{\mu ^2}{16}\right),
+\]
+hence the characteristic roots are $\kappa_{1,2}$ as in \eqref{kappa12}, and $\kappa_3={\mu }/{4}$. Based on this, one easily obtains the explicit solution as
+\begin{equation}\label{cP2kexpl}
+\cP_{2,k}=\frac{\nu  \left(1-y^2\right)^{1-2 k} \left(1+y^{2 k-1}+y^{2 k+1}-y^{4 k}\right)}{2 \left(1+y^2\right)}.
+\end{equation}
+
+
+$\bullet$  The polynomials $\cP_{3,k}$. They satisfy the same third-order recursion in the variable $k$ as \eqref{cP2rec},
+\[
+\cP_{3,k+3}=\left(1+\frac{3\mu}{4}\right)\cP_{3,k+2}-\left(\frac{\mu }{4}+\frac{3 \mu ^2}{16}\right)\cP_{3,k+1}+\frac{\mu ^3}{64}\cP_{3,k},
+\]
+but with initial conditions 
+\[
+\cP_{3,1}=\left(-\frac{1}{2}+\frac{\sqrt{\mu }}{4}\right) \nu, \quad \cP_{3,2}=\left(\frac{\sqrt{\mu} }{4}-\frac{\mu}{8}+\frac{\mu ^{3/2}}{16}\right) \nu,
+\]
+\[
+\cP_{3,3}=\left(\frac{\sqrt{\mu }}{4}-\frac{\mu ^2}{32}+\frac{3 \mu ^{3/2}}{16}+\frac{\mu ^{5/2}}{64}\right) \nu.
+\]
+The explicit solution of this recursion is
+\begin{equation}\label{cP3kexpl}
+\cP_{3,k}=\frac{\nu  \left(1-y^2\right)^{1-2 k} \left(y-y^{2 k-2}+y^{2 k+2}+y^{4 k-1}\right)}{2 \left(1+y^2\right)}.
+\end{equation}
+\begin{remark}
+We note that, for any \emph{fixed} $j\ge 2$, the polynomials $\cP_{j,k}$ satisfy the same third-order recursion \eqref{cP2rec} in the variable $k$, with triplets of initial conditions depending on $j$. However, we cannot use this approach to proceed, since setting up the initial conditions would require, among others, the knowledge of the  polynomials $\cP_{j,1}$ (for $j=2, 3$),  $\cP_{j,2}$ (for $j=4, 5$), $\cP_{j,3}$ (for $j=6, 7$), and so on. 
+\end{remark}
+
+
+
+$\bullet$  The polynomials $\cP_{j,k}$ ($4\le j\le 2k+1$, $k\ge 2$). They satisfy the following second-order recursion in the variable $j$ when $k$ is \emph{fixed} (hence having only finitely many terms for a particular $k$):  
+\[
+\cP_{j+2,k}=-\frac{2}{\sqrt{\mu }}\cP_{j+1,k}+\cP_{j,k}.
+\]
+For the initial conditions of this final recursion, we use the general forms of $\cP_{2,k}$ and $\cP_{3,k}$ in \eqref{cP2kexpl} and \eqref{cP3kexpl} to get for any $k\ge 1$ and $2\le j\le 2k+1$ that 
+\[
+\cP_{j,k}=\frac{\nu  \left(1-y^2\right)^{1-2 k}}{2 \left(1+y^2\right)}P_{j,k}(y), 
+\]
+where the polynomials $P_{j,k}$ are defined as
+\begin{equation}\label{Pjky}
+P_{j,k}(y):=(-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}.
+\end{equation}
 As a special case, we set
 \[
 \Por:=P_{2k+1,k}(y),
 \]
 in other words we have
-\[\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1.\]
-(Here, the subscript $R$ refers to \textit{right}.)
+\[\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1,\]
+where the subscript $R$ stands for \textit{rightmost}.
 
-As a by-product, by comparing the trigonometric and algebraic representations presented above, we have obtained the following set of identities. 
+
+\begin{remark}
+As a by-product, we have obtained the following set of identities by comparing the trigonometric and algebraic representations presented so far. They are interesting from a structural point of view: although the number of terms in the trigonometric sums increases as $k$ gets larger, the polynomials in $y$ are sparse polynomials (also known as lacunary polynomials or fewnomials---the number of terms does not increase as the polynomial degree increases).
+\end{remark}
 \begin{corollary}
-With $M$ defined in \eqref{Mdef}, $y=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}$, $\xi_\ell  = \frac{2\pi(\ell-1)}{2k+1}$, $\te>0$, $\nu>0$, and $k\in\nplus$, we have that
+With $M$ defined in \eqref{Mdef}, $\te>0$, $\nu>0$, $k\in\nplus$, $y=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}$, and $\xi_\ell  = \frac{2\pi(\ell-1)}{2k+1}$, we have that
 \[
-M_{1,1}=\frac{\cP_{1,k}}{\cD_k}=\frac{-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta}{  \left(1+y^2\right)\left(1-y^{4 k+2}\right)\theta}=
+ \frac{1}{2k+1} \sum_{\ell=1}^{2k+1} \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu  \sin(\xi_\ell)}=
 \]
 \[
- \frac{1}{2k+1} \sum_{\ell=1}^{2k+1} \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu  \sin(\xi_\ell)}.
+M_{1,1}=\frac{\cP_{1,k}}{\cD_k}=
+\]
+\[
+\frac{-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta}{  \left(1+y^2\right)\left(1-y^{4 k+2}\right)\theta}.
 \]
 Moreover, for $j=2, 3, \ldots, 2k+1$ we have that
 \[
-M_{1,j}=\frac{\cP_{j,k}}{\cD_k}=\frac{\nu  \left(1-y^2\right)^2 \left((-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}\right)}{2 \left(1+y^2\right) \left(1-y^{4 k+2}\right)}=
+\frac{1}{2k+1} \sum_{\ell=1}^{2k+1} \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu \sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right)=
 \]
 \[
-\frac{1}{2k+1} \sum_{\ell=1}^{2k+1} \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu \sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right).
+M_{1,j}=\frac{\cP_{j,k}}{\cD_k}=
 \]
+\[
+\frac{\nu  \left(1-y^2\right)^2 \left((-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}\right)}{2 \left(1+y^2\right) \left(1-y^{4 k+2}\right)}.
+\]
+
 
 \end{corollary}
 
 \subsection{Non-negativity of the matrix entries}
 
 In this section we present a detailed description of the non-negativity properties of the matrix $M$, thanks to the explicit forms for the entries $M_{1,j}$ obtained in Section \ref{explsect}.
+THE SIGN is detemined by ....\\
 
 From \eqref{expldet} it is evident that $D(k)>0$ for any $\mu>0$ and $k\in\nplus$.
 
