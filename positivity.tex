@@ -188,7 +188,7 @@ David's work here.
 
 \subsection{Explicit description of the matrix entries for odd values of $m$}\label{explsect}
 
-When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to study the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the matrix entries in certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $(\te,\nu)$.
+When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
 \begin{remark}
 The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well. 
 \end{remark}
@@ -212,6 +212,8 @@ $M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
 
 $\imath^2=-1$ 
 
+$3\le m\in\nplus$
+
 \begin{equation}\label{Mdef}
 M(m,\te,\nu):=(I-\te\nu L)^{-1}(I+(1-\te)\nu L),
 \end{equation}
@@ -220,11 +222,11 @@ where $I\in\rr^{m\times m}$ is the identity matrix. The dependence of $M$ on its
 \rule{8cm}{0.4pt}
 
 It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. Thus, throughout the rest of this section, we can thus assume that 
-\[
+\begin{equation}\label{genassump}
 \boxed{ 
 m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
-\]
-As an initial illustration, we present the first row of $M$ for the smallest values of $m$. 
+\end{equation}
+As an initial illustration, we present the first row of $M$ (as a vector, and with the common denominator of the entries in front of it) for the smallest values of $m$. 
 \begin{example}\label{example1} 
 %For $m=2$, 
 %\[\frac{1}{{\theta ^2 \nu ^2}/{4}+1}\left(-\frac{1}{4} \theta ^2 \nu ^2+\frac{\theta  \nu ^2}{4}+1,\theta  \nu -\frac{\nu }{2}\right),\]
@@ -246,9 +248,9 @@ while for $m=5$ we have
 
 
 Each element of $M$ is a rational function in the variables $\te$ and $\nu$. From \eqref{Mdef} it is clear that 
-\[
+\begin{equation}\label{M1jPjkDk}
 M_{1,j}=\frac{\cP_{j,k}(\te,\nu) }{\cD_k(\te,\nu)}\quad\quad(j=1,2,\ldots,2k+1),
-\]
+\end{equation}
 where $\cP_{j,k}$ and $\cD_{k}$ are certain bivariate polynomials in $\te$ and $\nu$, and 
 \begin{equation}\label{dendet}
 \cD_k:=\det\left(I_{(2k+1)\times(2k+1)}-\te\nu L_{(2k+1)\times(2k+1)}\right).
@@ -258,7 +260,7 @@ The subscripts of $\cP_{j,k}$ thus refer to the position of the polynomial withi
 \end{remark}
 
 
-The key to describing $M$ is the observation that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. Interestingly, the leftmost entry ($j=1$) behaves differently than the rest ($2\le j\le 2k+1$).
+The key to describing $M$ algebraically is the observation that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. Interestingly, the leftmost entry ($j=1$) behaves differently than the rest ($2\le j\le 2k+1$).
 
 
 \begin{remark}
@@ -277,9 +279,9 @@ will appear as a (factor of a) characteristic polynomial, and its roots are
 \kappa_{1,2}=\frac{2+\mu \pm 2 \sqrt{\mu +1}}{4}=\left(\frac{\sqrt{1+\mu}\pm 1}{2}\right)^2.
 \end{equation}
 This motivates us to introduce yet another variable, which will further simplify our exposition. We set
-\[
+\begin{equation}\label{ydef01}
 y:=\frac{\sqrt{1+\mu}-1}{\sqrt{\mu}}=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}\in (0,1).
-\]
+\end{equation}
 It is seen that the transformation
 \[
 (0,+\infty)\ni\mu \longleftrightarrow y\in(0,1)
@@ -298,7 +300,7 @@ are easily verified. We can now start describing the entries of the first row of
 \begin{remark}
 Although the expressions $\cP_{j,k}$ and $\cD_{k}$ will become in general rational functions in the variable $y$, we still call them polynomials (referring to their structure in the original variables $\te$ and $\nu$). 
 \end{remark}
-$\bullet$ The polynomials $\cD_k$. By carrying out some determinant expansions, we see that the determinants \eqref{dendet} obey the recursion
+$\bullet$ The polynomials $\cD_k$. By carrying out some determinant expansions, we see that the determinants \eqref{dendet} obey the second-order parametric recursion
 \begin{equation}\label{Dkrec}
 \cD_{k+2}=\left(1+\frac{\mu}{2}\right)\cD_{k+1}-\frac{\mu^2}{16}\cD_k
 \end{equation}
@@ -324,11 +326,13 @@ that is, with coefficients being the same as in \eqref{Dkrec}, but with initial 
 \cP_{1,1}=1+\frac{3 \mu }{4}-\frac{\mu /\theta}{2  }, \quad \cP_{1,2}=1+\frac{5 \mu }{4}+\frac{5 \mu ^2}{16}-\frac{\mu/\theta }{2  }-\frac{\mu ^2/\theta}{4  }
 \]
 (cf.~Example \ref{example1}). By solving this recursion we derive that
-\[
+\begin{equation}\label{P1kexpl}
 \cP_{1,k}=\frac{\Pol}{  \left(1+y^2\right)\left(1-y^2\right)^{2 k+1}\theta},
-\] 
+\end{equation}
 where the numerator is 
-\[\Pol:=-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta.\]
+\begin{equation}\label{poldef}
+\Pol:=-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta.
+\end{equation}
 \begin{remark}
 Here, the subscript $L$ stands for \emph{leftmost}. This polynomial will play a special role in the next section.
 \end{remark}
@@ -381,9 +385,9 @@ $\bullet$  The polynomials $\cP_{j,k}$ ($4\le j\le 2k+1$, $k\ge 2$). They satisf
 \cP_{j+2,k}=-\frac{2}{\sqrt{\mu }}\cP_{j+1,k}+\cP_{j,k}.
 \]
 For the initial conditions of this final recursion, we use the general forms of $\cP_{2,k}$ and $\cP_{3,k}$ in \eqref{cP2kexpl} and \eqref{cP3kexpl} to get for any $k\ge 1$ and $2\le j\le 2k+1$ that 
-\[
+\begin{equation}\label{Pjkexpl}
 \cP_{j,k}=\frac{\nu  \left(1-y^2\right)^{1-2 k}}{2 \left(1+y^2\right)}P_{j,k}(y), 
-\]
+\end{equation}
 where the polynomials $P_{j,k}$ are defined as
 \begin{equation}\label{Pjky}
 P_{j,k}(y):=(-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}.
@@ -393,12 +397,14 @@ As a special case, we set
 \Por:=P_{2k+1,k}(y),
 \]
 in other words we have
-\[\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1,\]
+\begin{equation}\label{pordef}
+\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1,
+\end{equation}
 where the subscript $R$ stands for \textit{rightmost}.
 
 
 \begin{remark}
-As a by-product, we have obtained the following set of identities by comparing the trigonometric and algebraic representations presented so far. They are interesting from a structural point of view: although the number of terms in the trigonometric sums increases as $k$ gets larger, the polynomials in $y$ are sparse polynomials (also known as lacunary polynomials or fewnomials---the number of terms does not increase as the polynomial degree increases).
+As a by-product, we have obtained the following set of identities by comparing the trigonometric and algebraic representations presented so far. They are also interesting from a structural point of view: although the number of terms in the trigonometric sums increases as $k$ gets larger, the polynomials in $y$ are sparse polynomials (also known as lacunary polynomials or fewnomials)---the number of terms does not increase as the polynomial degree increases.
 \end{remark}
 \begin{corollary}
 With $M$ defined in \eqref{Mdef}, $\te>0$, $\nu>0$, $k\in\nplus$, $y=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}$, and $\xi_\ell  = \frac{2\pi(\ell-1)}{2k+1}$, we have that
@@ -436,20 +442,73 @@ In particular,
 \subsection{Non-negativity of the matrix entries for odd values of $m$}\label{nonnegsect}
 
 In this section we present a detailed description of the non-negativity properties of the matrix $M$, thanks to the explicit forms for the entries $M_{1,j}$ obtained in Section \ref{explsect}.
-THE SIGN is detemined by ....\\
 
-From \eqref{expldet} it is evident that $D(k)>0$ for any $\mu>0$ and $k\in\nplus$.
+\begin{center}\boxed{\text{Throughout this section we again assume \eqref{genassump}.}}\end{center}
 
-\begin{lemma}
-ABOUT ITS UNIQUE ROOT.
+By taking into account \eqref{M1jPjkDk}, \eqref{expldet}, \eqref{P1kexpl}, \eqref{poldef}, \eqref{Pjkexpl}, \eqref{Pjky}, and the fact that now $y\in(0,1)$ (see \eqref{ydef01}), the following corollary is evident.
+\begin{corollary}\label{cor2} For a given pair $(\te,\nu)$
+\[
+M_{1,1}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \Pol\ge 0\quad\text{ (see } \eqref{poldef}\text{)},
+\]
+and for any $2\le j\le 2k+1$
+\[
+M_{1,j}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad P_{j,k}(y)\ge 0\quad\text{ (see } \eqref{Pjky}\text{)}.
+\]
+\end{corollary}
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{fig_excepttopleft.pdf}
+\caption{The typical behavior of the polynomials $P_{j,k}$ appearing in Corollary \ref{cor2} for $2\le j\le 2k+1$ and $k$ fixed: curves in shades of grey (or black) correspond to even $j$, while curves in shades of red (or orange) correspond to odd $j$ indices. Based on this figure, one can make the following observations. On the one hand, for each fixed and even $j$, $P_{j,k}$ is strictly increasing in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is in general not monotone in its even index $j$. On the other hand, for each fixed and odd $j$, $P_{j,k}$ is in general not monotone in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is strictly decreasing in its odd index $j$.}\label{fig_excepttopleft}
+\end{center}
+\end{figure}
+The following lemma proves some of the observations about the polynomials $P_{j,k}$ suggested by Figure \ref{fig_excepttopleft} for even and odd indices $2\le j\le 2k+1$.
+\begin{lemma}\label{lem2} Let us fix $y\in(0,1)$ arbitrarily. Then\\
+\indent $\bullet$ for any $1\le\ell\le k$, $P_{2\ell,k}(y)>0$;\\
+\indent $\bullet$ for any $2\le\ell\le k$, $P_{2\ell+1,k}(y)<P_{2\ell-1,k}(y)$. 
 \end{lemma}
+\begin{proof} We have
+\[
+P_{2\ell,k}(y)=y^{2 k-2 l+1}-y^{4 k-2 l+2}+y^{2 k+2 l-1}+y^{2 l-2}\]
+and here 
+\[
+y^{2 k-2 l+1}-y^{4 k-2 l+2}=y^{2 k-2 l+1}(1-y^{2 k+1})>0.
+\]
+As for the other case,
+\[
+P_{2\ell+1,k}(y)-P_{2\ell-1,k}(y)=-(1 - y^2)\Big(y^{2 k+2 l-2}+y^{2 l-3}+y^{2 k-2 l}(1-y^{2k+1})\Big)<0.
+\] 
+\end{proof}
+By combining Corollary \ref{cor2} and Lemma \ref{lem2}, we clearly have the following result, expressing the fact that $M(2k+1,\te,\nu)\ge 0$ is determined only by the polynomials appearing in the numerators of its top left and top right entries.
+\begin{corollary} For a given pair $(\te,\nu)$
+\[
+M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 1\le j\le 2k+1 \quad \Longleftrightarrow
+\]
+\[
+\Pol\ge 0 \text{ and }\Por\ge 0\quad\text{(see } \eqref{poldef}\text{ and }\eqref{pordef}\text{)}.
+\]
+\end{corollary}
+The non-negativity of $M(2k+1,\te,\nu)$ has therefore been reduced to studying the simultaneous non-negativity of two parametric polynomials over the interval $y\in(0,1)$.
+\begin{lemma}\label{lem3}
 The unique $y\in(0,1)$ for which $\Por=0$ is denoted by $\yr$. 
-
-
-\begin{lemma}
-ABOUT ITS UNIQUE ROOT.
 \end{lemma}
+\begin{proof}
+\end{proof}
+\begin{lemma}\label{lem4}
 The unique $y\in(0,1)$ for which $\Pol=0$ is denoted by $\yl$. 
+\end{lemma}
+\begin{proof}
+\end{proof}
+Figure \ref{fig_variousk} illustrates Lemmas \ref{lem3}--\ref{lem4}.
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{fig_someplpr.pdf}
+\caption{The red group ..., the black group .... Dotted red, solid red, dashed black, solid black curve.}\label{fig_someplpr}
+\end{center}
+\end{figure}
+
+
+
+
 
 $\bullet$ For any $k\in\nplus$ and $0<\te\le 1$ we define
 \[\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te}.\]
@@ -470,19 +529,7 @@ The value $+\infty$ is introduced for convenience so as to make our later descri
 \end{center}
 \end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{fig_excepttopleft.pdf}
-\caption{The polynomials in the first row of $M$, except for the top left polynomial. Even: black. Odd: red.}\label{fig_excepttopleft}
-\end{center}
-\end{figure}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{fig_someplpr.pdf}
-\caption{The red group ..., the black group .... Dotted red, solid red, dashed black, solid black curve.}\label{fig_someplpr}
-\end{center}
-\end{figure}
 
 \begin{figure}
 \begin{center}
