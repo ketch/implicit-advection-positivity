@@ -134,7 +134,7 @@ If $m$ is even, then these entries cannot all be positive.
     conjugate of the denominator and taking the real part (since $M$ is a real matrix).
     Due to symmetry, when $m$ is even,
     \begin{align*}
-        \sum_{k=1}^m \frac{\cos \xi_k}{1+\nu^2\sin^2\xi_k}  = \sum_{k=1}^{m/2} \frac{\cos \xi_k + \cos(\xi_k+\pi)}{1+\nu^2\sin^2\xi_k} = 0,
+        \sum_{k=1}^m \frac{\cos \xi_k}{1+\nu^2\sin^2\xi_k}  = \sum_{k=1}^{m/2} \frac{\cos \xi_k + \cos(\xi_k+\pi)}{1+\nu^2\sin^2\xi_k} = 0.
     \end{align*}
     Thus 
     \begin{align*} 
@@ -149,22 +149,29 @@ negative entries tend to zero as $\nu \to \infty$.
 Meanwhile, if $m$ is odd...
 
 
-Next we generalize the above results to the theta method.  In this case we have
+In what follows we assume $m\ge 3$. Next we generalize the above results to the theta method.  In this case we have
 \begin{align}
     R(z) & = \frac{1+(1-\theta)z}{1-\theta z}
 \end{align}
-so with the centered difference in space we get
+so with the centered difference in space we get for $1\le j\le m$ that
 \begin{align} \label{firstrow-theta}
-    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{1+(1-\theta)\nu i\sin\xi_k}{1-\theta\nu i \sin\xi_k}\exp\left(-i(j-1)\xi_k\right).
+    M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu \sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right).
 \end{align}
 This leads to
 \begin{align*} 
-    M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{\cos\xi_k(1-\theta(1-\theta)\nu^2\sin^2\xi_k)- \nu \sin^2 \xi_k}{1+\theta^2\nu^2 \sin^2 \xi_k}.
+    M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos(\xi_\ell)- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
 \end{align*}
-For even $m$, the sum over the first term in the numerator vanishes due to symmetry and we have
+For even $m=2k\ge 4$, the sum over the first term in the numerator vanishes due to symmetry and we have
 \begin{align*}
-    M_{1,m} & =  \frac{1}{m} \sum_{k=1}^m \frac{- \nu \sin^2 \xi_k}{1+\theta^2\nu^2 \sin^2 \xi_k} < 0.
+    M_{1,2k} & =  \frac{1}{2k} \sum_{\ell=1}^{2k} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
 \end{align*}
+\begin{remark}
+By using \eqref{firstrow-theta} and similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
+\[
+M_{1,2}=-M_{1,2k},
+\]
+from which one can also easily deduce that $M\ge 0$ is impossible for $\nu>0$ and $\te\in[0,1]$.
+\end{remark}
 
 \begin{theorem}
 Consider the backward in time, centered in space discretization of the
@@ -181,24 +188,27 @@ David's work here.
 
 \subsection{Explicit description of the matrix entries for odd values of $m$}\label{explsect}
 
-The explicit forms of the matrix $M$ obtained so far are independent of the question of non-negativity, and may be applicable in other contexts as well. The main theme is low-order recursions. As we will see, these appear throughout our work.
+When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to study the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the matrix entries in certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $(\te,\nu)$.
+\begin{remark}
+The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well. 
+\end{remark}
 
-Mention: enough to focus on the 1st row: the sum/product/inverse of circulant matrices is circulant [REFERENCE: Fact 5.16.7. in Berstein MATRIX MATHEMATICS]. Since $L$ and $I$ are circulant, the matrix $M$ is circulant, too.\\
+\rule{8cm}{0.4pt}
+
+General text for the introduction
+
+ Mention: enough to focus on the 1st row: the sum/product/inverse of circulant matrices is circulant [REFERENCE: Fact 5.16.7. in Berstein MATRIX MATHEMATICS]. Since $L$ and $I$ are circulant, the matrix $M$ is circulant, too.\\
 Financial support: TKP project + KAUST
-
 We used Wolfram \textit{Mathematica} (version 11) for the computations in this work.
 
 
 
-Some notation \\
 
  We need the explicit form of $L$---the first row.\\
 
 $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$.\\
 
 $M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
-
-
 
 $\imath^2=-1$ 
 
@@ -207,17 +217,12 @@ M(m,\te,\nu):=(I-\te\nu L)^{-1}(I+(1-\te)\nu L),
 \end{equation}
 where $I\in\rr^{m\times m}$ is the identity matrix. The dependence of $M$ on its parameters will often be suppressed. To emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
 
+\rule{8cm}{0.4pt}
 
-
-
-HANDLE THE TRIVIAL CASE $\te=0$ FIRST.\\
-
-MENTION THAT $M_{1,2}=-M_{1,2k}$\\
-
-Throughout the rest of this section we can thus assume that 
+It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. Thus, throughout the rest of this section, we can thus assume that 
 \[
-%\boxed{ }
-m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.
+\boxed{ 
+m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
 \]
 As an initial illustration, we present the first row of $M$ for the smallest values of $m$. 
 \begin{example}\label{example1} 
@@ -414,13 +419,21 @@ Moreover, for $j=2, 3, \ldots, 2k+1$ we have that
 M_{1,j}=\frac{\cP_{j,k}}{\cD_k}=
 \]
 \[
-\frac{\nu  \left(1-y^2\right)^2 \left((-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}\right)}{2 \left(1+y^2\right) \left(1-y^{4 k+2}\right)}.
+\frac{\nu  \left(1-y^2\right)^2 }{2 \left(1+y^2\right) \left(1-y^{4 k+2}\right)}\Big((-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}\Big).
+\]
+In particular,
+\[
+\prod_{\ell=1}^{2k+1} (1-\imath\theta\nu \sin(\xi_\ell))=\cD_k=
+\]
+\[
+\left(\frac{\sqrt{1+\te^2\nu^2}+1}{2}\right)^{2 k+1}- \left(\frac{\sqrt{1+\te^2\nu^2}-1}{2}\right)^{2 k+1}=
+\frac{1-y^{4 k+2}}{\left(1-y^2\right)^{2 k+1} }.
 \]
 
 
 \end{corollary}
 
-\subsection{Non-negativity of the matrix entries}
+\subsection{Non-negativity of the matrix entries for odd values of $m$}\label{nonnegsect}
 
 In this section we present a detailed description of the non-negativity properties of the matrix $M$, thanks to the explicit forms for the entries $M_{1,j}$ obtained in Section \ref{explsect}.
 THE SIGN is detemined by ....\\
