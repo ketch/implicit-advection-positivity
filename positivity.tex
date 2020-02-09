@@ -293,9 +293,9 @@ is a bijection. Moreover, the following (inverse) relations
 \[\mu y^2=2+\mu-2\sqrt{1+\mu},\]
 \[\mu/y^2=2+\mu+2\sqrt{1+\mu},\]
 and
-\[
+\begin{equation}\label{fromytonu}
 \nu=\frac{2y}{1-y^2}\cdot\frac{1}{\te}
-\]
+\end{equation}
 are easily verified. We can now start describing the entries of the first row of $M$.
 \begin{remark}
 Although the expressions $\cP_{j,k}$ and $\cD_{k}$ will become in general rational functions in the variable $y$, we still call them polynomials (referring to their structure in the original variables $\te$ and $\nu$). 
@@ -466,60 +466,112 @@ The following lemma proves some of the observations about the polynomials $P_{j,
 \indent $\bullet$ for any $1\le\ell\le k$, $P_{2\ell,k}(y)>0$;\\
 \indent $\bullet$ for any $2\le\ell\le k$, $P_{2\ell+1,k}(y)<P_{2\ell-1,k}(y)$. 
 \end{lemma}
-\begin{proof} We have
+\begin{proof} For the even indices, we have
 \[
-P_{2\ell,k}(y)=y^{2 k-2 l+1}-y^{4 k-2 l+2}+y^{2 k+2 l-1}+y^{2 l-2}\]
-and here 
-\[
-y^{2 k-2 l+1}-y^{4 k-2 l+2}=y^{2 k-2 l+1}(1-y^{2 k+1})>0.
-\]
-As for the other case,
+P_{2\ell,k}(y)=y^{2 k-2 l+1}(1-y^{2 k+1})+y^{2 k+2 l-1}+y^{2 l-2}>0,\]
+while for the odd indices,
 \[
 P_{2\ell+1,k}(y)-P_{2\ell-1,k}(y)=-(1 - y^2)\Big(y^{2 k+2 l-2}+y^{2 l-3}+y^{2 k-2 l}(1-y^{2k+1})\Big)<0.
 \] 
 \end{proof}
-By combining Corollary \ref{cor2} and Lemma \ref{lem2}, we clearly have the following result, expressing the fact that $M(2k+1,\te,\nu)\ge 0$ is determined only by the polynomials appearing in the numerators of its top left and top right entries.
-\begin{corollary} For a given pair $(\te,\nu)$
+By combining Corollary \ref{cor2} and Lemma \ref{lem2}, we have obtained the following result, expressing the fact that the non-negativity of $M(2k+1,\te,\nu)$ is determined only by the polynomials appearing in the numerators of its top left and top right entries.
+\begin{corollary}\label{cor3} For a given pair $(\te,\nu)$
 \[
-M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 1\le j\le 2k+1 \quad \Longleftrightarrow
+M_{1,1}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \Pol\ge 0 \quad \text{(see } \eqref{poldef}\text{)},
 \]
+and
 \[
-\Pol\ge 0 \text{ and }\Por\ge 0\quad\text{(see } \eqref{poldef}\text{ and }\eqref{pordef}\text{)}.
+M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 2\le j\le 2k+1 \quad \Longleftrightarrow \quad
+\Por\ge 0\quad\text{(see }\eqref{pordef}\text{)}.
 \]
 \end{corollary}
-The non-negativity of $M(2k+1,\te,\nu)$ has therefore been reduced to studying the simultaneous non-negativity of two parametric polynomials over the interval $y\in(0,1)$.
+The non-negativity of $M(2k+1,\te,\nu)$ has therefore been reduced to studying the simultaneous non-negativity of two parametric polynomials over the interval $y\in(0,1)$. The content of Lemmas \ref{lem3} and \ref{lem4} is illustrated by Figure \ref{fig_someplpr}.
 \begin{lemma}\label{lem3}
-The unique $y\in(0,1)$ for which $\Por=0$ is denoted by $\yr$. 
+Let us fix $k$ arbitrarily. Then\\
+\indent $\bullet$ there is a unique $y\in(0,1)$ such that $\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1=0$.\\ 
+Let $\yr$ denote this root. Then\\
+\indent $\bullet$ $\Por<0$ for $y\in(0,\yr)$, and $\Por>0$ for $y\in(\yr,1)$.\\
+Moreover,\\
+\indent $\bullet$ $\yr<y_R(k+1)$, $\lim_{k\to+\infty} \yr=1$, and
+\begin{equation}\label{yrasympt}
+\left(\sqrt{2}-1\right)^{\frac{1}{2 k-1}}<\yr < \left(\sqrt{2}-1\right)^{\frac{1}{2 k+1}}.
+\end{equation}
 \end{lemma}
 \begin{proof}
+For fixed $k$, the continuous function $y\mapsto\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1$ is strictly increasing, 
+$P_{R,k}(0)<0$ and $P_{R,k}(1)>0$, hence there is a unique root. This root is strictly increasing in $k$, because the function $k\mapsto\Por$ is strictly decreasing for fixed $y\in(0,1)$. Finally notice that 
+$y^{4 k}+y^{2 k+1}+y^{2 k-1}-1=0$ is equivalent to $\left(y^{2 k-1}+1\right) \left(y^{2 k+1}+1\right)=2$,
+and for any $y\in(0,1)$ one has
+\[
+\left(y^{2 k+1}+1\right)^2<\left(y^{2 k-1}+1\right) \left(y^{2 k+1}+1\right)<\left(y^{2 k-1}+1\right)^2.
+\]
+From this we easily get \eqref{yrasympt} and also the limit of $\yr$ ($k\to +\infty$).
 \end{proof}
+\begin{remark}
+The asymptotic series of both bounds in \eqref{yrasympt} has the form
+\[
+1+\frac{\ln \left(\sqrt{2}-1\right)}{2 k}+{\cal{O}}\left(\frac{1}{k^2}\right)\approx 
+1-\frac{0.44069}{k}+{\cal{O}}\left(\frac{1}{k^2}\right).
+\]
+\end{remark}
 \begin{lemma}\label{lem4}
 The unique $y\in(0,1)$ for which $\Pol=0$ is denoted by $\yl$. 
 \end{lemma}
 \begin{proof}
 \end{proof}
-Figure \ref{fig_variousk} illustrates Lemmas \ref{lem3}--\ref{lem4}.
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.5\textwidth]{fig_someplpr.pdf}
-\caption{The red group ..., the black group .... Dotted red, solid red, dashed black, solid black curve.}\label{fig_someplpr}
+\caption{The two solid curves show the functions $y\mapsto\Por$ for some $k=k_0$ (solid black) and 
+ $k=k_1$ (solid red) with $k_0<k_1$.  The dashed black curves show the functions $y\mapsto\Pol$ for $k=k_0$ and for various values of $\te\in(0,1]$. Finally, the dotted red curves show the functions $y\mapsto\Pol$ for $k=k_1$ and for the same values of $\te\in(0,1]$.}\label{fig_someplpr}
 \end{center}
 \end{figure}
 
 
 
 
-
-$\bullet$ For any $k\in\nplus$ and $0<\te\le 1$ we define
-\[\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te}.\]
-
-$\bullet$ For any $k\in\nplus$ and $0<\te\le 1$ we define
+To return to the original variables $(\te,\nu)$ from the variable $y$, by  \eqref{fromytonu} we define
+\[\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te},\]
+and similarly,
 \[\nul:=\begin{cases}
  \frac{2\yl}{1-\yl^2}\cdot \frac{1}{\te} & \text{for } 0<\te<\frac{2k}{2k+1}\\
  +\infty & \text{for } \frac{2k}{2k+1}\le \te<1.
 \end{cases}\]
-The value $+\infty$ is introduced for convenience so as to make our later descriptions shorter.
-
+The value $+\infty$ here is introduced for convenience so as to make our later descriptions shorter.
+A reformulation of Corollary \ref{cor3} is given below.
+\begin{corollary}
+For any $k\in\nplus$ and $\te\in(0,1]$ we have 
+\[
+M_{1,1}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \nu\le\nul,
+\] 
+and
+\[
+M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 2\le j\le 2k+1 \quad \Longleftrightarrow \quad \nu\ge\nur.
+\] 
+In particular, 
+\[
+M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 1\le j\le 2k+1  \quad \Longleftrightarrow \quad \nur\le\nu\le\nul.
+\] 
+\end{corollary}
+\begin{proof}
+Then for fixed $k$ and $\te$, $\Por\ge 0$ is equivalent to $\nu\ge\nur$, since the map $(0,1)\ni y\mapsto\frac{2y}{1-y^2}\in(0,+\infty)$ in \eqref{fromytonu} is a strictly increasing bijection.
+\end{proof}
+\begin{remark}
+From \eqref{yrasympt} we get that
+\[
+\frac{2 \left(1+\sqrt{2}\right)^{\frac{1}{2 k-1}}}{\left(1+\sqrt{2}\right)^{\frac{2}{2
+   k-1}}-1}\cdot\frac{1}{\te}<\nur<\frac{2 \left(\sqrt{2}-1\right)^{\frac{1}{2 k+1}}}{1-\left(\sqrt{2}-1\right)^{\frac{2}{2
+   k+1}}}\cdot\frac{1}{\te}.
+\]
+The asymptotic series for these lower and upper bounds have the form
+\[
+\left( \frac{2}{\ln \left(1+\sqrt{2}\right)}k\mp\frac{1}{\ln \left(1+\sqrt{2}\right)}+ {\cal{O}}\left(\frac{1}{k}\right)\right)\cdot\frac{1}{\te},
+\]
+which is approximately
+\[
+\left( 2.26919 k\mp1.13459+ {\cal{O}}\left(\frac{1}{k}\right)\right)\cdot\frac{1}{\te}.
+\]
+\end{remark}
 
 
 \begin{figure}
@@ -538,31 +590,11 @@ The value $+\infty$ is introduced for convenience so as to make our later descri
 \end{center}
 \end{figure}
 
-... about the non-negativity of the top left, and the top right entries of $M$.
-\begin{lemma}
-For any $k\in\nplus$ and $\te\in(0,1]$ we have 
-\[
-M_{1,1}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \nu\le\nul
-\] 
-and
-\[
-M_{1,2k+1}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \nu\ge\nur.
-\] 
-\end{lemma}
-\begin{proof}
-\end{proof}
 
 
 
-... a necessary and sufficient condition for the non-negativity of the matrix $M$ for odd sizes.
-\begin{lemma}
-For any $k\in\nplus$ and $\te\in(0,1]$ we have 
-\[
-M(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \nur\le\nu\le\nul.
-\] 
-\end{lemma}
-\begin{proof}
-\end{proof}
+
+
 
 
 ... to explain Figure \ref{fig_variousk} we use the following result.
@@ -586,9 +618,6 @@ ABOUT THE SIGN PATTERN OF THE MATRICES CORRESPONDING TO CORNER POINTS OF THE DIA
 \end{remark}
 
 
-\begin{lemma}
-SOME ASYMPTOTIC PROPERTIES OF $\nu_R(k,1)$.
-\end{lemma}
 
 
 
