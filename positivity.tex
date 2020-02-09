@@ -486,7 +486,7 @@ M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 2\le j\le 2k+1 \quad \Longleftrigh
 \]
 \end{corollary}
 The non-negativity of $M(2k+1,\te,\nu)$ has therefore been reduced to studying the simultaneous non-negativity of two parametric polynomials over the interval $y\in(0,1)$. The content of Lemmas \ref{lem3} and \ref{lem4} is illustrated by Figure \ref{fig_someplpr}.
-\begin{lemma}\label{lem3}
+\begin{lemma}[about the root of $\Por$]\label{lem3}
 Let us fix $k$ arbitrarily. Then\\
 \indent $\bullet$ there is a unique $y\in(0,1)$ such that $\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1=0$.\\ 
 Let $\yr$ denote this root. Then\\
@@ -514,8 +514,20 @@ The asymptotic series of both bounds in \eqref{yrasympt} has the form
 1-\frac{0.44069}{k}+{\cal{O}}\left(\frac{1}{k^2}\right).
 \]
 \end{remark}
-\begin{lemma}\label{lem4}
-The unique $y\in(0,1)$ for which $\Pol=0$ is denoted by $\yl$. 
+
+
+
+
+
+
+\begin{lemma}[about the root of $\Pol$]\label{lem4} Let us fix $k$ arbitrarily.\\
+(i) Suppose that $\frac{2k}{2k+1}\le\te\le1$. Then for any $y\in(0,1)$, $\Pol>0$.\\
+(ii) Suppose now that $0<\te<\frac{2k}{2k+1}$. Then\\
+\indent $\bullet$ there is a unique $y\in(0,1)$ such that $\Pol=-\theta  y^{4 k+4}-(\theta -2) y^{4 k+2}+(\theta -2) y^2+\theta=0$.\\ 
+Let $\yl$ denote this root. Then\\
+\indent $\bullet$ $\Pol>0$ for $y\in(0,\yl)$, and $\Pol<0$ for $y\in(\yl,1)$.\\
+Moreover, on the one hand, for fixed $0<\te<\frac{2k}{2k+1}$, the function $k\mapsto\yl$ is strictly decreasing, and $\lim_{k\to+\infty} \yl=\sqrt{\frac{\te}{2-\te}}\in(0,1)$.\\
+On the other hand, for fixed $k\in\nplus$, the function $\left(0,\frac{2k}{2k+1}\right)\ni\te\mapsto\yl$ is strictly increasing, and we have the one-sided limits $\lim_{\te\to0+0} \yl=0$ and $\lim_{\te\to\frac{2k}{2k+1}-0} \yl=1$.
 \end{lemma}
 \begin{proof}
 \end{proof}
@@ -530,15 +542,15 @@ The unique $y\in(0,1)$ for which $\Pol=0$ is denoted by $\yl$.
 
 
 
-To return to the original variables $(\te,\nu)$ from the variable $y$, by  \eqref{fromytonu} we define
+To return to the original variables $(\te,\nu)$ from the variable $y$, by using \eqref{fromytonu} and Lemmas \ref{lem3} and \ref{lem4} we define
 \[\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te},\]
 and similarly,
 \[\nul:=\begin{cases}
  \frac{2\yl}{1-\yl^2}\cdot \frac{1}{\te} & \text{for } 0<\te<\frac{2k}{2k+1}\\
  +\infty & \text{for } \frac{2k}{2k+1}\le \te<1.
 \end{cases}\]
-The value $+\infty$ here is introduced for convenience so as to make our later descriptions shorter.
-A reformulation of Corollary \ref{cor3} is given below.
+The value $+\infty$ is introduced here for convenience so as to make our later descriptions shorter.
+A reformulation of Corollary \ref{cor3} in terms of the variable $(\te,\nu)$ is given below.
 \begin{corollary}
 For any $k\in\nplus$ and $\te\in(0,1]$ we have 
 \[
@@ -553,11 +565,11 @@ In particular,
 M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 1\le j\le 2k+1  \quad \Longleftrightarrow \quad \nur\le\nu\le\nul.
 \] 
 \end{corollary}
-\begin{proof}
-Then for fixed $k$ and $\te$, $\Por\ge 0$ is equivalent to $\nu\ge\nur$, since the map $(0,1)\ni y\mapsto\frac{2y}{1-y^2}\in(0,+\infty)$ in \eqref{fromytonu} is a strictly increasing bijection.
+\begin{proof} By taking into account Corollary \ref{cor3}, Lemmas \ref{lem3} and \ref{lem4}, and the fact that the map $(0,1)\ni y\mapsto\frac{2y}{1-y^2}\in(0,+\infty)$ in \eqref{fromytonu} is a strictly increasing bijection, we get for fixed $k$ and $\te$ that $\Por\ge 0$ is equivalent to $\nu\ge\nur$, and
+$\Pol\ge 0$ is equivalent to $\nu\le\nul$. 
 \end{proof}
 \begin{remark}
-From \eqref{yrasympt} we get that
+From \eqref{yrasympt} we obtain that
 \[
 \frac{2 \left(1+\sqrt{2}\right)^{\frac{1}{2 k-1}}}{\left(1+\sqrt{2}\right)^{\frac{2}{2
    k-1}}-1}\cdot\frac{1}{\te}<\nur<\frac{2 \left(\sqrt{2}-1\right)^{\frac{1}{2 k+1}}}{1-\left(\sqrt{2}-1\right)^{\frac{2}{2
@@ -571,6 +583,9 @@ which is approximately
 \[
 \left( 2.26919 k\mp1.13459+ {\cal{O}}\left(\frac{1}{k}\right)\right)\cdot\frac{1}{\te}.
 \]
+\end{remark}
+\begin{remark}
+REFORMULATE ALL LIM RESULTS FOR $\yl$ TO $\nul$ APPEARING IN LEMMA \ref{lem4}.
 \end{remark}
 
 
@@ -586,7 +601,7 @@ which is approximately
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_boundary.pdf}
-\caption{Boundary curves for $m=3$ in the $(\te,\nu)$ parameter plane. The shaded region shows the parameter values in this window for which $M(3,\te,\nu)\ge 0$.}\label{fig_boundary}
+\caption{Boundary curves for $k=1$ (that is, $m=3$) in the $(\te,\nu)$ parameter plane. The shaded region shows the parameter values in this window for which $M(3,\te,\nu)\ge 0$.}\label{fig_boundary}
 \end{center}
 \end{figure}
 
@@ -597,12 +612,13 @@ which is approximately
 
 
 
-... to explain Figure \ref{fig_variousk} we use the following result.
+The following result explains why the ``left half'' of Figure \ref{fig_variousk} is ``empty''.
 \begin{lemma}
 For any $k\in\nplus$ and $\te\in\left(0,\frac{1}{2}\right)$ we have 
 \[
- \nur>\nul.
+ \nur>\nul,
 \] 
+hence $M(2k+1,\te,\nu)\ge 0$ cannot hold for any $\nu>0$.
 \end{lemma}
 \begin{proof}
 \end{proof}
