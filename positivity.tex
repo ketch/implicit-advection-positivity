@@ -186,19 +186,10 @@ where (i) if $m$ is even, then $M$ has at least one negative entry;
 \subsection{Discrete Fourier analysis}
 David's work here.
 
-\subsection{Explicit description of the matrix entries for odd values of $m$}\label{explsect}
-
-When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
-\begin{remark}
-The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well. 
-\end{remark}
-
-\rule{8cm}{0.4pt}
-
-General text for the introduction
+\subsection{Some material for: Notation/Introduction}
 
  Mention: enough to focus on the 1st row: the sum/product/inverse of circulant matrices is circulant [REFERENCE: Fact 5.16.7. in Berstein MATRIX MATHEMATICS]. Since $L$ and $I$ are circulant, the matrix $M$ is circulant, too.\\
-Financial support: TKP project + KAUST
+Financial support for LL: TKP project + KAUST\\
 We used Wolfram \textit{Mathematica} (version 11) for the computations in this work.
 
 
@@ -219,7 +210,15 @@ M(m,\te,\nu):=(I-\te\nu L)^{-1}(I+(1-\te)\nu L),
 \end{equation}
 where $I\in\rr^{m\times m}$ is the identity matrix. The dependence of $M$ on its parameters will often be suppressed. To emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
 
-\rule{8cm}{0.4pt}
+\subsection{Explicit description of the matrix entries for odd values of $m$}\label{explsect}
+
+When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
+\begin{remark}
+The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well. 
+\end{remark}
+
+
+
 
 It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. Thus, throughout the rest of this section, we can thus assume that 
 \begin{equation}\label{genassump}
@@ -589,12 +588,16 @@ so, due to \eqref{lem4equi} with ``equality'', one has for fixed $\te\in\left(0,
 
 
 In order to return to the original variables $(\te,\nu)$ from the variable $y$---based on \eqref{fromytonu},  \eqref{yrdef} and \eqref{yldef}---we define
-\[\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te},\]
+\begin{equation}\label{nurdef}
+\nur:=\frac{2\yr}{1-\yr^2}\cdot \frac{1}{\te},
+\end{equation}
 and similarly,
-\[\nul:=\begin{cases}
+\begin{equation}\label{nuldef}
+\nul:=\begin{cases}
  \frac{2\yl}{1-\yl^2}\cdot \frac{1}{\te} & \text{for } 0<\te<\frac{2k}{2k+1}\\
  +\infty & \text{for } \frac{2k}{2k+1}\le \te\le 1.
-\end{cases}\]
+\end{cases}
+\end{equation}
 The value $+\infty$ is introduced here for convenience so as to make our descriptions shorter.
 
 A reformulation of Corollary \ref{cor3} in terms of the variables $(\te,\nu)$ is given below.
@@ -612,34 +615,48 @@ In particular,
 M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 1\le j\le 2k+1  \quad \Longleftrightarrow \quad \nur\le\nu\le\nul.
 \] 
 \end{corollary}
-\begin{proof} By taking into account Corollary \ref{cor3}, Lemmas \ref{lem3} and \ref{lem4}, and the fact that the map $(0,1)\ni y\mapsto\frac{2y}{1-y^2}\in(0,+\infty)$ in \eqref{fromytonu} is a strictly increasing bijection, we get for fixed $k$ and $\te$ that $\Por\ge 0$ is equivalent to $\nu\ge\nur$, and
-$\Pol\ge 0$ is equivalent to $\nu\le\nul$. In particular, due to the definition of $\nul$, this last inequality means that there is no upper bound on $\nu$ for $\frac{2k}{2k+1}\le \te\le 1$.
+\begin{proof} By taking into account Corollary \ref{cor3}, Lemmas \ref{lem3} and \ref{lem4}, and the fact that the map in \eqref{fromytonu} 
+\begin{equation}\label{cor4bijection}
+(0,1)\ni y\mapsto\frac{2y}{1-y^2}\in(0,+\infty)\text{ is a strictly increasing bijection,}
+\end{equation}
+we get for fixed $k$ and $\te$ that $\Por\ge 0$ is equivalent to $\nu\ge\nur$, and
+$\Pol\ge 0$ is equivalent to $\nu\le\nul$. In particular, due to the definition of $\nul$ in\eqref{nuldef}, this last inequality means that there is no upper bound on $\nu$ for $\frac{2k}{2k+1}\le \te\le 1$.
 \end{proof}
-\begin{remark}
-From \eqref{yrasympt} we obtain that
+Some growth rates, monotonicity and limit properties of $\nur$ and $\nul$---defined in \eqref{nurdef}-- \eqref{nuldef}---are collected below; 
+see also Figures \ref{fig_variousk} and \ref{fig_boundary}.
+\begin{corollary} (i) For any $k\in\nplus$ and $\te\in(0,1]$, we have $\nur<\nu_R(k+1,\theta)$, and
 \[
-\frac{2 \left(1+\sqrt{2}\right)^{\frac{1}{2 k-1}}}{\left(1+\sqrt{2}\right)^{\frac{2}{2
+\frac{2 \left(\sqrt{2}+1\right)^{\frac{1}{2 k-1}}}{\left(\sqrt{2}+1\right)^{\frac{2}{2
    k-1}}-1}\cdot\frac{1}{\te}<\nur<\frac{2 \left(\sqrt{2}-1\right)^{\frac{1}{2 k+1}}}{1-\left(\sqrt{2}-1\right)^{\frac{2}{2
    k+1}}}\cdot\frac{1}{\te}.
 \]
 The asymptotic series for these lower and upper bounds have the form
 \[
-\left( \frac{2}{\ln \left(1+\sqrt{2}\right)}k\mp\frac{1}{\ln \left(1+\sqrt{2}\right)}+ {\cal{O}}\left(\frac{1}{k}\right)\right)\cdot\frac{1}{\te},
+\left( \frac{2}{\ln \left(\sqrt{2}+1\right)}k\mp\frac{1}{\ln \left(\sqrt{2}+1\right)}+ {\cal{O}}\left(\frac{1}{k}\right)\right)\cdot\frac{1}{\te},
 \]
-which is approximately
-\[
+being approximately
+$
 \left( 2.26919 k\mp1.13459+ {\cal{O}}\left(\frac{1}{k}\right)\right)\cdot\frac{1}{\te}.
+$
+In particular, $\lim_{k\to+\infty} \nur=+\infty$.\\
+(ii) For fixed $0<\te<\frac{2k}{2k+1}$, $\nul>\nu_L(k+1,\theta)$ (and $\nul =+\infty$ for $\frac{2k}{2k+1}\le\te\le 1$). Finally, for fixed $\te\in(0,1]$, we have the limit
+\[
+\lim_{k\to+\infty} \nul=\frac{1}{1-\theta }\sqrt{\frac{2-\theta }{\theta }},
 \]
-\end{remark}
-\begin{remark}
-REFORMULATE ALL LIM RESULTS FOR $\yl$ TO $\nul$ APPEARING IN LEMMA \ref{lem4}.
-\end{remark}
-
+and, for fixed $k\in\nplus$, the one-sided limits  
+\[
+\lim_{\te\to 0+0} \nul=+\infty=\lim_{\te\to\frac{2k}{2k+1}-0} \nul.
+\]
+\end{corollary}
+\begin{proof} All these results 
+are, again, simple consequences of Lemmas  \ref{lem3} and \ref{lem4}, and \eqref{cor4bijection}. 
+For fixed $k\in\nplus$, evaluating the one-sided limit $\lim_{\te\to 0+0} \nul$ would be non-trivial, since in \eqref{nuldef} we have $\frac{2\yl}{1-\yl^2}\to 0$ (due to Lemma \ref{lem4}), while $\frac{1}{\te}\to+\infty$ ($\te\to0+0$).
+\end{proof}
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_variousk.pdf}
-\caption{The set of parameters in the $(\te,\nu)$ parameter plane ensuring $M(2k+1,\te,\nu)\ge 0$ for $k=1, 2, \ldots, 6$. The regions continue to extend to infinity ``upward'', but ``shrink'' in the horizontal direction as $k$ is increased.}\label{fig_variousk}
+\caption{The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(2k+1,\te,\nu)\ge 0$ for $k=1, 2, \ldots, 6$ (different values of $k$ are represented by different colors). The regions continue to extend to infinity ``upward'', but ``shrink'' in the horizontal direction as $k$ is increased.}\label{fig_variousk}
 \end{center}
 \end{figure}
 
@@ -648,7 +665,7 @@ REFORMULATE ALL LIM RESULTS FOR $\yl$ TO $\nul$ APPEARING IN LEMMA \ref{lem4}.
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_boundary.pdf}
-\caption{Boundary curves for $k=1$ (that is, $m=3$) in the $(\te,\nu)$ parameter plane. The shaded region shows the parameter values in this window for which $M(3,\te,\nu)\ge 0$.}\label{fig_boundary}
+\caption{A typical shaded region from Figure \ref{fig_variousk} for which $M(2k+1,\te,\nu)\ge 0$ (in this particular case, for $k=1$). The region is described by the inequalities $\nur\le\nu\le\nul$. The upper curve has a vertical asymptote at $\te=2k/(2k+1)$.}\label{fig_boundary}
 \end{center}
 \end{figure}
 
@@ -663,18 +680,32 @@ The following result explains why the ``left half'' of Figure \ref{fig_variousk}
 \begin{lemma}
 For any $k\in\nplus$ and $\te\in\left(0,\frac{1}{2}\right)$ we have 
 \[
- \nur>\nul,
+ \nur>\nul.
 \] 
-hence $M(2k+1,\te,\nu)\ge 0$ cannot hold for any $\nu>0$.
+Moreover, for any fixed $k\in\nplus$, there is a unique $\te_k\in[\frac{1}{2},1)$  such that 
+\[
+\nur \le \nul\quad \Longleftrightarrow \quad \te\ge \te_k.
+\]
 \end{lemma}
 \begin{proof}
 \end{proof}
 
 \begin{remark}
-ABOUT THE SIGN PATTERN OF THE MATRICES CORRESPONDING TO CORNER POINTS OF THE DIAGRAM
+The ``lower left corner point'' of each shaded region in Figure \ref{fig_variousk} corresponds to a pair $(\te,\nu)$  for which $\nur=\nul$. This means that the leftmost and the rightmost entries of the first row of $M(2k+1,\te,\nu)$ vanish simultaneously. For $k=1$, this happens for $\te=1/2$ and $\nu=4$, when
+\[
+M\left(3,\frac{1}{2},4\right)=\left(
+\begin{array}{ccc}
+ 0 & 1 & 0 \\
+ 0 & 0 & 1 \\
+ 1 & 0 & 0 \\
+\end{array}
+\right).
+\] 
 \end{remark}
 
 \begin{theorem}
+hence $M(2k+1,\te,\nu)\ge 0$ cannot hold for any $k\in\nplus$, $0<\te<1/2$ and $\nu>0$.\\ 
+
 DESCRIBING $M(2k+1,\te,\nu)\ge 0 $ FOR FIXED VALUES OF $\te$.
 DIFFERENT CASES TO MENTION:
 $\te=0$ (the explicit Euler method), $0<\te<1/2$, $\te=1/2$ (second order method), $1/2<\te<1$, $\te=1$ (the implicit Euler method). FINITELY MANY $k$ VALUES. FOR FIXED K: THETA SMALL then bounded in nu, theta larger, lower but not upper bounded in nu.
