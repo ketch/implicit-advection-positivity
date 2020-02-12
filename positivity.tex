@@ -457,7 +457,7 @@ M_{1,j}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad P_{j,k}(y)\ge 0\quad\
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.5\textwidth]{fig_excepttopleft.pdf}
-\caption{The typical behavior of the polynomials $P_{j,k}$ appearing in Corollary \ref{cor2} for $2\le j\le 2k+1$ and $k$ fixed: curves in shades of grey (or black) correspond to even $j$, while curves in shades of red (or orange) correspond to odd $j$ indices. Based on this figure, one can make the following observations. On the one hand, for each fixed and even $j$, $P_{j,k}$ is strictly increasing in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is in general not monotone in its even index $j$. On the other hand, for each fixed and odd $j$, $P_{j,k}$ is in general not monotone in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is strictly decreasing in its odd index $j$.}\label{fig_excepttopleft}
+\caption{The typical behavior of the polynomials $P_{j,k}$ appearing in Corollary \ref{cor2} for $2\le j\le 2k+1$ and $k$ fixed: curves in shades of gray (or black) correspond to even $j$, while curves in shades of red (or orange) correspond to odd $j$ indices. Based on this figure, one can make the following observations. On the one hand, for each fixed and even $j$, $P_{j,k}$ is strictly increasing in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is in general not monotone in its even index $j$. On the other hand, for each fixed and odd $j$, $P_{j,k}$ is in general not monotone in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is strictly decreasing in its odd index $j$.}\label{fig_excepttopleft}
 \end{center}
 \end{figure}
 The following lemma proves some of the observations about the polynomials $P_{j,k}$ suggested by Figure \ref{fig_excepttopleft} for even and odd indices $2\le j\le 2k+1$.
@@ -601,7 +601,7 @@ and similarly,
 The value $+\infty$ is introduced here for convenience so as to make our descriptions shorter.
 
 A reformulation of Corollary \ref{cor3} in terms of the variables $(\te,\nu)$ is given below.
-\begin{corollary}
+\begin{corollary}\label{cor4}
 For any $k\in\nplus$ and $\te\in(0,1]$ we have 
 \[
 M_{1,1}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad \nu\le\nul,
@@ -620,16 +620,16 @@ M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 1\le j\le 2k+1  \quad \Longleftrig
 (0,1)\ni y\mapsto\frac{2y}{1-y^2}\in(0,+\infty)\text{ is a strictly increasing bijection,}
 \end{equation}
 we get for fixed $k$ and $\te$ that $\Por\ge 0$ is equivalent to $\nu\ge\nur$, and
-$\Pol\ge 0$ is equivalent to $\nu\le\nul$. In particular, due to the definition of $\nul$ in\eqref{nuldef}, this last inequality means that there is no upper bound on $\nu$ for $\frac{2k}{2k+1}\le \te\le 1$.
+$\Pol\ge 0$ is equivalent to $\nu\le\nul$. In particular, due to the definition of $\nul$ in \eqref{nuldef}, this last inequality means that there is no upper bound on $\nu$ for $\frac{2k}{2k+1}\le \te\le 1$.
 \end{proof}
 Some growth rates, monotonicity and limit properties of $\nur$ and $\nul$---defined in \eqref{nurdef}-- \eqref{nuldef}---are collected below; 
 see also Figures \ref{fig_variousk} and \ref{fig_boundary}.
-\begin{corollary} (i) For any $k\in\nplus$ and $\te\in(0,1]$, we have $\nur<\nu_R(k+1,\theta)$, and
-\[
+\begin{corollary}\label{cor5} (i) For any $k\in\nplus$ and $\te\in(0,1]$, we have $\nur<\nu_R(k+1,\theta)$, and
+\begin{equation}\label{cor5lowerupper}
 \frac{2 \left(\sqrt{2}+1\right)^{\frac{1}{2 k-1}}}{\left(\sqrt{2}+1\right)^{\frac{2}{2
    k-1}}-1}\cdot\frac{1}{\te}<\nur<\frac{2 \left(\sqrt{2}-1\right)^{\frac{1}{2 k+1}}}{1-\left(\sqrt{2}-1\right)^{\frac{2}{2
    k+1}}}\cdot\frac{1}{\te}.
-\]
+\end{equation}
 The asymptotic series for these lower and upper bounds have the form
 \[
 \left( \frac{2}{\ln \left(\sqrt{2}+1\right)}k\mp\frac{1}{\ln \left(\sqrt{2}+1\right)}+ {\cal{O}}\left(\frac{1}{k}\right)\right)\cdot\frac{1}{\te},
@@ -640,17 +640,31 @@ $
 $
 In particular, $\lim_{k\to+\infty} \nur=+\infty$.\\
 (ii) For fixed $0<\te<\frac{2k}{2k+1}$, $\nul>\nu_L(k+1,\theta)$ (and $\nul =+\infty$ for $\frac{2k}{2k+1}\le\te\le 1$). Finally, for fixed $\te\in(0,1]$, we have the limit
-\[
+\begin{equation}\label{cor5klim}
 \lim_{k\to+\infty} \nul=\frac{1}{1-\theta }\sqrt{\frac{2-\theta }{\theta }},
-\]
+\end{equation}
 and, for fixed $k\in\nplus$, the one-sided limits  
-\[
+\begin{equation}\label{cor5thetalim}
 \lim_{\te\to 0+0} \nul=+\infty=\lim_{\te\to\frac{2k}{2k+1}-0} \nul.
-\]
+\end{equation}
 \end{corollary}
-\begin{proof} All these results 
-are, again, simple consequences of Lemmas  \ref{lem3} and \ref{lem4}, and \eqref{cor4bijection}. 
-For fixed $k\in\nplus$, evaluating the one-sided limit $\lim_{\te\to 0+0} \nul$ would be non-trivial, since in \eqref{nuldef} we have $\frac{2\yl}{1-\yl^2}\to 0$ (due to Lemma \ref{lem4}), while $\frac{1}{\te}\to+\infty$ ($\te\to0+0$).
+\begin{proof} (\textit{i}) The monotonicity of $\nur$ in $k$ for fixed $\te$ follows from the monotonicity of 
+$\yr$ in Lemma \ref{lem3} together \eqref{cor4bijection}, and inequality \eqref{cor5lowerupper} is 
+just \eqref{yrasympt} under the transformation \eqref{cor4bijection}.\\
+(\textit{ii}) We similarly obtain the monotonicity of $\nul$ in $k$ for fixed $\te$, and the limit \eqref{cor5klim} from Lemma \ref{lem4} via \eqref{cor4bijection}, by also noting that
+%\begin{equation}\label{cor5roots}
+\[
+\frac{2\sqrt{\frac{\te}{2-\te}}}{1-\left(\sqrt{\frac{\te}{2-\te}}\right)^2}\cdot \frac{1}{\te}=\frac{1}{1-\theta }\sqrt{\frac{2-\theta }{\theta }}.
+\]
+%\end{equation}
+As for the $\te\to\frac{2k}{2k+1}-0$ limit in \eqref{cor5thetalim}, we know from Lemma \ref{lem4} that $\yl\to 1$ (from below), and $\lim_{y\to 1-0}\frac{2y}{1-y^2}=+\infty$, hence $\nul\to+\infty$ when $\te\to\frac{2k}{2k+1}-0$.
+
+One needs to take care only when evaluating the $\te\to 0+0$ limit in \eqref{cor5thetalim} for fixed $k\in\nplus$,  since $\frac{2\yl}{1-\yl^2}\to 0$ and $\frac{1}{\te}\to+\infty$ in \eqref{nuldef} when $\te\to0+0$. But 
+the monotonicity of $\nul$ in $k$ for fixed $\te$, and \eqref{cor5klim} imply for any $k$ and $\te\in(0,1]$ that 
+\[
+\nul\ge\frac{1}{1-\theta }\sqrt{\frac{2-\theta }{\theta }},
+\]
+and the right-hand side tends to $+\infty$ as $\te\to 0+0$.
 \end{proof}
 
 \begin{figure}
@@ -665,34 +679,42 @@ For fixed $k\in\nplus$, evaluating the one-sided limit $\lim_{\te\to 0+0} \nul$ 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_boundary.pdf}
-\caption{A typical shaded region from Figure \ref{fig_variousk} for which $M(2k+1,\te,\nu)\ge 0$ (in this particular case, for $k=1$). The region is described by the inequalities $\nur\le\nu\le\nul$. The upper curve has a vertical asymptote at $\te=2k/(2k+1)$.}\label{fig_boundary}
+\caption{A typical shaded region in Figure \ref{fig_variousk} for which $M(2k+1,\te,\nu)\ge 0$; in this particular case, for $k=1$. The gray region is described by the inequalities $\nur\le\nu\le\nul$. The black dotted curve represents the function $\te\mapsto\nur$, while the red dashed curve is the function 
+$\te\mapsto\nul$, having a vertical asymptote at $\te=2k/(2k+1)$.}\label{fig_boundary}
 \end{center}
 \end{figure}
 
 
 
-
-
-
-
-
-The following result explains why the ``left half'' of Figure \ref{fig_variousk} is ``empty''.
-\begin{lemma}
-For any $k\in\nplus$ and $\te\in\left(0,\frac{1}{2}\right)$ we have 
+The following result explains why the ``left half'' of Figure \ref{fig_variousk} is ``empty'' (cf.~Corollary \ref{cor4})---the result is non-trivial, since for fixed $k$, $\lim_{\te\to 0+0} \nul=+\infty=\lim_{\te\to 0+0} \nur$ (cf.~Figure \ref{fig_boundary}).
+\begin{lemma}\label{lem5} For any $k\in\nplus$ there is a unique $\te_k\in[\frac{1}{2},1)$  such that 
+\[
+\nur = \nul\quad \Longleftrightarrow \quad \te= \te_k.
+\]
+This $\te_k$ also satisfies
+\[
+\nur < \nul\quad \Longleftrightarrow \quad \te> \te_k.
+\]
+Moreover, $\te_k$ is strictly increasing in $k$, and  $\te_1=\frac{1}{2}$. In particular, for any $k\in\nplus$ and $\te\in\left(0,\frac{1}{2}\right)$ we have 
 \[
  \nur>\nul.
 \] 
-Moreover, for any fixed $k\in\nplus$, there is a unique $\te_k\in[\frac{1}{2},1)$  such that 
+Finally, for $\te=\te_1=1/2$
 \[
-\nur \le \nul\quad \Longleftrightarrow \quad \te\ge \te_k.
+M\left(2k+1,\frac{1}{2},\nu\right)\ge 0\quad\Longleftrightarrow\quad k=1\text{ and } \nu=4.
 \]
 \end{lemma}
-\begin{proof}
+\begin{proof} For $k=1$ one explicitly computes that
+\[
+\nu_L(1,\theta)=\frac{2}{\sqrt{\theta  (2-3 \theta)}}\quad\text{ and }\quad\nu_R(1,\theta)=\frac{2}{\te},
+\]
+so $\nu_L(1,\theta)=\nu_R(1,\theta) \Longleftrightarrow \te=\te_1:=1/2$ and $\nu_L(1,\theta)>\nu_R(1,\theta) \Longleftrightarrow \te>\te_1$. INCOMPLETE
 \end{proof}
 
 \begin{remark}
-The ``lower left corner point'' of each shaded region in Figure \ref{fig_variousk} corresponds to a pair $(\te,\nu)$  for which $\nur=\nul$. This means that the leftmost and the rightmost entries of the first row of $M(2k+1,\te,\nu)$ vanish simultaneously. For $k=1$, this happens for $\te=1/2$ and $\nu=4$, when
-\[
+Thus, the ``lower left corner point'' of each shaded region in Figure \ref{fig_variousk} corresponds to a pair 
+$(\te,\nu)$  for which $\nu=\nur=\nul$. This means that here the leftmost and the rightmost entries of the first row of $M(2k+1,\te,\nu)$ simultaneously vanish. For $k=1$, this happens for $\te=\te_1=1/2$ and $\nu=4$, when
+\begin{equation}\label{rem10thetahalfmatrix}
 M\left(3,\frac{1}{2},4\right)=\left(
 \begin{array}{ccc}
  0 & 1 & 0 \\
@@ -700,17 +722,30 @@ M\left(3,\frac{1}{2},4\right)=\left(
  1 & 0 & 0 \\
 \end{array}
 \right).
-\] 
+\end{equation}
 \end{remark}
 
+The following theorem summarizes the results of this section in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. Recall that $\te=0$ and $\te=1$ correspond to the explicit and implicit Euler methods, respectively, and $\te=1/2$ corresponds to the only second-order method in the $\te$-family. In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
 \begin{theorem}
-hence $M(2k+1,\te,\nu)\ge 0$ cannot hold for any $k\in\nplus$, $0<\te<1/2$ and $\nu>0$.\\ 
-
-DESCRIBING $M(2k+1,\te,\nu)\ge 0 $ FOR FIXED VALUES OF $\te$.
-DIFFERENT CASES TO MENTION:
-$\te=0$ (the explicit Euler method), $0<\te<1/2$, $\te=1/2$ (second order method), $1/2<\te<1$, $\te=1$ (the implicit Euler method). FINITELY MANY $k$ VALUES. FOR FIXED K: THETA SMALL then bounded in nu, theta larger, lower but not upper bounded in nu.
+\begin{itemize}\ 
+\item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e., for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
+\item[$\bullet$] Let $\te=1/2$. Then
+\[
+M\left(2k+1,\frac{1}{2},\nu\right)\ge 0\quad\Longleftrightarrow\quad k=1\text{ and } \nu=4,
+\]
+see \eqref{rem10thetahalfmatrix}.
+\item[$\bullet$] Fix $1/2<\te<1$ arbitrarily. Then there are finitely many values of $k$ for which there exists $\nu>0$ with $M(2k+1,\te,\nu)\ge 0$. For any such value of $k$, the set of admissible values of $\nu$ has the form $\nur\le\nu\le\nul$, with suitable constants $0<\nur\le\nul\le+\infty$ (the possible case $\nul=+\infty$ means that there is no upper but only a lower bound on $\nu$); see also Corollary \ref{cor5}.
+\item[$\bullet$] Let $\te=1$. Then for each $k\in\nplus$ there is a constant $\nu_R(k,1)>0$ such that
+\[
+M(2k+1,1,\nu)\ge 0\quad\Longleftrightarrow\quad \nu\ge\nu_R(k,1).
+\]
+In addition, $\nu_R(k,1)<\nu_R(k+1,1)$ for any $k$, $\lim_{k\to+\infty} \nu_R(k,1)=+\infty$, and the two-sided estimates in \eqref{cor5lowerupper} with $\te=1$ hold.
+\end{itemize}
 \end{theorem}
+\begin{proof} The case $\te=0$ has been discussed at the beginning of Section \ref{explsect}.
+In general, for $\te\in\left(0,1\right]$, we know from Corollary \ref{cor4} that for any $k$ the set of $\nu$ values for which $M(2k+1,\te,\nu)\ge 0$ holds has the form $\nur\le\nu\le\nul$. Lemma \ref{lem5} covers the range $\te\in\left(0,\frac{1}{2}\right]$. For $\te\in\left(\frac{1}{2},1\right]$ INCOMPLETE
 
+\end{proof}
 
 
 
@@ -719,7 +754,7 @@ $\te=0$ (the explicit Euler method), $0<\te<1/2$, $\te=1/2$ (second order method
 
 \subsection{Structured non-negative inverse eigenvalue problems}
 
-Due to the fact that the eigenvalues of the matrix $M$ in \eqref{Mdef} are known, we can use some necessary conditions... Perron--Frobenius theorem, $\lambda_1$ non-negative real dominant root. 
+INCOMPLETE Due to the fact that the eigenvalues of the matrix $M$ in \eqref{Mdef} are known, we can use some necessary conditions... Perron--Frobenius theorem, $\lambda_1$ non-negative real dominant root. 
 It turns out that these general theorem restrict the parameter values. We give the following example.
 
 Let us consider the $\te=1$ case. ...
