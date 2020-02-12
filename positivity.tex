@@ -188,8 +188,12 @@ David's work here.
 
 \subsection{Some material for: Notation/Introduction}
 
+THE QUESTION BOILS DOWN TO: We study the non-negativity of a two-parameter family of circulant matrices of arbitrary size, where each entry is a (specific) rational function.\\
+
  Mention: enough to focus on the 1st row: the sum/product/inverse of circulant matrices is circulant [REFERENCE: Fact 5.16.7. in Berstein MATRIX MATHEMATICS]. Since $L$ and $I$ are circulant, the matrix $M$ is circulant, too.\\
+ 
 Financial support for LL: TKP project + KAUST\\
+
 We used Wolfram \textit{Mathematica} (version 11) for the computations in this work.
 
 
@@ -199,7 +203,7 @@ We used Wolfram \textit{Mathematica} (version 11) for the computations in this w
 
 $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$.\\
 
-$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
+%$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
 
 $\imath^2=-1$ 
 
@@ -688,9 +692,9 @@ $\te\mapsto\nul$, having a vertical asymptote at $\te=2k/(2k+1)$.}\label{fig_bou
 
 
 The following result explains why the ``left half'' of Figure \ref{fig_variousk} is ``empty'' (cf.~Corollary \ref{cor4})---the result is non-trivial, since for fixed $k$, $\lim_{\te\to 0+0} \nul=+\infty=\lim_{\te\to 0+0} \nur$ (cf.~Figure \ref{fig_boundary}).
-\begin{lemma}\label{lem5} For any $k\in\nplus$ there is a unique $\te_k\in[\frac{1}{2},1)$  such that 
+\begin{lemma}\label{lem5} For any $k\in\nplus$ there is a unique $\te_k\in\left[\frac{1}{2},\frac{2k}{2k+1}\right)$  such that 
 \[
-\nur = \nul\ \ \  (\text{for } \te\in(0,1))\quad \Longleftrightarrow \quad \te= \te_k.
+\nur = \nul\ \ \  (\text{for } \te\in(0,1])\quad \Longleftrightarrow \quad \te= \te_k.
 \]
 This $\te_k$ also satisfies
 \[
@@ -700,28 +704,58 @@ Moreover, the sequence $\te_k$ is strictly increasing in $k$, and  $\te_1=\frac{
 \[
  \nur>\nul.
 \] 
-Finally, for $\te=\te_1=1/2$
-\[
-M\left(2k+1,\frac{1}{2},\nu\right)\ge 0\quad\Longleftrightarrow\quad k=1\text{ and } \nu=4.
-\]
 \end{lemma}
-\begin{proof} Due to \eqref{nurdef}--\eqref{nuldef} and \eqref{cor4bijection}, we have for any $\te\in(0,1]$
-that
+\begin{proof} Let us fix $k$. Due to \eqref{nurdef}--\eqref{nuldef}, $\nur$ is finite but $\nul$ is infinite for any $\te\in\left[\frac{2k}{2k+1},1\right]$, so $\nur = \nul$ cannot hold. For $\te\in\left(0,\frac{2k}{2k+1}\right)$, by also using \eqref{cor4bijection}, we have 
 \[
-\nur = \nul\quad \Longleftrightarrow \frac{2\yr}{1-\yr^2}=
+\nur = \nul\quad \Longleftrightarrow \quad \frac{2\yr}{1-\yr^2}=\frac{2\yl}{1-\yl^2} \quad \Longleftrightarrow
+\quad \yr=\yl.
 \]
+Here $\yr$ is independent of $\te$, and $k$ is fixed, so by definitions \eqref{yrdef} and \eqref{yldef} this means that $\te$ must be chosen in a way such that $P_{L,k,\te}(\yr)=0$. By using the notation introduced in the proof of Lemma \ref{lem4}, this is equivalent to $\te=\Theta(\yr,k)=:\te_k$. Hence, if $\nur = \nul$ holds for some $\te\in(0,1]$, then $\te=\te_k\in\left(0,\frac{2k}{2k+1}\right)$. Now, by Lemma \ref{lem3}, we have $\yr<y_R(k+1)$, and $\Theta$ is strictly increasing in its first argument (see \eqref{Thetaincr}), so the sequence $\te_k$ is also strictly increasing. 
 
+The same monotonicity argument shows that $\nur < \nul$ holds for some $\te\in(0,1]$ if and only if $\te>\te_k$
+(see \eqref{lem4equi} and the characterization of  $P_{L,k,\te}>0$ in Lemma \ref{lem4}). 
 
+For $k=1$, one explicitly computes that
+\begin{equation}\label{nurl1thetaconcrete}
+\nu_R(1,\theta)=\frac{2}{\te}\quad\text{ and }\quad\nu_L(1,\theta)=\frac{2}{\sqrt{\theta  (2-3 \theta)}},
+\end{equation}
+so $\nu_R(1,\theta)=\nu_L(1,\theta) \Longleftrightarrow \te=\te_1=1/2$. Therefore, we have
+$\te_k\in\left(\frac{1}{2},\frac{2k}{2k+1}\right)$ for $k\ge 2$, also implying that for any $k\in\nplus$ and 
+$\te\in\left(0,\frac{1}{2}\right)$, we have $\nur>\nul$.
+\end{proof}
 
-
-
-
-
-For $k=1$ one explicitly computes that
+The following theorem summarizes the results of this section in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. Recall that $\te=0$ and $\te=1$ correspond to the explicit and implicit Euler methods, respectively, and $\te=1/2$ corresponds to the only second-order method in the $\te$-family. In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
+\begin{theorem}
+\begin{itemize}\ 
+\item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e., for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
+\item[$\bullet$] Let $\te=1/2$. Then
 \[
-\nu_L(1,\theta)=\frac{2}{\sqrt{\theta  (2-3 \theta)}}\quad\text{ and }\quad\nu_R(1,\theta)=\frac{2}{\te},
+M\left(2k+1,\frac{1}{2},\nu\right)\ge 0\quad\Longleftrightarrow\quad k=1\text{ and } \nu=4\quad\text{(see }\eqref{rem10thetahalfmatrix}\text{)}.
 \]
-so $\nu_L(1,\theta)=\nu_R(1,\theta) \Longleftrightarrow \te=\te_1:=1/2$ and $\nu_L(1,\theta)>\nu_R(1,\theta) \Longleftrightarrow \te>\te_1$. INCOMPLETE
+\item[$\bullet$] Fix $1/2<\te<1$ arbitrarily. Then there are finitely many values of $k$ for which there exists $\nu>0$ with $M(2k+1,\te,\nu)\ge 0$. For any such value of $k$, the set of admissible values of $\nu$ has the form $\nur\le\nu\le\nul$, with suitable constants $0<\nur\le\nul\le+\infty$ (the possible case $\nul=+\infty$ means that there is no upper but only a lower bound on $\nu$); see also Corollary \ref{cor5}.
+\item[$\bullet$] Let $\te=1$. Then for each $k\in\nplus$ there is a constant $\nu_R(k,1)>0$ such that
+\[
+M(2k+1,1,\nu)\ge 0\quad\Longleftrightarrow\quad \nu\ge\nu_R(k,1).
+\]
+In addition, $\nu_R(k,1)<\nu_R(k+1,1)$ for any $k$, $\lim_{k\to+\infty} \nu_R(k,1)=+\infty$, and the two-sided estimates in \eqref{cor5lowerupper} with $\te=1$ hold.
+\end{itemize}
+\end{theorem}
+\begin{proof} The case $\te=0$ has already been discussed at the beginning of Section \ref{explsect}.
+In general, for $\te\in\left(0,1\right]$, we know from Corollary \ref{cor4} that, for any $k$, the set of $\nu$ values for which $M(2k+1,\te,\nu)\ge 0$ holds has the form $\nur\le\nu\le\nul$. 
+
+The range $\te\in\left(0,\frac{1}{2}\right)$ is covered by Lemma \ref{lem5}. 
+
+For $\te=1/2$, \eqref{nurl1thetaconcrete} shows that for $k=1$ one has $\nu_R(1,1/2)=\nu_L(1,1/2)=4$. 
+But for any $k\ge 2$ we know (see Corollary \ref{cor5}) that
+\[
+\nu_L(k,1/2)<\nu_L(1,1/2)=\nu_R(1,1/2)<\nu_R(k,1/2),
+\]
+hence $\nu_R(k,1/2)\le\nu_L(k,1/2)$ cannot hold for any $k\ge 2$.
+
+For fixed $1/2<\te<1$, $\nul$ becomes finite for all sufficiently large $k$ (see \eqref{nuldef}). But according to Corollary \ref{cor5}, $\nul$ is decreasing in $k$ for $\te<\frac{2k}{2k+1}$, and 
+$\lim_{k\to+\infty} \nur=+\infty$, so the inequality $\nur\le\nul$ can hold only for finitely many values of $k$.
+
+Finally, for $\te=1$, $\nu_L(k,1)=+\infty$ and we can use Corollary \ref{cor5} (\textit{i}) with $\te=1$.
 \end{proof}
 
 \begin{remark}
@@ -737,36 +771,6 @@ M\left(3,\frac{1}{2},4\right)=\left(
 \right).
 \end{equation}
 \end{remark}
-
-The following theorem summarizes the results of this section in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. Recall that $\te=0$ and $\te=1$ correspond to the explicit and implicit Euler methods, respectively, and $\te=1/2$ corresponds to the only second-order method in the $\te$-family. In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
-\begin{theorem}
-\begin{itemize}\ 
-\item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e., for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
-\item[$\bullet$] Let $\te=1/2$. Then
-\[
-M\left(2k+1,\frac{1}{2},\nu\right)\ge 0\quad\Longleftrightarrow\quad k=1\text{ and } \nu=4,
-\]
-see \eqref{rem10thetahalfmatrix}.
-\item[$\bullet$] Fix $1/2<\te<1$ arbitrarily. Then there are finitely many values of $k$ for which there exists $\nu>0$ with $M(2k+1,\te,\nu)\ge 0$. For any such value of $k$, the set of admissible values of $\nu$ has the form $\nur\le\nu\le\nul$, with suitable constants $0<\nur\le\nul\le+\infty$ (the possible case $\nul=+\infty$ means that there is no upper but only a lower bound on $\nu$); see also Corollary \ref{cor5}.
-\item[$\bullet$] Let $\te=1$. Then for each $k\in\nplus$ there is a constant $\nu_R(k,1)>0$ such that
-\[
-M(2k+1,1,\nu)\ge 0\quad\Longleftrightarrow\quad \nu\ge\nu_R(k,1).
-\]
-In addition, $\nu_R(k,1)<\nu_R(k+1,1)$ for any $k$, $\lim_{k\to+\infty} \nu_R(k,1)=+\infty$, and the two-sided estimates in \eqref{cor5lowerupper} with $\te=1$ hold.
-\end{itemize}
-\end{theorem}
-\begin{proof} The case $\te=0$ has already been discussed at the beginning of Section \ref{explsect}.
-In general, for $\te\in\left(0,1\right]$, we know from Corollary \ref{cor4} that, for any $k$, the set of $\nu$ values for which $M(2k+1,\te,\nu)\ge 0$ holds has the form $\nur\le\nu\le\nul$. 
-
-The range $\te\in\left(0,\frac{1}{2}\right]$ is covered by Lemma \ref{lem5}. 
-
-For fixed $1/2<\te<1$, $\nul$ becomes finite for all sufficiently large $k$ (see \eqref{nuldef}). But according to Corollary \ref{cor5}, $\nul$ is decreasing in $k$ for $\te<\frac{2k}{2k+1}$, and 
-$\lim_{k\to+\infty} \nur=+\infty$, so the inequality $\nur\le\nul$ can hold only for finitely many values of $k$.
-
-Finally, for $\te=1$, $\nu_L(k,1)=+\infty$ and we can use Corollary \ref{cor5} (\textit{i}) with $\te=1$.
-\end{proof}
-
-
 
 
 
