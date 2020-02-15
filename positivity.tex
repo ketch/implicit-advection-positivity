@@ -48,58 +48,101 @@
 \maketitle
 
 \section{Background and motivation}
-Here we investigate the positivity of some discretizations of the advection equation
-\begin{align} \label{advection}
-U_t = a U_x.
+In this work we investigate the positivity of some discretizations of the advection equation
+\begin{subequations} \label{advection}
+\begin{align}
+U_t & = a U_x \\
+U(x,t=0) & = U_0.
 \end{align}
-The advection equation is a fundamental PDE, and herein we focus on
-some of the simplest and most fundamental discretizations of it.
+\end{subequations}
+The exact solution of the Cauchy problem \eqref{advection}, given by $U(x,t) =
+U_0(x+at)$, is positivity preserving; i.e.
+\begin{align} \label{implies-positivity}
+U(x,0) \ge 0 \implies U(x,t) \ge 0.
+\end{align}
+This property also holds on a finite domain with periodic boundary
+conditions, which will be the setting for this work.
 
-Any linear one-step discretization of a time-dependent PDE in one spatial
-dimention with $m$ grid points in space yields an approximate solution given by
-an iteration of the form
-where $M$ is a fixed $m\times m$ matrix.
-
-
-\subsection{Discrete Fourier analysis}
-Any finite difference semi-discretization of \eqref{advection} with
-periodic boundary conditions yields a system of ODEs
+Any finite difference semi-discretization of \eqref{advection} yields a system of ODEs
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t)
 \end{align}
-where $L$ is a circulant matrix, which has the eigendecomposition
+where $L$ is a Toeplitz matrix.  It is natural to use an upwdind spatial discretization
+\begin{align}
+    L_{i,i} & = -1 \ \ \ L_{i,i+1} =  1.
+\end{align}
+The exact solution of \eqref{semi-discrete} is also then positivity
+preserving, and a corresponding full discretization will be positive
+under an appropriate step size restriction
+if the forward Euler method or any strong stability preserving
+method is used in time.  A more accurate spatial discretization is
+obtained with the centered difference
+\begin{align} \label{centered-difference}
+    L_{i,i-1} & = -1/2 \ \ \ L_{i,i+1} =  1/2.
+\end{align}
+However, this semi-discretization is not positivity preserving (proof?).
+This implies that any consistent full discretization based on \eqref{centered-difference}
+must fail to preserve positivity under sufficiently small step sizes.
+Indeed, a full discretization based on the \eqref{centered-difference}
+and forward Euler in time is not positivity preserving for any step size.
+
+On the other hand, using \eqref{centered-difference} with backward
+Euler time integration, one generally observes positivity preservation
+under large step sizes.  To investigate the differences between the behavior
+of the forward and backward Euler methods, we will study the class of
+$\theta$-methods, which include both Euler methods as limiting cases:
+\begin{align}
+    u^{n+1} = u^n + \frac{a\dt}{\dx}((1-\theta)Lu^n + \theta Lu^{n+1}).
+\end{align}
+%Thus our main focus is on a discretization of \eqref{advection} that is
+%centered in space and backward in time.  For various reasons, this
+%is not a method that is recommended in practice, but it is an application
+%of some of the most fundamental discretizations to one of the most fundamental
+%partial differential equations (PDEs), so its behavior seems to be of
+%independent interest.
+
+%Any linear one-step discretization of a time-dependent PDE in one spatial
+%dimension with $m$ grid points in space yields an approximate solution given by
+%an iteration of the form
+%where $M$ is a fixed $m\times m$ matrix.
+
+
+\subsection{Discrete Fourier analysis}
+From here on, we consider the problem \eqref{advection} on the domain $x\in[0,1]$
+with periodic boundary condition: $U(0,t)=U(1,t)$.  Finite difference discretization
+in space leads to \eqref{semi-discrete}, where $L$ is a circulant matrix
+which has the eigendecomposition
 \begin{align}
     L & = F \Lambda F^*
 \end{align}
 where the (unitary) matrix of eigenvectors has entries
 \begin{align}
-    f_{jk} & = \exp(i \xi_k (j-1))/\sqrt{m}  & 1 \le j, k \le m
+    f_{jk} & = \exp(\imath \xi_k (j-1))/\sqrt{m}  & 1 \le j, k \le m
 \end{align}
 and $\Lambda$ is the diagonal matrix of eigenvalues, which depends on the
-particular finite difference method chosen.  Here $\xi_k$ are the
-$m$th roots of unity:
+particular finite difference method chosen.  Here $\xi_k$ are evenly
+spaced angles such that $\exp(\imath\xi_k)$ are the $m$th roots of unity:
 \begin{align}
     \xi_k & = \frac{2\pi(k-1)}{m} & 1 \le k \le m.
 \end{align}
-
 Applying a one-step time
 discretization with stability function $R(z)$ to \eqref{semi-discrete} leads to
 the iteration
 \begin{align} \label{M}
     u^{n+1} & = R(\nu L) u^n = Mu^n
 \end{align}
-where $M=F^* R(\nu \Lambda) F$ and $\nu=a\dt/\dx$ is the CFL number.  The
+where $M=F R(\nu \Lambda) F^*$ and $\nu=a\dt/\dx$ is the CFL number.  The
 necessary and sufficient condition for positive invariance of the numerical
 solution is then simply that every entry of $M$ be nonnegative.
-
-Note that $M$ is also a real, circulant matrix.
+Products and inverses of circulant matrices are also circulant, so
+$M$ is also a real, circulant matrix.
 Thus it is defined completely by the entries of its first row, which
 are given by
 \begin{align} \label{M-entries}
     M_{1,j} & = \frac{1}{m} \sum_{k=1}^m R(\nu\lambda_k) \exp(-i(j-1)\xi_k).
 \end{align}
 
-\section{Backward in time, centered in space}
+\subsection{Centered in space, $\theta$ method in time}
 Consider the case of a 3-point centered difference in space:
 \begin{align}
     U_x|_{x=x_j} \approx \frac{u_{j+1}-u_{j-1}}{2\dx}
@@ -111,45 +154,45 @@ positive initial condition) any consistent time discretization will yield
 negative values for small enough time steps.  Here we investigate whether
 it is possible to ensure positive invariance for large time steps.
 
-Let us consider first the backward Euler method.
-The eigenvalues for this semi-discretization are $\lambda_j = i\sin\xi_j$.
-If we use the backward Euler method in time, we have $R(z) = (1-z)^{-1}$, so
-\eqref{M-entries} gives the entries of $M$ as
-\begin{align} \label{firstrow}
-    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{\exp\left(-i(j-1)\xi_k\right)}{1-\nu i \sin\xi_k}.
-\end{align}
-If $m$ is even, then these entries cannot all be positive.
+%Let us consider first the backward Euler method.
+%The eigenvalues for this semi-discretization are $\lambda_j = \imath\sin\xi_j$.
+%If we use the backward Euler method in time, we have $R(z) = (1-z)^{-1}$, so
+%\eqref{M-entries} gives the entries of $M$ as
+%\begin{align} \label{firstrow}
+%    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m \frac{\exp\left(-i(j-1)\xi_k\right)}{1-\nu i \sin\xi_k}.
+%\end{align}
+%If $m$ is even, then these entries cannot all be positive.
+%
+%\begin{lemma}
+%    If $m$ is even, then $M_{1,m} < 0$.
+%\end{lemma}
+%\begin{proof}
+%    From \eqref{firstrow} we have
+%    \begin{align}  \label{M12}
+%        M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(-i(m-1)\xi_k)}{1-\nu i \sin\xi_k}
+%                  = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(i\xi_k)}{1-\nu i \sin\xi_k}
+%                  = \frac{1}{m} \sum_{k=1}^m \frac{\cos \xi_k - \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k}.
+%    \end{align}
+%    The expression on the right is obtained by multiplying by the complex
+%    conjugate of the denominator and taking the real part (since $M$ is a real matrix).
+%    Due to symmetry, when $m$ is even,
+%    \begin{align*}
+%        \sum_{k=1}^m \frac{\cos \xi_k}{1+\nu^2\sin^2\xi_k}  = \sum_{k=1}^{m/2} \frac{\cos \xi_k + \cos(\xi_k+\pi)}{1+\nu^2\sin^2\xi_k} = 0.
+%    \end{align*}
+%    Thus 
+%    \begin{align*} 
+%        M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{- \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k} < 0.
+%    \end{align*}
+%\end{proof}
+%Using similar expressions, it can in fact be shown that, for $m$ even, we have
+%$M_{1,2j}<0$ for $1\le j \le m/4$; in other words, approximately one fourth of
+%the entries of $M$ are negative, no matter the value of $\nu$.  All of these
+%negative entries tend to zero as $\nu \to \infty$.
+%
+%Meanwhile, if $m$ is odd...
 
-\begin{lemma}
-    If $m$ is even, then $M_{1,m} < 0$.
-\end{lemma}
-\begin{proof}
-    From \eqref{firstrow} we have
-    \begin{align}  \label{M12}
-        M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(-i(m-1)\xi_k)}{1-\nu i \sin\xi_k}
-                  = \frac{1}{m} \sum_{k=1}^m \frac{ \exp(i\xi_k)}{1-\nu i \sin\xi_k}
-                  = \frac{1}{m} \sum_{k=1}^m \frac{\cos \xi_k - \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k}.
-    \end{align}
-    The expression on the right is obtained by multiplying by the complex
-    conjugate of the denominator and taking the real part (since $M$ is a real matrix).
-    Due to symmetry, when $m$ is even,
-    \begin{align*}
-        \sum_{k=1}^m \frac{\cos \xi_k}{1+\nu^2\sin^2\xi_k}  = \sum_{k=1}^{m/2} \frac{\cos \xi_k + \cos(\xi_k+\pi)}{1+\nu^2\sin^2\xi_k} = 0.
-    \end{align*}
-    Thus 
-    \begin{align*} 
-        M_{1,m} & = \frac{1}{m} \sum_{k=1}^m \frac{- \nu \sin^2 \xi_k}{1+\nu^2 \sin^2 \xi_k} < 0.
-    \end{align*}
-\end{proof}
-Using similar expressions, it can in fact be shown that, for $m$ even, we have
-$M_{1,2j}<0$ for $1\le j \le m/4$; in other words, approximately one fourth of
-the entries of $M$ are negative, no matter the value of $\nu$.  All of these
-negative entries tend to zero as $\nu \to \infty$.
 
-Meanwhile, if $m$ is odd...
-
-
-In what follows we assume $m\ge 3$. Next we generalize the above results to the theta method.  In this case we have
+In what follows we assume $m\ge 3$. For the $\theta$ method we have
 \begin{align}
     R(z) & = \frac{1+(1-\theta)z}{1-\theta z}
 \end{align}
@@ -157,14 +200,42 @@ so with the centered difference in space we get for $1\le j\le m$ that
 \begin{align} \label{firstrow-theta}
     M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu \sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right).
 \end{align}
-This leads to
+This leads to the following expressions for the first and last entries of the first
+row of $M$:
 \begin{align*} 
+    M_{11} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)} \\
     M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos(\xi_\ell)- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
 \end{align*}
+Consider the expression for $M_{1,m}$.
 For even $m=2k\ge 4$, the sum over the first term in the numerator vanishes due to symmetry and we have
 \begin{align*}
     M_{1,2k} & =  \frac{1}{2k} \sum_{\ell=1}^{2k} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
 \end{align*}
+Thus this method cannot preserve positivity when $m$ is even, regardless of the values
+of $\nu$ and $\theta$.
+
+Let us now consider the case of odd $m$.  Writing
+\begin{align*} 
+    M_{11} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
+    M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^m \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos((j-1)\xi_\ell)- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin((j-1)\xi_\ell)\sin(\xi_\ell)}\right) & j>1,
+\end{align*}
+and taking $\nu \to \infty$ with $m$ fixed, we find that
+\begin{align*} 
+    M_{11}^\infty := \lim_{\nu \to \infty} M_{11} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  \frac{1}{m} \left(1 - (m-1) \frac{1-\theta}{\theta}\right)\\
+    M_{1j}^\infty := \lim_{\nu \to \infty} M_{1,m} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta}.
+\end{align*}
+We see that $M_{1j}^\infty\ge0$ for all $j>1$, while $M_{11}^\infty\ge0$ if and only if $\theta\ge m/(m-1)$.
+We have proved the following.
+
+\begin{theorem}
+Consider the advection equation with periodic boundary conditions discretized using centered
+differences in space and the $\theta$ method in time with $m$ spatial grid points.  
+The discretization takes the form \eqref{M},
+where (i) if $m$ is even, then $M$ has at least one negative entry;
+(ii) if $m$ is odd and $\theta\ge m/(m-1)$, then for large enough $\dt$ all entries of $M$ are nonnegative.
+\end{theorem}
+
+
 \begin{remark}
 By using \eqref{firstrow-theta} and similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
 \[
@@ -173,18 +244,6 @@ M_{1,2}=-M_{1,2k},
 from which one can also easily deduce that $M\ge 0$ is impossible for $\nu>0$ and $\te\in[0,1]$.
 \end{remark}
 
-\begin{theorem}
-Consider the backward in time, centered in space discretization of the
-advection equation with periodic boundary conditions and $m$ spatial grid
-points.  The discretization takes the form \eqref{M},
-where (i) if $m$ is even, then $M$ has at least one negative entry;
-(ii) if $m$ is odd, then for $\dt>\dt_*$ all entries of $M$ are nonnegative.
-
-(add details about $\dt_*$)
-\end{theorem}
-
-\subsection{Discrete Fourier analysis}
-David's work here.
 
 \subsection{Some material for: Notation/Introduction}
 
