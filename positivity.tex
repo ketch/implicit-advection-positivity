@@ -67,7 +67,7 @@ Any finite difference semi-discretization of \eqref{advection} yields a system o
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t)
 \end{align}
-where $L$ is a Toeplitz matrix.  It is natural to use an upwdind spatial discretization
+where $L$ is a Toeplitz matrix.  It is natural to use an upwind spatial discretization
 \begin{align}
     L_{i,i} & = -1 \ \ \ L_{i,i+1} =  1.
 \end{align}
@@ -89,11 +89,12 @@ and forward Euler in time is not positivity preserving for any step size.
 On the other hand, using \eqref{centered-difference} with backward
 Euler time integration, one generally observes positivity preservation
 under large step sizes.  To investigate the differences between the behavior
-of the forward and backward Euler methods, we will study the class of
-$\theta$-methods, which include both Euler methods as limiting cases:
+of the forward and backward Euler methods, we will study the one-parameter family of
+$\theta$-methods for $0\le\te\le1$, which include both Euler methods as limiting cases:
 \begin{align}
     u^{n+1} = u^n + \frac{a\dt}{\dx}((1-\theta)Lu^n + \theta Lu^{n+1}).
 \end{align}
+Recall that $\te=0$ and $\te=1$ correspond to the forward (or explicit) and backward (or implicit) Euler methods, respectively, and $\te=1/2$ yields the only second-order method in the $\te$-family. 
 %Thus our main focus is on a discretization of \eqref{advection} that is
 %centered in space and backward in time.  For various reasons, this
 %is not a method that is recommended in practice, but it is an application
@@ -113,17 +114,17 @@ with periodic boundary condition: $U(0,t)=U(1,t)$.  Finite difference discretiza
 in space leads to \eqref{semi-discrete}, where $L$ is a circulant matrix
 which has the eigendecomposition
 \begin{align}
-    L & = F \Lambda F^*
+    L & = F \Lambda F^*,
 \end{align}
 where the (unitary) matrix of eigenvectors has entries
 \begin{align}
-    f_{jk} & = \exp(\imath \xi_k (j-1))/\sqrt{m}  & 1 \le j, k \le m
+    f_{j,\ell} & = \exp(\imath \xi_\ell (j-1))/\sqrt{m}  & 1 \le j, \ell \le m
 \end{align}
-and $\Lambda$ is the diagonal matrix of eigenvalues, which depends on the
-particular finite difference method chosen.  Here $\xi_k$ are evenly
-spaced angles such that $\exp(\imath\xi_k)$ are the $m$th roots of unity:
+and $\Lambda$ is the diagonal matrix of eigenvalues $\lambda_\ell$, which depends on the
+particular finite difference method chosen.  Here $\xi_\ell$ are evenly
+spaced angles such that $\exp(\imath\xi_\ell)$ are the $m$th roots of unity:
 \begin{align}
-    \xi_k & = \frac{2\pi(k-1)}{m} & 1 \le k \le m.
+    \xi_\ell & = \frac{2\pi(\ell-1)}{m} & 1 \le \ell \le m.
 \end{align}
 Applying a one-step time
 discretization with stability function $R(z)$ to \eqref{semi-discrete} leads to
@@ -139,7 +140,7 @@ $M$ is also a real, circulant matrix.
 Thus it is defined completely by the entries of its first row, which
 are given by
 \begin{align} \label{M-entries}
-    M_{1,j} & = \frac{1}{m} \sum_{k=1}^m R(\nu\lambda_k) \exp(-i(j-1)\xi_k).
+    M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m R(\nu\lambda_\ell) \exp(-i(j-1)\xi_\ell).
 \end{align}
 
 \subsection{Centered in space, $\theta$ method in time}
@@ -192,18 +193,18 @@ it is possible to ensure positive invariance for large time steps.
 %Meanwhile, if $m$ is odd...
 
 
-In what follows we assume $m\ge 3$. For the $\theta$ method we have
+In what follows we assume $m\ge 3$. For the $\theta$-method we have
 \begin{align}
-    R(z) & = \frac{1+(1-\theta)z}{1-\theta z}
+    R(z) & := \frac{1+(1-\theta)z}{1-\theta z}
 \end{align}
-so with the centered difference in space we get for $1\le j\le m$ that
+so with the centered difference in space we get from \eqref{M-entries} for $1\le j\le m$ that
 \begin{align} \label{firstrow-theta}
     M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu \sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right).
 \end{align}
 This leads to the following expressions for the first and last entries of the first
 row of $M$:
 \begin{align*} 
-    M_{11} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)} \\
+    M_{1,1} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)} \\
     M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos(\xi_\ell)- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
 \end{align*}
 Consider the expression for $M_{1,m}$.
@@ -216,15 +217,15 @@ of $\nu$ and $\theta$.
 
 Let us now consider the case of odd $m$.  Writing
 \begin{align*} 
-    M_{11} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
+    M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
     M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^m \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos((j-1)\xi_\ell)- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin((j-1)\xi_\ell)\sin(\xi_\ell)}\right) & j>1,
 \end{align*}
 and taking $\nu \to \infty$ with $m$ fixed, we find that
 \begin{align*} 
-    M_{11}^\infty := \lim_{\nu \to \infty} M_{11} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  \frac{1}{m} \left(1 - (m-1) \frac{1-\theta}{\theta}\right)\\
-    M_{1j}^\infty := \lim_{\nu \to \infty} M_{1,m} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta}.
+    M_{1,1}^\infty := \lim_{\nu \to \infty} M_{11} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  \frac{1}{m} \left(1 - (m-1) \frac{1-\theta}{\theta}\right)\\
+    M_{1,j}^\infty := \lim_{\nu \to \infty} M_{1,m} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta}.
 \end{align*}
-We see that $M_{1j}^\infty\ge0$ for all $j>1$, while $M_{11}^\infty\ge0$ if and only if $\theta\ge m/(m-1)$.
+We see that $M_{1,j}^\infty\ge0$ for all $j>1$, while $M_{1,1}^\infty\ge0$ if and only if $\theta\ge m/(m-1)$.
 We have proved the following.
 
 \begin{theorem}
@@ -246,6 +247,10 @@ from which one can also easily deduce that $M\ge 0$ is impossible for $\nu>0$ an
 
 
 \subsection{Some material for: Notation/Introduction}
+
+Here we assume that $a>0$ is a positive constant.\\
+
+Relation to SSP analysis?\\
 
 THE QUESTION BOILS DOWN TO: We study the non-negativity of a two-parameter family of circulant matrices of arbitrary size, where each entry is a (specific) rational function.\\
 
@@ -783,7 +788,7 @@ $\te_k\in\left(\frac{1}{2},\frac{2k}{2k+1}\right)$ for $k\ge 2$, also implying t
 $\te\in\left(0,\frac{1}{2}\right)$, we have $\nur>\nul$.
 \end{proof}
 
-The following theorem summarizes the results of this section in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. Recall that $\te=0$ and $\te=1$ correspond to the explicit and implicit Euler methods, respectively, and $\te=1/2$ corresponds to the only second-order method in the $\te$-family. In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
+The following theorem summarizes the results of this section in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
 \begin{theorem}
 \begin{itemize}\ 
 \item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e., for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
