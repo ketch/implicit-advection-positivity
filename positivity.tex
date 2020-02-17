@@ -35,66 +35,93 @@
 \newcommand{\Pol}{P_{L,k,\te}(y)}
 \newcommand{\cP}{{\cal{P}}}
 \newcommand{\cD}{{\cal{D}}}
+\newcommand{\cF}{{\cal{F}}}
 
 
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
 
 
 
 
 \title{Positivity of implicit discretizations of the advection equation}
-\author{Yiannis Hadjimichael \and David I. Ketcheson \and Lajos L\'oczi}
+\author{Yiannis Hadjimichael\thanks{\texttt{@} }\and David I. Ketcheson\thanks{\texttt{@kaust.edu.sa}}\and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. Project no.~ED\_18-1-2019-0030 (Application-specific highly reliable IT solutions) has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme funding scheme.}}
 
 \begin{document}
 \maketitle
+\begin{abstract}
+In this work we analyze---from the viewpoint of positivity preservation---certain discretizations of a fundamental partial differential equation, the one-dimensional advection equation with periodic boundary condition. The full discretization is obtained by coupling a second-order centered difference scheme in space with an arbitrary $\te$-method in time (including the forward and backward Euler methods, and a second-order method by choosing $\te\in [0,1]$ suitably). The full discretization yields a two-parameter family of circulant matrices $M\in\mathbb{R}^{m\times m}$, 
+where $m$ is the number of spatial grid points, and each matrix entry is a rational function in $\te$ and $\nu$. Here $\nu>0$ denotes the CFL number, being proportional to the ratio between the temporal and spatial discretization step sizes. The entrywise non-negativity of the matrix $M$---which is equivalent to the positivity preservation of the full discretization scheme---is investigated via discrete Fourier analysis and some low-order linear recursions. We get that positivity preservation is impossible for even values of $m$, but the case $m=2k+1$ is more subtle. It turns out, surprisingly, that positivity preservation is recovered for odd values of $m$ provided that $\te\ge 1/2$ and $\nu$ is bounded by two positive constants (the upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and $\nu$ governing non-negativity of the matrix $M$ is explicitly described in terms of roots of certain sparse polynomials.
+\end{abstract}
+\blfootnote{This work was supported by the King Abdullah University of Science and Technology (KAUST), 4700Thuwal, 23955-6900, Saudi Arabia.}
 
 \section{Background and motivation}
 In this work we investigate the positivity of some discretizations of the advection equation
 \begin{subequations} \label{advection}
 \begin{align}
-U_t & = a U_x \\
-U(x,t=0) & = U_0.
+U_t (x,t)& = a U_x(x,t) \\
+U(x,0) & = U_0(x),
 \end{align}
 \end{subequations}
+where $U:\mathbb{R}\times [0,+\infty)\to\mathbb{R}$ is the unknown function, $U_0:\mathbb{R}\to\mathbb{R}$ is a given differentiable initial function, and $a>0$ is a constant. LL:  \boxed{\text{WHAT IF}} $a<0$?
 The exact solution of the Cauchy problem \eqref{advection}, given by $U(x,t) =
-U_0(x+at)$, is positivity preserving; i.e.
+U_0(x+a t)$, is positivity preserving; i.e.
 \begin{align} \label{implies-positivity}
-U(x,0) \ge 0 \implies U(x,t) \ge 0.
+U_0(x) \ge 0 \implies U(x,t) \ge 0.
 \end{align}
 This property also holds on a finite domain with periodic boundary
-conditions, which will be the setting for this work.
+condition, which will be the setting for this work. 
+\begin{remark}
+Following the usual terminology, the term {\emph{positivity}} in the context of {positivity preservation} is always meant in the weak sense; i.e.~it means {\emph{non-negativity}}. 
+\end{remark}
+
 
 Any finite difference semi-discretization of \eqref{advection} yields a system of ODEs
 \begin{align} \label{semi-discrete}
-    u'(t) & = \frac{a}{\dx}Lu(t)
+    u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
-where $L$ is a Toeplitz matrix.  It is natural to use an upwind spatial discretization
+where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a Toeplitz matrix \cite[Section 3.1]{matmat}, and $\dx>0$ denotes the spatial discretization step size.  
+If one uses an upwind spatial discretization
 \begin{align}
-    L_{i,i} & = -1 \ \ \ L_{i,i+1} =  1.
+    L_{i,i} & = -1,\quad\quad L_{i,i+1} =  1,
 \end{align}
-The exact solution of \eqref{semi-discrete} is also then positivity
-preserving, and a corresponding full discretization will be positive
-under an appropriate step size restriction
-if the forward Euler method or any strong stability preserving
-method is used in time.  A more accurate spatial discretization is
+then the exact solution of \eqref{semi-discrete} is also positivity
+preserving. Moreover, a corresponding full discretization will be positivity preserving too,
+under an appropriate time step size restriction $0<\dt\le\dt_0$
+if the forward (explicit) Euler method or any strong stability preserving
+method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.  
+
+Since the upwind discretization is only of order one, it is natural to use a more accurate spatial discretization. A second-order scheme is
 obtained with the centered difference
 \begin{align} \label{centered-difference}
-    L_{i,i-1} & = -1/2 \ \ \ L_{i,i+1} =  1/2.
+    L_{i,i-1} & = -\frac{1}{2},\quad\quad L_{i,i+1} =  \frac{1}{2}.
 \end{align}
-However, this semi-discretization is not positivity preserving (proof?).
+However, this semi-discretization is not positivity preserving (proof? LL: CHECK HERE \cite{hundsdorferverwer}).
 This implies that any consistent full discretization based on \eqref{centered-difference}
-must fail to preserve positivity under sufficiently small step sizes.
+must fail to preserve positivity under sufficiently small step sizes $\dt>0$.
 Indeed, a full discretization based on the \eqref{centered-difference}
 and forward Euler in time is not positivity preserving for any step size.
 
-On the other hand, using \eqref{centered-difference} with backward
+On the other hand, using \eqref{centered-difference} with backward (implicit) 
 Euler time integration, one generally observes positivity preservation
-under large step sizes.  To investigate the differences between the behavior
-of the forward and backward Euler methods, we will study the one-parameter family of
-$\theta$-methods for $0\le\te\le1$, which include both Euler methods as limiting cases:
-\begin{align}
+under \emph{large} step sizes.  To investigate the differences between the behavior
+of the forward and backward Euler methods, we will study the $\theta$-method \cite[Chapter IV.3]{hairerwanner}
+\begin{align}\label{firsttheta}
     u^{n+1} = u^n + \frac{a\dt}{\dx}((1-\theta)Lu^n + \theta Lu^{n+1}).
 \end{align}
-Recall that $\te=0$ and $\te=1$ correspond to the forward (or explicit) and backward (or implicit) Euler methods, respectively, and $\te=1/2$ yields the only second-order method in the $\te$-family. 
+For $\te\in[0,1]$, this family of time integrators includes both Euler methods as limiting cases: the forward Euler method for $\te=0$, the backward 
+ Euler method for $\te=1$, and the only second-order $\te$-method for $\te=1/2$. 
+
+
+
+
+
+
+
 %Thus our main focus is on a discretization of \eqref{advection} that is
 %centered in space and backward in time.  For various reasons, this
 %is not a method that is recommended in practice, but it is an application
@@ -107,49 +134,103 @@ Recall that $\te=0$ and $\te=1$ correspond to the forward (or explicit) and back
 %an iteration of the form
 %where $M$ is a fixed $m\times m$ matrix.
 
+\subsection{Structure of the paper and main results}
+In Section \ref{sectiondiscFourier} ... In Section \ref{sectioncentered} ... In Section \ref{SNIEP}
 
-\subsection{Discrete Fourier analysis}
+In Section \ref{explsect} ... When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
+The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well.  
+
+Finally, ...
+
+The computations in this work has been carried out by using Wolfram \textit{Mathematica} version 11.
+
+
+\subsection{Notation}
+Throughout the paper, the set of positive integers is denoted by $\nplus$, and the complex imaginary unit is $\imath$. 
+The symbol $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$ of the matrix $M\in\mathbb{R}^{m\times m}$.
+Finally, as is customary in the context of space-time discretizations of partial differential equations, superscripts of $u$, e.g.~in \eqref{firsttheta}, are not exponents but denote time discretization steps.  
+
+...where $I\in\rr^{m\times m}$ is the identity matrix.  To emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
+
+
+
+%$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
+
+
+\subsection{Some useful sentences/expressions to copy/TODOs}
+SENTENCES FROM \cite{posconv}----------------------------------------
+In this work we do not deal with the influence of boundary conditions, so for simplicitywe consider periodic boundaries.\\
+
+SENTENCES FROM \cite{posconv}----------------------------------------
+We focus on the application of this technique to the initial-boundary-value problem givenby the hyperbolic conservation law below, together with positive initial and boundary data.A common approach to solving hyperbolic conservation laws numerically is to discretize inspace with a slope or flux limiter, and in time with an explicit Runge--Kutta (explicit RK,or ERK) method. It is natural to ask whether the positivity property is retained under thisdiscretization. This question is usually analyzed by using Harten's theoremto show positivity under explicit Euler integration, and then applying a higher-order strongstability preserving (SSP) method in time .... This can be thought of as a method-of-linespositivity analysis, in which the spatial and temporal discretizations are analyzed separately.In the present work, we perform a direct positivity analysis of fully discretized schemes,obtaining stronger results than what can be achieved by considering only Harten's theoremand SSP methods. These results provide a theoretical basis for some empirical observations in..., wherein various Runge--Kutta integrators preserved strong stability properties understep sizes much larger than those suggested by the existing theory.--------------------------------------------------------------------------------\\
+
+
+
+
+
+\section{Discrete Fourier analysis}\label{sectiondiscFourier}
+WE NEED TO SPECIFY EXACTLY IN WHICH WAY WE SUBDIVIDE $[0,1]$ BY $m$ DISCRETIZATION POINTS.\\
+
 From here on, we consider the problem \eqref{advection} on the domain $x\in[0,1]$
-with periodic boundary condition: $U(0,t)=U(1,t)$.  Finite difference discretization
-in space leads to \eqref{semi-discrete}, where $L$ is a circulant matrix
+with periodic boundary condition $U(0,t)=U(1,t)$.  Finite difference discretization
+in space leads to \eqref{semi-discrete}, where $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}
 which has the eigendecomposition
 \begin{align}
-    L & = F \Lambda F^*,
+    L & = \cF \Lambda \cF^*,
 \end{align}
-where the (unitary) matrix of eigenvectors has entries
+where the (unitary) matrix of eigenvectors $\cF$ has entries
 \begin{align}
-    f_{j,\ell} & = \exp(\imath \xi_\ell (j-1))/\sqrt{m}  & 1 \le j, \ell \le m
+    f_{j,\ell} & := \frac{1}{\sqrt{m}}\exp(\imath  (j-1) \xi_\ell)  & 1 \le j, \ell \le m,
 \end{align}
 and $\Lambda$ is the diagonal matrix of eigenvalues $\lambda_\ell$, which depends on the
 particular finite difference method chosen.  Here $\xi_\ell$ are evenly
 spaced angles such that $\exp(\imath\xi_\ell)$ are the $m$th roots of unity:
 \begin{align}
-    \xi_\ell & = \frac{2\pi(\ell-1)}{m} & 1 \le \ell \le m.
+    \xi_\ell & := \frac{2\pi(\ell-1)}{m} & 1 \le \ell \le m.
 \end{align}
 Applying a one-step time
-discretization with stability function $R(z)$ to \eqref{semi-discrete} leads to
+discretization with stability function $R:\mathbb{C}\to\mathbb{C}$ to \eqref{semi-discrete} leads to
 the iteration
 \begin{align} \label{M}
-    u^{n+1} & = R(\nu L) u^n = Mu^n
+    u^{n+1} & = M u^n,
 \end{align}
-where $M=F R(\nu \Lambda) F^*$ and $\nu=a\dt/\dx$ is the CFL number.  The
-necessary and sufficient condition for positive invariance of the numerical
-solution is then simply that every entry of $M$ be nonnegative.
-Products and inverses of circulant matrices are also circulant, so
+where 
+\begin{equation}\label{Mdualdef}
+M:=R(\nu L)=\cF R(\nu \Lambda) \cF^*, 
+\end{equation}
+and $\nu:=a\dt/\dx$ is the CFL number.  
+Then it is easily seen that 
+\[
+\text{positivity preservation of the fully discrete numerical solution}\quad \Longleftrightarrow \quad M\ge 0.
+\]
+For one-step methods, $R$ is a rational function, and products and inverses of circulant matrices are also circulant \cite[Fact 5.16.7]{matmat}, so
 $M$ is also a real, circulant matrix.
 Thus it is defined completely by the entries of its first row, which
 are given by
 \begin{align} \label{M-entries}
-    M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m R(\nu\lambda_\ell) \exp(-i(j-1)\xi_\ell).
+    M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m R(\nu\lambda_\ell) \exp(-\imath(j-1)\xi_\ell) \quad\quad (1\le j\le m).
 \end{align}
 
-\subsection{Centered in space, $\theta$ method in time}
+\subsection{Centered in space, $\theta$-method in time}\label{sectioncentered}
 Consider the case of a 3-point centered difference in space:
 \begin{align}
     U_x|_{x=x_j} \approx \frac{u_{j+1}-u_{j-1}}{2\dx}
 \end{align}
-so that $L$ is a circulant matrix with entries $(-1/2, 0, 1/2)$ on the central
-three diagonals.  The exact solution of the resulting semi-discrete
+so that $L\in\mathbb{R}^{m\times m}$ is a circulant matrix with entries $(-1/2, 0, 1/2)$ on the central
+three diagonals,
+\[
+L:=\left(
+\begin{array}{cccccc}
+ 0 & \frac{1}{2} & 0  & \cdots & 0 & -\frac{1}{2} \\
+ -\frac{1}{2} & 0 & \frac{1}{2} &  \cdots & 0 & 0 \\
+ 0 & -\frac{1}{2} & 0 &  \ddots & 0 & 0\\
+ \vdots  & \vdots  & \ddots  & \ddots & \ddots & \vdots \\
+  0 & 0 & \cdots  & -\frac{1}{2} & 0 & \frac{1}{2} \\
+ \frac{1}{2} & 0 & \cdots & 0 & -\frac{1}{2} & 0 \\
+\end{array}
+\right).
+\]
+The exact solution of the resulting semi-discrete
 system \eqref{semi-discrete} is not positive invariant, so (given an appropriate
 positive initial condition) any consistent time discretization will yield
 negative values for small enough time steps.  Here we investigate whether
@@ -193,9 +274,9 @@ it is possible to ensure positive invariance for large time steps.
 %Meanwhile, if $m$ is odd...
 
 
-In what follows we assume $m\ge 3$. For the $\theta$-method we have
-\begin{align}
-    R(z) & := \frac{1+(1-\theta)z}{1-\theta z}
+In what follows we assume $3\le m\in\nplus$. The stability function $R$ for the $\theta$-method is \cite[Chapter IV.3]{hairerwanner}
+\begin{align}\label{R}
+    R(z) & := \frac{1+(1-\theta)z}{1-\theta z},
 \end{align}
 so with the centered difference in space we get from \eqref{M-entries} for $1\le j\le m$ that
 \begin{align} \label{firstrow-theta}
@@ -204,7 +285,7 @@ so with the centered difference in space we get from \eqref{M-entries} for $1\le
 This leads to the following expressions for the first and last entries of the first
 row of $M$:
 \begin{align*} 
-    M_{1,1} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)} \\
+    M_{1,1} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}, \\
     M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos(\xi_\ell)- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
 \end{align*}
 Consider the expression for $M_{1,m}$.
@@ -229,8 +310,8 @@ We see that $M_{1,j}^\infty\ge0$ for all $j>1$, while $M_{1,1}^\infty\ge0$ if an
 We have proved the following.
 
 \begin{theorem}
-Consider the advection equation with periodic boundary conditions discretized using centered
-differences in space and the $\theta$ method in time with $m$ spatial grid points.  
+Consider the advection equation with periodic boundary condition discretized using centered
+differences in space and the $\theta$-method in time with $m$ spatial grid points.  
 The discretization takes the form \eqref{M},
 where (i) if $m$ is even, then $M$ has at least one negative entry;
 (ii) if $m$ is odd and $\theta\ge m/(m-1)$, then for large enough $\dt$ all entries of $M$ are nonnegative.
@@ -245,50 +326,39 @@ M_{1,2}=-M_{1,2k},
 from which one can also easily deduce that $M\ge 0$ is impossible for $\nu>0$ and $\te\in[0,1]$.
 \end{remark}
 
+\subsection{Structured non-negative inverse eigenvalue problems}\label{SNIEP}
 
-\subsection{Some material for: Notation/Introduction}
+LL COMPLETE Due to the fact that the eigenvalues of the matrix $M$ in \eqref{Mdef} are known, we can use some necessary conditions... Perron--Frobenius theorem, $\lambda_1$ non-negative real dominant root. 
+It turns out that these general theorem restrict the parameter values. We give the following example.
 
-Here we assume that $a>0$ is a positive constant.\\
-
-Relation to SSP analysis?\\
-
-THE QUESTION BOILS DOWN TO: We study the non-negativity of a two-parameter family of circulant matrices of arbitrary size, where each entry is a (specific) rational function.\\
-
- Mention: enough to focus on the 1st row: the sum/product/inverse of circulant matrices is circulant [REFERENCE: Fact 5.16.7. in Berstein MATRIX MATHEMATICS]. Since $L$ and $I$ are circulant, the matrix $M$ is circulant, too.\\
- 
-Financial support for LL: TKP project + KAUST\\
-
-We used Wolfram \textit{Mathematica} (version 11) for the computations in this work.
+Let us consider the $\te=1$ case. ... aspect ...
+These yield some (weaker, why?) bounds on $\nu$.
 
 
 
 
- We need the explicit form of $L$---the first row.\\
 
-$M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$.\\
 
-%$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
+\section{An algebraic characterization of the matrix entries}
 
-$\imath^2=-1$ 
-
-$3\le m\in\nplus$
-
+LL SOME INTRODUCTORY SENTENCES HERE\\ So far we used trig now alg.\\
+By \eqref{Mdualdef} we also have 
 \begin{equation}\label{Mdef}
-M(m,\te,\nu):=(I-\te\nu L)^{-1}(I+(1-\te)\nu L),
+M(m,\te,\nu)=(I-\te\nu L)^{-1}(I+(1-\te)\nu L).
 \end{equation}
-where $I\in\rr^{m\times m}$ is the identity matrix. The dependence of $M$ on its parameters will often be suppressed. To emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
+The dependence of $M$ on its parameters will often be suppressed. 
 
 \subsection{Explicit description of the matrix entries for odd values of $m$}\label{explsect}
 
-When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
-\begin{remark}
-The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well. 
-\end{remark}
+LL CUT THIS When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
+%\begin{remark}
+%The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well. 
+%\end{remark}
 
 
 
 
-It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. Thus, throughout the rest of this section, we can thus assume that 
+LL PUT THIS EARLIER It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. Thus, throughout the rest of this section, we can thus assume that 
 \begin{equation}\label{genassump}
 \boxed{ 
 m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
@@ -791,7 +861,7 @@ $\te\in\left(0,\frac{1}{2}\right)$, we have $\nur>\nul$.
 The following theorem summarizes the results of this section in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
 \begin{theorem}
 \begin{itemize}\ 
-\item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e., for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
+\item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e.~for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
 \item[$\bullet$] Let $\te=1/2$. Then
 \[
 M\left(2k+1,\frac{1}{2},\nu\right)\ge 0\quad\Longleftrightarrow\quad k=1\text{ and } \nu=4\quad\text{(see }\eqref{rem10thetahalfmatrix}\text{)}.
@@ -839,14 +909,37 @@ M\left(3,\frac{1}{2},4\right)=\left(
 
 
 
-\subsection{Structured non-negative inverse eigenvalue problems}
 
-INCOMPLETE Due to the fact that the eigenvalues of the matrix $M$ in \eqref{Mdef} are known, we can use some necessary conditions... Perron--Frobenius theorem, $\lambda_1$ non-negative real dominant root. 
-It turns out that these general theorem restrict the parameter values. We give the following example.
 
-Let us consider the $\te=1$ case. ...
-These  can obtain (some weaker, why?) information on the para size of the entries $M_{i,j}$.
+\section{Other discretizations/Conclusions?}
 
-\section{Other discretizations}
+
+\begin{thebibliography}{99}
+
+
+\bibitem{SSPbook}
+{S.~Gottlieb,  D.~I.~Ketcheson,  C.-W.~Shu}, {Strong Stability Preserving {R}unge--{K}utta and Multistep Time Discretizations}. {World Scientific Publishing, Hackensack, NJ} ({2011})
+
+ \bibitem{posconv}
+I.~Fekete, D.~I.~Ketcheson, L.~L\'oczi, Positivity for convective semi-discretizations, J. Sci. Comput., Vol.~74, No.~1, 244--266 (2018), \href{https://doi.org/10.1007/s10915-017-0432-9}{https://doi.org/10.1007/s10915-017-0432-9}
+
+%\bibitem{hairerwanner1}
+%E. Hairer, S. N{\o}rsett, G. Wanner, Solving Ordinary Differential Equations I. Nonstiff
+%Problems, Springer, Berlin (2009)
+
+\bibitem{hairerwanner}
+E.~Hairer, G.~Wanner, Solving Ordinary Differential Equations II. Stiff
+and Differential-Algebraic Problems, Springer, Berlin (2002)
+
+\bibitem{hundsdorferverwer}
+W.~Hundsdorfer, J.~Verwer, Numerical Solution of Time-Dependent Advection-Diffusion-ReactionEquations. Springer Series in Computational Mathematics, Vol.~33. Springer, Berlin (2003)    
+
+
+
+ \bibitem{matmat}
+D.~S.~Bernstein, Matrix Mathematics. Theory, Facts, and Formulas. Second edition, Princeton University Press, Princeton, NJ (2009), \href{https://doi.org/10.1515/9781400833344}{https://doi.org/10.1515/9781400833344}
+
+
+\end{thebibliography}
 
 \end{document}
