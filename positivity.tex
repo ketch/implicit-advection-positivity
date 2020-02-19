@@ -36,6 +36,8 @@
 \newcommand{\cP}{{\cal{P}}}
 \newcommand{\cD}{{\cal{D}}}
 \newcommand{\cF}{{\cal{F}}}
+\newcommand{\cS}{{\cal{S}}}
+
 
 
 \newcommand\blfootnote[1]{%
@@ -137,12 +139,12 @@ For $\te\in[0,1]$, this family of time integrators includes both Euler methods a
 %where $M$ is a fixed $m\times m$ matrix.
 
 \subsection{Structure of the paper and main results}
-In Section \ref{sectiondiscFourier} ... In Section \ref{sectioncentered} ... In Section \ref{SNIEP}
+In Section \ref{sectiondiscFourier} ... In Section \ref{sectioncentered} ... 
 
 In Section \ref{explsect} ... When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
 The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well.  \boxed{\text{LL POINT OUT: Corollary 1, asymptotic bounds}}
 
-Finally, ...
+Finally, in Section \ref{SNIEP} ...\\
 
 The computations in this work has been carried out by using Wolfram \textit{Mathematica} version 11.
 
@@ -158,7 +160,7 @@ The symbol $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$ 
 %$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
 
 
-\subsection{Some useful sentences to reuse}
+\subsection{Some useful sentences to reuse, then remove this subsection}
 SENTENCES FROM \cite{posconv}---------------------------------------
 In this work we do not deal with the influence of boundary conditions, so for simplicity
 we consider periodic boundaries.\\
@@ -340,14 +342,7 @@ M_{1,2}=-M_{1,2k},
 from which one can also easily deduce that $M\ge 0$ is impossible for $\nu>0$ and $\te\in[0,1]$.
 \end{remark}
 
-\subsection{Structured non-negative inverse eigenvalue problems}\label{SNIEP}
-
-\boxed{\text{LL COMPLETE}} Due to the fact that the eigenvalues of the matrix $M$ in \eqref{Mdef} are known, we can use some necessary conditions... Perron--Frobenius theorem, $\lambda_1$ non-negative real dominant root. 
-It turns out that these general theorem restrict the parameter values. We give the following example.
-
-Let us consider the $\te=1$ case. ... aspect ...
-These yield some (weaker, why?) bounds on $\nu$.
-
+%\subsection{Structured non-negative inverse eigenvalue problems}
 
 
 
@@ -872,7 +867,7 @@ $\te\in\left(0,\frac{1}{2}\right)$, we have $\nur>\nul$.
 \end{proof}
 
 The following theorem summarizes the results of this section in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
-\begin{theorem}
+\begin{theorem}\label{thm2}
 \begin{itemize}\ 
 \item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e.~for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
 \item[$\bullet$] Let $\te=1/2$. Then
@@ -924,34 +919,94 @@ M\left(3,\frac{1}{2},4\right)=\left(
 
 
 
-\section{Other discretizations/Conclusions?}
+\section{Other discretizations/Conclusions?}\label{SNIEP}
+
+\boxed{\text{MAYBE dknotes.pdf Section 5?}}
+
+
+Below we point out a related approach to studying the non-negativity of the family of matrices $M$. Due to the fact that the eigenvalues of $M$ in \eqref{Mdualdef} are known, we can use some conditions developed in the context of \emph{non-negative inverse eigenvalue problems}, where the main question is the following. 
+\begin{center} Find (necessary or sufficient) conditions for a set $\cS:=\{\sigma_1,\ldots,\sigma_m\}\subset\mathbb{C}$ to be the spectrum of some non-negative $m \times m$ matrix.
+\end{center}
+It is known \cite[Chapter 4]{nonnegmatr} that if $\cS$ is the spectrum of 
+an $m \times m$ non-negative matrix, then one has,  for example, 
+\begin{equation}\label{sigmampq}
+\forall\, p, q \in\nplus:\quad\quad 0\le \left(\sum_{j=1}^m \sigma_j^{\,p}\right)^q\le m^{q-1} \sum_{j=1}^m \sigma_j^{\,p q}.
+\end{equation}
+In our situation, of course, the eigenvalues of $M(m,\te,\nu)$ also depend on the parameters $\te\in[0,1]$ and $\nu>0$. Then
+for $m=5$ and $\te=1$, for example, \eqref{sigmampq} with  $p\in\{1,\ldots,9\}$, $q\in\{2,3\}$ yields the lower bounds
+\begin{equation}\label{nustartpq}
+\nu\ge \nu_{*}(p,q),
+\end{equation}
+where, approximately,
+\[
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\nu_{*}(p,q) & p=1 & p=2 & p=3 & p=4 & p=5 & p=6 & p=7 & p=8 & p=9 \\
+\hline
+q=2 & 3.0074 & 1.462 & 0.9669 & 0.7219 & 0.5753 & 0.4778 & 0.4082 & 0.3563 & 0.3160 \\
+\hline
+q=3 & 2.1497 & 1.0269 & 0.6694  & 0.4941 & 0.3907 & 0.3227  & 0.2749  & 0.2393  &  0.2119 \\
+\hline
+\end{array}
+\]
+The true lower bound, according to Theorem \ref{thm2} with $k=2$ and $\te=1$, is
+\[
+\nu\ge \nu_R(2,1)\approx 4.4111.
+\]
+\begin{remark}
+In the actual computations of the table values, we made use of the equality 
+\[
+\forall\, r\in\nplus:\quad\quad\sum_{j=1}^m \sigma_j^{\,r}=\mathrm{trace}(M^r)\] 
+to avoid computing the eigenvalues as functions of $\nu$, and to convert \eqref{sigmampq} into
+\[
+\left(\mathrm{trace}(M^p)\right)^q\le m^{q-1} \mathrm{trace}(M^{p q}).
+\]
+The resulting high-degree inequalities in $\nu$ have then been solved (for $p=9$, $q=3$, for example, the rational functions in $\nu$ on both sides have numerator and denominator degrees 108).
+\end{remark}
+\begin{remark}
+In the definition of $\nu_R(2,1)$ in \eqref{nurdef}, the constant $y_R(2)$ can be simplified to a degree 6 algebraic number, and $\nu_R(2,1)$ itself is a degree 3 algebraic number.
+\end{remark}
+
+It is possible to sharpen the lower bounds \eqref{nustartpq} by making use of some more specific results. For simplicity, we still consider the case $m=5$, $\te=1$. The inequality \eqref{sigmampq} holds for any non-negative matrix. However, we know in addition that the matrix $M(5,1,\nu)$ is circulant. This leads us to the realm of 
+\emph{structured non-negative inverse eigenvalue problems}. The spectra of non-negative circulant matrices 
+have been characterized in \cite[Theorem 10]{rojosoto}. 
+
+\boxed{\text{LL COMPLETE}}
+... Perron--Frobenius theorem \cite{nonnegmatr}, $\lambda_1$ non-negative real dominant root. 
+
+
 
 
 \begin{thebibliography}{99}
 
+ \bibitem{matmat}
+D.~S.~Bernstein, Matrix Mathematics. Theory, Facts, and Formulas. Second edition, Princeton University Press, Princeton, NJ (2009), \href{https://doi.org/10.1515/9781400833344}{https://doi.org/10.1515/9781400833344}
 
 \bibitem{SSPbook}
 {S.~Gottlieb,  D.~I.~Ketcheson,  C.-W.~Shu}, {Strong Stability Preserving {R}unge--{K}utta and Multistep Time Discretizations}. {World Scientific Publishing, Hackensack, NJ} ({2011})
 
- \bibitem{posconv}
-I.~Fekete, D.~I.~Ketcheson, L.~L\'oczi, Positivity for convective semi-discretizations, J. Sci. Comput., Vol.~74, No.~1, 244--266 (2018), \href{https://doi.org/10.1007/s10915-017-0432-9}{https://doi.org/10.1007/s10915-017-0432-9}
+\bibitem{posconv}
+I.~Fekete, D.~I.~Ketcheson, L.~L\'oczi, Positivity for convective semi-discretizations, J.~Sci.~Comput., Vol.~74, No.~1, 244--266 (2018), \href{https://doi.org/10.1007/s10915-017-0432-9}{https://doi.org/10.1007/s10915-017-0432-9}
 
 %\bibitem{hairerwanner1}
 %E. Hairer, S. N{\o}rsett, G. Wanner, Solving Ordinary Differential Equations I. Nonstiff
 %Problems, Springer, Berlin (2009)
 
-\bibitem{hairerwanner}
-E.~Hairer, G.~Wanner, Solving Ordinary Differential Equations II. Stiff
-and Differential-Algebraic Problems, Springer, Berlin (2002)
-
 \bibitem{hundsdorferverwer}
 W.~Hundsdorfer, J.~Verwer, Numerical Solution of Time-Dependent Advection-Diffusion-Reaction
-Equations. Springer Series in Computational Mathematics, Vol.~33. Springer, Berlin (2003)    
+Equations. Springer Series in Computational Mathematics, Vol.~33, Springer, Berlin (2003)    
 
+\bibitem{hairerwanner}
+E.~Hairer, G.~Wanner, Solving Ordinary Differential Equations II. Stiff
+and Differential-Algebraic Problems. Springer, Berlin (2002)
 
+\bibitem{nonnegmatr}
+ A.~Berman, R.~J.~Plemmons, Nonnegative Matrices in the Mathematical Sciences. SIAM (1994)
+ 
+ \bibitem{rojosoto}
+O.~Rojo, R.~L.~Soto, Existence and construction of nonnegative matrices with complex spectrum, 
+Lin.~Alg.~Appl., Vol.~368, 53--69 (2003), \href{https://doi.org/10.1016/S0024-3795(02)00650-X}{https://doi.org/10.1016/S0024-3795(02)00650-X}
 
- \bibitem{matmat}
-D.~S.~Bernstein, Matrix Mathematics. Theory, Facts, and Formulas. Second edition, Princeton University Press, Princeton, NJ (2009), \href{https://doi.org/10.1515/9781400833344}{https://doi.org/10.1515/9781400833344}
 
 
 \end{thebibliography}
