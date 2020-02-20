@@ -71,7 +71,7 @@ U_t (x,t)& = a U_x(x,t) \\
 U(x,0) & = U_0(x),
 \end{align}
 \end{subequations}
-where $U:\mathbb{R}\times [0,+\infty)\to\mathbb{R}$ is the unknown function, $U_0:\mathbb{R}\to\mathbb{R}$ is a given differentiable initial function, and $a>0$ is a constant. \boxed{\text{LL WHAT IF } a<0?}
+where $U:\mathbb{R}\times [0,+\infty)\to\mathbb{R}$ is the unknown function, $U_0:\mathbb{R}\to\mathbb{R}$ is a given differentiable initial function, and $a>0$ is a constant. 
 The exact solution of the Cauchy problem \eqref{advection}, given by $U(x,t) =
 U_0(x+a t)$, is positivity preserving; i.e.
 %\begin{align} \label{implies-positivity}
@@ -339,7 +339,7 @@ $\bullet$ For \emph{even} $m=2k\ge 4$, consider the previous expression for $M_{
 Thus this method cannot preserve positivity when $m$ is even, regardless of the values
 of $\theta\in[0,1]$ and $\nu>0$.
 \begin{remark}
-By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we actually have
+By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
 $M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
 \end{remark}
 
@@ -356,7 +356,9 @@ and taking $\nu \to +\infty$ with $m$ and $\te\in(0,1]$ fixed, we find that
 We see that $M_{1,j}^\infty>0$ for all $2\le j\le m$ and $\te\in(0,1]$, while $M_{1,1}^\infty>0$ if and only if $\theta>\frac{m-1}{m}$. Thus for fixed $m\ge 3$ and $\theta>\frac{m-1}{m}$, the matrix $M$ is non-negative 
 if $\nu>0$ is large enough.
 
-We now show that $M\ge 0$ also holds for $\theta=\frac{m-1}{m}$ with $m$ fixed and for $\nu>0$ large enough. Clearly, we only need to verify the non-negativity of entry $M_{1,1}$ for $\nu>0$ large enough. 
+We can show that $M\ge 0$ also holds for $\theta=\frac{m-1}{m}$ with $m$ fixed and for $\nu>0$ large enough. 
+\begin{proof}
+Clearly, we only need to verify the non-negativity of entry $M_{1,1}$ for $\nu>0$ large enough. 
 In fact, for $\theta=\frac{m-1}{m}$ and for \emph{any} $\nu>0$ we have $M_{1,1}> 0$. To see this, consider a summand with $2\le\ell\le m$ in $M_{1,1}$: 
 \[
  \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\Big|_{\theta=\frac{m-1}{m}}=
@@ -366,9 +368,10 @@ Its partial derivative with respect to $\nu$ is
 \[
 \partial_\nu\varphi(\nu,\ell)=-\frac{2 (m-1) m^3 \nu  \sin ^2\left(\xi _\ell\right)}{\left(m^2+(m-1)^2 \nu ^2 \sin ^2\left(\xi _\ell\right)\right)^2}<0,
 \]
-and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$, completing the proof.\\
+and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$.
+\end{proof}
 
-Summarizing the above for any $m\ge 3$, $\te\in[0,1]$ and $\nu>0$, we have proved the following. 
+Summarizing the above, we have proved the following for any $m\ge 3$, $\te\in[0,1]$ and $\nu>0$. 
 \begin{theorem}\label{thm1}
 Consider the advection equation with periodic boundary condition discretized using centered
 differences in space and the $\theta$-method in time with $m$ spatial grid points.  
@@ -391,6 +394,10 @@ where\\
 A refinement of Theorem \ref{thm1} for odd values of $m$ will be given at the end of Section \ref{section3}, see Theorem \ref{thm2}.
 As for the interval $\theta\in\left[\frac{m-1}{m},1\right]$ appearing in Theorem \ref{thm1}, see also 
 Figures \ref{fig_variousk}--\ref{fig_boundary}.
+
+\begin{remark}
+It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ instead, then the results of Theorems \ref{thm1} and \ref{thm2} would remain valid (together with Figures \ref{fig_variousk}--\ref{fig_boundary}, for example), with all the arguments in their proofs being essentially the same.  For example, as we will see in Section \ref{section3}, the non-negativity of (the first row of) matrix $M$ is governed by the elements $M_{1,1}$ and $M_{1,m}$ for $a>0$ and $m$ odd---this would change to elements $M_{1,1}$ and $M_{1,2}$ for $a<0$ and $m$ odd.
+\end{remark}
 
 %\subsection{Structured non-negative inverse eigenvalue problems}
 
