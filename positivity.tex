@@ -57,7 +57,8 @@
 \maketitle
 \begin{abstract}
 In this work we analyze---from the viewpoint of positivity preservation---certain discretizations of a fundamental partial differential equation, the one-dimensional advection equation with periodic boundary condition. The full discretization is obtained by coupling a second-order centered difference scheme in space with an arbitrary $\te$-method in time (including the forward and backward Euler methods, and a second-order method by choosing $\te\in [0,1]$ suitably). The full discretization yields a two-parameter family of circulant matrices $M\in\mathbb{R}^{m\times m}$, 
-where $m$ is the number of spatial grid points, and each matrix entry is a rational function in $\te$ and $\nu$. Here $\nu>0$ denotes the CFL number, being proportional to the ratio between the temporal and spatial discretization step sizes. The entrywise non-negativity of the matrix $M$---which is equivalent to the positivity preservation of the full discretization scheme---is investigated via discrete Fourier analysis and some low-order linear recursions. We get that positivity preservation is impossible for even values of $m$, but the case $m=2k+1$ is more subtle. It turns out, surprisingly, that positivity preservation is recovered for odd values of $m$ provided that $\te\ge 1/2$ and $\nu$ is bounded by two positive constants (the upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and $\nu$ governing non-negativity of the matrix $M$ is explicitly described in terms of roots of certain sparse polynomials.
+where $m$ is the number of spatial grid points, and each matrix entry is a rational function in $\te$ and $\nu$. Here $\nu>0$ denotes the CFL number, being proportional to the ratio between the temporal and spatial discretization step sizes. The entrywise non-negativity of the matrix $M$---which is equivalent to the positivity preservation of the full discretization scheme---is investigated via discrete Fourier analysis and some low-order linear recursions. We get that positivity preservation is impossible for even values of $m$, but the case $m=2k+1$ is more subtle. It turns out, surprisingly, that positivity preservation is recovered for odd values of $m$ provided that $\te\ge 1/2$ and $\nu$ is bounded by two positive constants (the upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and $\nu$ governing non-negativity of the matrix $M$ is explicitly described in terms of roots of certain sparse polynomials. Finally, some connections with 
+non-negative inverse eigenvalue problems are pointed out.
 \end{abstract}
 \blfootnote{This work was supported by the King Abdullah University of Science and Technology (KAUST), 4700
 Thuwal, 23955-6900, Saudi Arabia.}
@@ -406,7 +407,7 @@ M(m,\te,\nu)=(I-\te\nu L)^{-1}(I+(1-\te)\nu L)\in\mathbb{R}^{m\times m},
 \end{equation}
 but the dependence of $M$ on its parameters will often be suppressed. 
 
-It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. The case $m=2k$ has been discussed in Section \ref{sectiondiscFourier}. Thus, throughout the rest of this section, we can assume that 
+It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. The case $m=2k$ has been discussed in Section \ref{sectioncentered}. Thus, throughout the rest of this section, we can assume that 
 \begin{equation}\label{genassump}
 \boxed{ 
 m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
@@ -456,7 +457,7 @@ The subscripts of $\cP_{j,k}$ thus refer to the position of the polynomial withi
 \end{remark}
 
 
-The key to describing $M$ algebraically is the observation that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. Interestingly, the leftmost entry ($j=1$) behaves differently than the rest ($2\le j\le 2k+1$).
+The key to describing $M$ algebraically is the observation that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. As already indicated by Section \ref{sectioncentered}, the leftmost entry ($j=1$) behaves differently than the rest ($2\le j\le 2k+1$).
 
 
 \begin{remark}
