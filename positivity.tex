@@ -57,8 +57,8 @@
 \maketitle
 \begin{abstract}
 In this work we analyze---from the viewpoint of positivity preservation---certain discretizations of a fundamental partial differential equation, the one-dimensional advection equation with periodic boundary condition. The full discretization is obtained by coupling a second-order centered difference scheme in space with an arbitrary $\te$-method in time (including the forward and backward Euler methods, and a second-order method by choosing $\te\in [0,1]$ suitably). The full discretization yields a two-parameter family of circulant matrices $M\in\mathbb{R}^{m\times m}$, 
-where $m$ is the number of spatial grid points, and each matrix entry is a rational function in $\te$ and $\nu$. Here $\nu>0$ denotes the CFL number, being proportional to the ratio between the temporal and spatial discretization step sizes. The entrywise non-negativity of the matrix $M$---which is equivalent to the positivity preservation of the full discretization scheme---is investigated via discrete Fourier analysis and some low-order linear recursions. We get that positivity preservation is impossible for even values of $m$, but the case $m=2k+1$ is more subtle. It turns out, surprisingly, that positivity preservation is recovered for odd values of $m$ provided that $\te\ge 1/2$ and $\nu$ is bounded by two positive constants (the upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and $\nu$ governing non-negativity of the matrix $M$ is explicitly described in terms of roots of certain sparse polynomials. Finally, some connections with 
-non-negative inverse eigenvalue problems are pointed out.
+where $m$ is the number of spatial grid points, and each matrix entry is a rational function in $\te$ and $\nu$. Here $\nu>0$ denotes the CFL number, being proportional to the ratio between the temporal and spatial discretization step sizes. The entrywise non-negativity of the matrix $M$---which is equivalent to the positivity preservation of the full discretization scheme---is investigated via discrete Fourier analysis and some low-order linear recursions. We get that positivity preservation is impossible for even values of $m$, but the case $m=2k+1$ is more subtle. It turns out, surprisingly, that positivity preservation is recovered for odd values of $m$ provided that $\te\ge 1/2$ and $\nu$ is bounded by two positive constants (the upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and $\nu$ governing non-negativity of the matrix $M$ is explicitly described in terms of roots of certain sparse polynomials. %Finally, some connections with 
+%non-negative inverse eigenvalue problems are pointed out.
 \end{abstract}
 \blfootnote{This work was supported by the King Abdullah University of Science and Technology (KAUST), 4700
 Thuwal, 23955-6900, Saudi Arabia.}
@@ -95,7 +95,7 @@ where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a Toeplitz 
 If one uses an upwind spatial discretization
 %\begin{align}
 \[
-    L_{i,i}  = -1,\quad\quad L_{i,i+1} =  1,
+    L_{i,i}  := -1,\quad\quad L_{i,i+1} :=  1,
 \]
 %\end{align}
 \boxed{\text{WHAT WHEN i=m?}} then the exact solution of \eqref{semi-discrete} is also positivity
@@ -107,12 +107,12 @@ method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.
 Since the upwind discretization is only of order one, it is natural to use a more accurate spatial discretization. A second-order scheme is
 obtained with the centered difference
 \begin{align} \label{centered-difference}
-    L_{i,i-1} & = -\frac{1}{2},\quad\quad L_{i,i+1} =  \frac{1}{2}.
+    L_{i,i-1} & := -\frac{1}{2},\quad\quad L_{i,i+1} :=  \frac{1}{2}.
 \end{align}
 \boxed{\text{WHAT WHEN i=m?}} However, this semi-discretization is not positivity preserving, because the matrix $L$ has at least one negative off-diagonal entry \cite[Chapter I, Theorem 7.2]{hundsdorferverwer}.
 This implies that any consistent full discretization based on \eqref{centered-difference}
 must fail to preserve positivity under sufficiently small step sizes $\dt>0$.
-Indeed, a full discretization based on the \eqref{centered-difference}
+Indeed, a full discretization based on the scheme \eqref{centered-difference}
 and forward Euler in time is not positivity preserving for any step size.
 
 On the other hand, interestingly, using \eqref{centered-difference} with backward (implicit) 
@@ -144,9 +144,9 @@ For $\te\in[0,1]$, this family of time integrators includes both Euler methods a
 %where $M$ is a fixed $m\times m$ matrix.
 
 \subsection{Structure of the paper and main results}
-In Section \ref{sectiondiscFourier} ... In Section \ref{sectioncentered} ... 
+In Section \ref{sectiondiscFourier} ... In Section \ref{sectioncentered} ... Theorem \ref{thm1} 
 
-In Section \ref{explsect} ... When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
+In Section \ref{explsect} ...  To reveal more information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
 The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well.\\
 \boxed{\text{LL POINT OUT: Corollary 1, asymptotic bounds, and the relevant figures, definitions}}
 
@@ -166,7 +166,7 @@ The symbol $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$ 
 %$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
 
 
-\subsection{Some useful sentences to reuse, then remove this subsection}
+\subsection{\boxed{\text{Some useful sentences to reuse, then remove this subsection}}}
 SENTENCES FROM \cite{posconv}---------------------------------------
 In this work we do not deal with the influence of boundary conditions, so for simplicity
 we consider periodic boundaries.\\
@@ -240,7 +240,7 @@ are given by
 \end{align}
 
 \subsection{Centered in space, $\theta$-method in time}\label{sectioncentered}
-In what follows we assume $3\le m\in\nplus$. Consider the case of a 3-point centered difference \boxed{\text{SCHEME/APPROXIMATION?}} in space:
+In what follows we assume $3\le m\in\nplus$. Consider the case of a 3-point centered difference approximation in space:
 %\begin{align}
 \[
     U_x\Big|_{x=x_j} \approx \frac{u_{j+1}-u_{j-1}}{2\dx},
@@ -260,14 +260,10 @@ L:=\left(
 \end{array}
 \right).
 \end{equation}
-It is known that the eigenvalues of $L$ are $\lambda_\ell=\imath \sin(\xi_\ell)$ ($\ell=1,\ldots,m$).
-
-\boxed{\text{I FEEL THIS PARAGRAPH HAS BECOME A LITTLE REDUNDANT?}} The exact solution of the resulting semi-discrete
-system \eqref{semi-discrete} is not positive invariant, so (given an appropriate
-positive initial condition) any consistent time discretization will yield
-negative values for small enough time steps.  Here we investigate whether
-it is possible to ensure positive invariance for large time steps.
-
+It is known that the eigenvalues of $L$ are 
+\begin{equation}\label{Leigenvalues}
+\lambda_\ell=\imath \sin(\xi_\ell)\quad (1\le\ell\le m).
+\end{equation}
 %Let us consider first the backward Euler method.
 %The eigenvalues for this semi-discretization are $\lambda_j = \imath\sin\xi_j$.
 %If we use the backward Euler method in time, we have $R(z) = (1-z)^{-1}$, so
@@ -304,14 +300,10 @@ it is possible to ensure positive invariance for large time steps.
 %negative entries tend to zero as $\nu \to \infty$.
 %
 %Meanwhile, if $m$ is odd...
-
-
- The stability function $R$ for the $\theta$-method is \cite[Chapter IV.3]{hairerwanner}
-%\begin{align}\label{R}
-\[
+The stability function $R$ for the $\theta$-method \cite[Chapter IV.3]{hairerwanner} is
+\begin{align}\label{R}
     R(z)  := \frac{1+(1-\theta)z}{1-\theta z},
-\]
-%\end{align}
+\end{align}
 so with the centered difference in space we get from \eqref{M-entries} for $1\le j\le m$ that
 %\begin{align} \label{firstrow-theta}
 \[
@@ -332,7 +324,7 @@ row of $M$:
 \end{align*}
 These entries will have a special role in the forthcoming analysis. 
 
-$\bullet$ For \emph{even} $m=2k\ge 4$, consider the previous expression for $M_{1,m}$. The sum over the first term in the numerator vanishes due to symmetry, and $\sin(\xi_1)=0$, so we have
+$\bullet$ For \emph{even} $m=2k\ge 4$, consider the above expression for $M_{1,m}$. The sum over the first term in the numerator vanishes due to symmetry, and $\sin(\xi_1)=0$, so we have
 \begin{align*}
     M_{1,m} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
 \end{align*}
@@ -353,11 +345,16 @@ and taking $\nu \to +\infty$ with $m$ and $\te\in(0,1]$ fixed, we find that
     M_{1,1}^\infty := \lim_{\nu \to +\infty} M_{1,1} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  1-\frac{m-1}{m\theta}\\
     M_{1,j}^\infty := \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta} \quad\quad (j\ge 2).
 \end{align*}
-We see that $M_{1,j}^\infty>0$ for all $2\le j\le m$ and $\te\in(0,1]$, while $M_{1,1}^\infty>0$ if and only if $\theta>\frac{m-1}{m}$. Thus for fixed $m\ge 3$ and $\theta>\frac{m-1}{m}$, the matrix $M$ is non-negative 
+We see that 
+\[M_{1,j}^\infty>0 \text{ for all } 2\le j\le m \text{ and } \te\in(0,1],
+\]
+ while 
+\[M_{1,1}^\infty>0 \quad\Longleftrightarrow\quad \theta>\frac{m-1}{m}.
+\]
+Thus for fixed $m\ge 3$ and $\theta>\frac{m-1}{m}$, the matrix $M$ is non-negative 
 if $\nu>0$ is large enough.
 
-We can show that $M\ge 0$ also holds for $\theta=\frac{m-1}{m}$ with $m$ fixed and for $\nu>0$ large enough. 
-\begin{proof}
+We now show that $M\ge 0$ also holds for $\theta=\frac{m-1}{m}$ with $m$ fixed and for $\nu>0$ large enough. 
 Clearly, we only need to verify the non-negativity of entry $M_{1,1}$ for $\nu>0$ large enough. 
 In fact, for $\theta=\frac{m-1}{m}$ and for \emph{any} $\nu>0$ we have $M_{1,1}> 0$. To see this, consider a summand with $2\le\ell\le m$ in $M_{1,1}$: 
 \[
@@ -368,8 +365,8 @@ Its partial derivative with respect to $\nu$ is
 \[
 \partial_\nu\varphi(\nu,\ell)=-\frac{2 (m-1) m^3 \nu  \sin ^2\left(\xi _\ell\right)}{\left(m^2+(m-1)^2 \nu ^2 \sin ^2\left(\xi _\ell\right)\right)^2}<0,
 \]
-and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$.
-\end{proof}
+and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$, completing the proof of the claim.\\
+
 
 Summarizing the above, we have proved the following for any $m\ge 3$, $\te\in[0,1]$ and $\nu>0$. 
 \begin{theorem}\label{thm1}
@@ -381,19 +378,101 @@ where\\
 (ii) if $m$ is odd and $\theta\in\left[\frac{m-1}{m},1\right]$, then for large enough $\dt$ all entries of $M$ are non-negative.
 \end{theorem}
 
+\noindent\rule{10cm}{0.4pt}\\
+\noindent\rule{10cm}{0.4pt}\\
+\boxed{\text{SOME INTERPRETATION OF THIS THM IS NEED HERE}}\\
+large enough $\dt$ if $\dx$ is fixed, or small enough $\dx$ if $\dt$ is chosen before carrying out spatial discretization
 
-\boxed{\text{MENTION THE INTERPRETATION OF THM 1:}}\\
-\boxed{\text{large enough $\dt$ if $\dx$ is fixed, or small enough $\dx$ if $\dt$ is chosen before carrying out spatial discretization}}\\
+WE CAN emphasize the following again: positivity preservation of the fully discrete numerical solution  
+$\Longleftrightarrow  M\ge 0$
 
-
-\boxed{\text{MOREOVER, MAYBE WE SHOULD EMPHASIZE HERE AGAIN THE FOLLOWING}}\\
-\[
-\text{positivity preservation of the fully discrete numerical solution}\quad \Longleftrightarrow \quad M\ge 0.
-\]
+MAYBE WE CAN REUSE THESE SENTENCES:
+The exact solution of the resulting semi-discrete
+system \eqref{semi-discrete} is not positive invariant, so (given an appropriate
+positive initial condition) any consistent time discretization will yield
+negative values for small enough time steps.  Here we investigate whether
+it is possible to ensure positive invariance for large time steps.\\
+\noindent\rule{10cm}{0.4pt}\\
+\noindent\rule{10cm}{0.4pt}
 
 A refinement of Theorem \ref{thm1} for odd values of $m$ will be given at the end of Section \ref{section3}, see Theorem \ref{thm2}.
 As for the interval $\theta\in\left[\frac{m-1}{m},1\right]$ appearing in Theorem \ref{thm1}, see also 
 Figures \ref{fig_variousk}--\ref{fig_boundary}.
+
+
+\begin{remark} 
+In the formulae leading to Theorem \ref{thm1} we used a trigonometric representation of the matrix 
+\emph{entries} $M_{1,j}$. Here we highlight a related approach to studying the non-negativity of $M$ by
+relying only on the \emph{eigenvalues} $\sigma_\ell$ ($1\le \ell\le m$) of $M$. According to
+\eqref{Mdualdef}, \eqref{Leigenvalues} and \eqref{R}, we have
+\[
+\sigma_\ell:=R(\nu\lambda_\ell)=\frac{1+ (1-\theta )\nu \imath \sin \left(\xi _\ell\right)}{1- \theta\nu \imath  \sin \left(\xi _\ell\right)}.
+\]
+The main question in the context of \emph{non-negative inverse eigenvalue problems} is to 
+find (necessary or sufficient) conditions for a set $\Sigma:=\{\sigma_1,\ldots,\sigma_m\}\subset\mathbb{C}$ to be the spectrum of \emph{some} non-negative $m \times m$ matrix.
+%In our situation, of course, the eigenvalues of $M(m,\te,\nu)$ also depend on the parameters $\te\in[0,1]$ and $\nu>0$. For this reason, a direct application of such a theorem to extract information on $\te$ and $\nu$ is not straightforward, so below we present only some examples. 
+One such condition is the following. It is known \cite[Chapter 4]{nonnegmatr} that if $\Sigma$ is the spectrum of 
+an $m \times m$ non-negative matrix, then 
+\begin{equation}\label{sigmampq}
+\forall\, p, q \in\nplus:\quad\quad 0\le \left(\sum_{j=1}^m \sigma_j^{\,p}\right)^q\le m^{q-1} \sum_{j=1}^m \sigma_j^{\,p q}.
+\end{equation}
+For example, for $m=5$ and $\te=1$, \eqref{sigmampq} with  $p\in\{1,\ldots,9\}$ and $q\in\{2,3\}$ yields the lower bounds
+\begin{equation}\label{nustartpq}
+\nu\ge \nu_{*}(p,q),
+\end{equation}
+where the approximate values of $\nu_{*}(p,q)$ are given below:
+\[
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\nu_{*}(p,q) & p=1 & p=2 & p=3 & p=4 & p=5 & p=6 & p=7 & p=8 & p=9 \\
+\hline
+q=2 & 3.0074 & 1.462 & 0.9669 & 0.7219 & 0.5753 & 0.4778 & 0.4082 & 0.3563 & 0.3160 \\
+\hline
+q=3 & 2.1497 & 1.0269 & 0.6694  & 0.4941 & 0.3907 & 0.3227  & 0.2749  & 0.2393  &  0.2119 \\
+\hline
+\end{array}
+\]
+As we see, the necessary condition \eqref{sigmampq}---valid for \emph{any} non-negative matrix---already 
+implies that there are positive \emph{lower} bounds on $\nu$, although these bounds are not optimal. 
+%\begin{remark}
+%In the actual computations of the values of $\nu_{*}(p,q)$, we made use of the property 
+%\[
+%\forall\, r\in\nplus:\quad\quad\sum_{j=1}^m \sigma_j^{\,r}=\mathrm{trace}(M^r)\] 
+%to avoid computing the eigenvalues as functions of $\nu$, and to convert \eqref{sigmampq} into
+%\begin{equation}\label{48converted}
+%\left(\mathrm{trace}(M^p)\right)^q\le m^{q-1} \mathrm{trace}(M^{p q}),
+%\end{equation}
+%see Figure \ref{fig_eigen1}. The resulting high-degree inequalities in $\nu$ have then been solved: for $p=9$ and $q=3$, for example, the rational functions in $\nu$ on both sides of \eqref{48converted} have numerator and denominator degrees 108.
+%\end{remark}
+%\begin{remark}
+%In the definition of $\nu_R(2,1)$ in \eqref{nurdef}, the constant $y_R(2)$ can be simplified to a degree 6 algebraic number, and $\nu_R(2,1)$ itself is a degree 3 algebraic number.
+%\end{remark}
+%\begin{figure}
+%\begin{center}
+%\includegraphics[width=0.5\textwidth]{fig_eigenvalues1.pdf}
+%\caption{The right- and left-hand sides of inequality \eqref{48converted}---as functions of $\nu$ with $m=5$, $\te=1$, $p=1$ and $q=2$---are shown as solid and dashed curves, respectively. The positive intersection point of the curves occurs at $\nu_{*}(1,2)\approx 3.0074$.}\label{fig_eigen1}
+%\end{center}
+%\end{figure}
+
+It is possible to sharpen the lower bounds in \eqref{nustartpq} by making use of some more specific results. 
+%In order to facilitate a comparison, we consider again the case $m=5$, $\te=1$. 
+%The inequality \eqref{sigmampq} holds for any non-negative matrix. However, 
+We know in addition that the matrix $M$ is \emph{circulant}, which leads us to the realm of 
+\emph{structured non-negative inverse eigenvalue problems}. For example, 
+the spectra of non-negative circulant matrices have been characterized (with a necessary \emph{and} sufficient condition) in \cite[Theorem 10]{rojosoto}. From this theorem we get (still for $m=5$ and $\te=1$) the lower bound
+\[
+\nu\ge 3.9173.
+\]
+%To keep our presentation simple, we do not reproduce this theorem here due to its technical details, only give a short overview.
+%Suppose that the matrix $M$ is non-negative and circulant. Then \cite[Theorem 10]{rojosoto} shows
+%that the Perron--Frobenius root (that is, the non-negative eigenvalue equal to the spectral radius of $M$, which exists due to the classical Perron--Frobenius theorem \cite{nonnegmatr})
+%that  $\sigma_1\ge $ cannot be
+%Interestingly, for $m=4$ and $\te=1$, the application of \cite[Theorem 10]{rojosoto} already shows that $M(4,1,\nu)\ge 0$ cannot hold for any $\nu>0$.
+As we will see, the precise lower bound for this matrix---according to our Theorem \ref{thm2} with $k=2$ and $\te=1$---is
+\[
+\nu\ge \nu_R(2,1)\approx 4.4111.
+\]
+\end{remark}
 
 \begin{remark}
 It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ instead, then the results of Theorems \ref{thm1} and \ref{thm2} would remain valid (together with Figures \ref{fig_variousk}--\ref{fig_boundary}, for example), with all the arguments in their proofs being essentially the same.  For example, as we will see in Section \ref{section3}, the non-negativity of (the first row of) matrix $M$ is governed by the elements $M_{1,1}$ and $M_{1,m}$ for $a>0$ and $m$ odd---this would change to elements $M_{1,1}$ and $M_{1,2}$ for $a<0$ and $m$ odd.
@@ -980,82 +1059,9 @@ M\left(3,\frac{1}{2},4\right)=\left(
 
 \section{Other discretizations/Conclusions?}\label{SNIEP}
 
-\boxed{\text{MAYBE dknotes.pdf Section 5?}}
+\boxed{\text{MAYBE some sentences from dknotes.tex here?}}
 
-\subsection{Non-negative inverse eigenvalue problems}
- 
-Here we point out a related approach to studying the non-negativity of the family of matrices $M$ in \eqref{Mdualdef}. 
 
-Due to the fact that the eigenvalues of $M$ are known, we can use some theorems developed in the context of \emph{non-negative inverse eigenvalue problems}, where the main question is the following. 
-\begin{center} Find (necessary or sufficient) conditions for a set $\Sigma:=\{\sigma_1,\ldots,\sigma_m\}\subset\mathbb{C}$ to be the spectrum of some non-negative $m \times m$ matrix.
-\end{center}
-In our situation, of course, the eigenvalues of $M(m,\te,\nu)$ also depend on the parameters $\te\in[0,1]$ and $\nu>0$. For this reason, a direct application of such a theorem to extract information on $\te$ and $\nu$ is not straightforward, so below we present only some examples. 
-
-It is known \cite[Chapter 4]{nonnegmatr} that if $\Sigma$ is the spectrum of 
-an $m \times m$ non-negative matrix, then one has,  for example, 
-\begin{equation}\label{sigmampq}
-\forall\, p, q \in\nplus:\quad\quad 0\le \left(\sum_{j=1}^m \sigma_j^{\,p}\right)^q\le m^{q-1} \sum_{j=1}^m \sigma_j^{\,p q}.
-\end{equation}
-\begin{example}\label{example2}
-For $m=5$ and $\te=1$, \eqref{sigmampq} with  $p\in\{1,\ldots,9\}$ and $q\in\{2,3\}$ yields the lower bounds
-\begin{equation}\label{nustartpq}
-\nu\ge \nu_{*}(p,q),
-\end{equation}
-where the approximate values of $\nu_{*}(p,q)$ are given below:
-\[
-\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\nu_{*}(p,q) & p=1 & p=2 & p=3 & p=4 & p=5 & p=6 & p=7 & p=8 & p=9 \\
-\hline
-q=2 & 3.0074 & 1.462 & 0.9669 & 0.7219 & 0.5753 & 0.4778 & 0.4082 & 0.3563 & 0.3160 \\
-\hline
-q=3 & 2.1497 & 1.0269 & 0.6694  & 0.4941 & 0.3907 & 0.3227  & 0.2749  & 0.2393  &  0.2119 \\
-\hline
-\end{array}
-\]
-\end{example}
-Hence the necessary condition \eqref{sigmampq}---valid for \emph{any} non-negative matrix---already 
-implies that there are positive \emph{lower} bounds on $\nu$, although these bounds are not optimal. The precise lower bound, according to Theorem \ref{thm2} with $k=2$ and $\te=1$, is
-\[
-\nu\ge \nu_R(2,1)\approx 4.4111.
-\]
-\begin{remark}
-In the actual computations of the values of $\nu_{*}(p,q)$, we made use of the property 
-\[
-\forall\, r\in\nplus:\quad\quad\sum_{j=1}^m \sigma_j^{\,r}=\mathrm{trace}(M^r)\] 
-to avoid computing the eigenvalues as functions of $\nu$, and to convert \eqref{sigmampq} into
-\begin{equation}\label{48converted}
-\left(\mathrm{trace}(M^p)\right)^q\le m^{q-1} \mathrm{trace}(M^{p q}),
-\end{equation}
-see Figure \ref{fig_eigen1}. The resulting high-degree inequalities in $\nu$ have then been solved: for $p=9$ and $q=3$, for example, the rational functions in $\nu$ on both sides of \eqref{48converted} have numerator and denominator degrees 108.
-
-%\end{remark}
-%\begin{remark}
-In the definition of $\nu_R(2,1)$ in \eqref{nurdef}, the constant $y_R(2)$ can be simplified to a degree 6 algebraic number, and $\nu_R(2,1)$ itself is a degree 3 algebraic number.
-\end{remark}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.5\textwidth]{fig_eigenvalues1.pdf}
-\caption{The right- and left-hand sides of inequality \eqref{48converted}---as functions of $\nu$ with $m=5$, $\te=1$, $p=1$ and $q=2$---are shown as solid and dashed curves, respectively. The positive intersection point of the curves occurs at $\nu_{*}(1,2)\approx 3.0074$.}\label{fig_eigen1}
-\end{center}
-\end{figure}
-
-It is possible to sharpen the lower bounds in \eqref{nustartpq} by making use of some more specific results. 
-In order to facilitate a comparison, we consider again the case $m=5$, $\te=1$. 
-The inequality \eqref{sigmampq} holds for \emph{any} non-negative matrix. However, we know in addition that the matrix $M(5,1,\nu)$ is \emph{circulant}. This leads us to the realm of 
-\emph{structured non-negative inverse eigenvalue problems}. 
-
-The spectra of, for example, non-negative circulant matrices have been characterized in \cite[Theorem 10]{rojosoto}. To keep our
-presentation simple, we do not reproduce this theorem here due to its technical details, only give a short
-overview.
-
-\boxed{\text{LL COMPLETE}}
-... Perron--Frobenius theorem \cite{nonnegmatr}, $\lambda_1$ non-negative real dominant root. 
-
-\begin{remark}
-Interestingly, for $m=4$ and $\te=1$, the application of \cite[Theorem 10]{rojosoto} already shows that $M(4,1,\nu)\ge 0$ cannot hold for any $\nu>0$.
-\end{remark}
 
 
 \begin{thebibliography}{99}
