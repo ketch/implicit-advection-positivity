@@ -4,6 +4,7 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{enumitem}
 
 %% Sets page size and margins
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
@@ -305,47 +306,101 @@ The stability function $R$ for the $\theta$-method \cite[Chapter IV.3]{hairerwan
     R(z)  := \frac{1+(1-\theta)z}{1-\theta z},
 \end{align}
 so with the centered difference in space we get from \eqref{M-entries} for $1\le j\le m$ that
-%\begin{align} \label{firstrow-theta}
-\[
-    M_{1,j} = \frac{1}{m} \sum_{\ell=1}^m \frac{1+(1-\theta)\nu \imath\sin(\xi_\ell)}{1-\theta\nu \imath\sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right).
-\]
-%\end{align}
-Since $ M_{1,j}\in\mathbb{R}$, the imaginary part of the above sum vanishes, so for $1\le j\le m$ we also have
+\begin{equation}\label{matrix_entries}
+\begin{split}
+	M_{1,j} &= \frac{1}{m} \sum_{\ell=1}^m \frac{1+(1-\theta)\nu \imath\sin(\xi_\ell)}
+		{1-\theta\nu \imath\sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right) \\
+		&= \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
+		\cos((j-1)\xi_\ell) - \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)} \\
+		&\quad + \frac{\imath}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)
+		\right)\sin((j-1)\xi_\ell)+ \nu \sin(\xi_\ell)\cos((j-1)\xi_\ell)}
+		{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
+\end{split}
+\end{equation}
+Note that the angles $\{(j-1)\xi_\ell)\}_{\ell=1}^m$ are symmetric about the $x$-axis if $m$ is odd, and
+also if $m$ is even and $j$ is odd.
+If both $m$ and $j$ are even then the angles are symmetric about the origin.
+Therefore, we have that
+\begin{align*}
+	\sum_{\ell=1}^{m} \sin((j-1)\xi_\ell)) = 0 \qquad \text{and} \qquad
+		\sum_{\ell=1}^{m} \sin(\xi_\ell)\cos((j-1)\xi_\ell)) = 0,
+\end{align*}
+for all $1\le j\le m$  and for any value of $m$.
+Moreover the multiplying terms
+$\frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$
+and $\frac{\nu}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$ in \eqref{matrix_entries} keep the symmetry invariant.
+Thus, the imaginary part of \eqref{matrix_entries} vanishes and we get $M_{1,j}\in\mathbb{R}$ for all $j$
+as expected.
+So for $1\le j\le m$ we get
+%Since $ M_{1,j}\in\mathbb{R}$, the imaginary part of the above sum vanishes, so for $1\le j\le m$ we also
+%have
 %\begin{align}\label{firstrow-theta}
 \[
-  M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos((j-1)\xi_\ell)+ \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
+  M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
+  \cos((j-1)\xi_\ell) - \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
 \]
 %\end{align}
-This leads to the following expressions for the first and last entries of the first
+This leads to the following expressions for the first, second and last entries of the first
 row of $M$:
-\begin{align*} 
-    M_{1,1} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}, \\
-    M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos(\xi_\ell)- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
+\begin{align*}
+	M_{1,1} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
+		{1+\theta^2\nu^2\sin^2(\xi_\ell)}, \\
+	M_{1,2} & = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
+		\cos(\xi_\ell) - \nu \sin^2(\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}, \\
+	M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
+		\cos(\xi_\ell) + \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
 \end{align*}
 These entries will have a special role in the forthcoming analysis. 
-
-$\bullet$ For \emph{even} $m=2k\ge 4$, consider the above expression for $M_{1,m}$. The sum over the first term in the numerator vanishes due to symmetry, and $\sin(\xi_1)=0$, so we have
+We distinguish two cases:
+\begin{description}[style=unboxed,leftmargin=0cm]
+\item [\emph{Case 1:} $m$ is \emph{even}.]
+\item \noindent For \emph{even} $m=2k\ge 2$ the entries of matrix $M$ are given by
 \begin{align*}
-    M_{1,m} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
+	M_{1,j} = \begin{cases}
+				\displaystyle
+				\frac{1}{m} \sum_{\ell=2}^{m} \frac{-\nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}
+					{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}, &\mbox{if } j \text{ is even}, \\[20pt]
+				\displaystyle
+				\frac{1}{m} \sum_{\ell=1}^{m}\frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)
+					\right)\cos((j-1)\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}, &\mbox{if } j
+					\text{ is odd}.
+			  \end{cases}
 \end{align*}
+Considering  the above expression for $j = 2$ we have
+\begin{align*}
+    M_{1,2} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
+\end{align*}
+%$\bullet$ For \emph{even} $m=2k\ge 4$, consider the above expression for $M_{1,m}$. The sum over the first term in the numerator vanishes due to symmetry, and $\sin(\xi_1)=0$, so we have
+%\begin{align*}
+%    M_{1,m} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
+%\end{align*}
 Thus this method cannot preserve positivity when $m$ is even, regardless of the values
 of $\theta\in[0,1]$ and $\nu>0$.
 \begin{remark}
-By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
-$M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
+It can be easily seen that for any $m=2k\ge 4$ we have $M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$
+is impossible for $\te\in[0,1]$ and $\nu>0$.
 \end{remark}
-
-$\bullet$ Let us now consider the case of \emph{odd} $m=2k+1\ge 3$. Then $\sin(\xi_\ell)\ne0$ for $2\le\ell\le m$. Writing
+%\begin{remark}
+%By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
+%$M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
+%\end{remark}
+\item [\emph{Case 2:} $m$ is \emph{odd}.]
+\item \noindent Let us now consider the case of \emph{odd} $m=2k+1\ge 3$. Then $\sin(\xi_\ell)\ne0$ for
+$2\le\ell\le m$.
+ Writing
 \begin{align*} 
-    M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
-    M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))\cos((j-1)\xi_\ell)+ \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}\right) \quad (j\ge 2),
+	M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
+		{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
+	M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))
+		\cos((j-1)\xi_\ell) - \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}
+		\right) \quad (j\ge 2),
 \end{align*}
 and taking $\nu \to +\infty$ with $m$ and $\te\in(0,1]$ fixed, we find that
 \begin{align*} 
     M_{1,1}^\infty := \lim_{\nu \to +\infty} M_{1,1} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  1-\frac{m-1}{m\theta}\\
     M_{1,j}^\infty := \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta} \quad\quad (j\ge 2).
 \end{align*}
-We see that 
+We see that
 \[M_{1,j}^\infty>0 \text{ for all } 2\le j\le m \text{ and } \te\in(0,1],
 \]
  while 
@@ -367,21 +422,27 @@ Its partial derivative with respect to $\nu$ is
 \]
 and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$, completing the proof of the claim.\\
 
-
-Summarizing the above, we have proved the following for any $m\ge 3$, $\te\in[0,1]$ and $\nu>0$. 
+Summarizing the above, we have proved the following for any odd number $m\ge 3$, $\te\in[0,1]$ and
+$\nu>0$.
+\end{description}
 \begin{theorem}\label{thm1}
 Consider the advection equation with periodic boundary condition discretized using centered
 differences in space and the $\theta$-method in time with $m$ spatial grid points.  
 The discretization takes the form \eqref{M},
 where\\
 (i) if $m$ is even, then $M$ has at least one negative entry;\\
-(ii) if $m$ is odd and $\theta\in\left[\frac{m-1}{m},1\right]$, then for large enough $\dt$ all entries of $M$ are non-negative.
+(ii) if $m$ is odd and $\theta\in\left[\frac{m-1}{m},1\right]$, then for large CFL numbers $\nu$ all
+entries of $M$ are non-negative.
 \end{theorem}
 
 \noindent\rule{10cm}{0.4pt}\\
 \noindent\rule{10cm}{0.4pt}\\
 \boxed{\text{SOME INTERPRETATION OF THIS THM IS NEED HERE}}\\
 large enough $\dt$ if $\dx$ is fixed, or small enough $\dx$ if $\dt$ is chosen before carrying out spatial discretization
+
+\textbf{Y.H.: In my opinion we could avoid any discussion about $\dt$ or $\dx$ and say that for large
+enough CFL numbers in theorem 1, the matrix $M$ is non-negative.
+In general for hyperbolic problems $\dt$ is proportional to  $\dx$.}
 
 WE CAN emphasize the following again: positivity preservation of the fully discrete numerical solution  
 $\Longleftrightarrow  M\ge 0$
