@@ -354,21 +354,22 @@ These entries will have a special role in the forthcoming analysis.
 We distinguish two cases:
 \begin{description}[style=unboxed,leftmargin=0cm]
 \item [\emph{Case 1:} $m$ is \emph{even}.]
-\item \noindent For \emph{even} $m=2k\ge 2$ the entries of matrix $M$ are given by
+\item \noindent By using similar symmetry arguments as before, we conclude that for \emph{even} $m=2k\ge 4$
+the entries of matrix $M$ are given by
 \begin{align*}
 	M_{1,j} = \begin{cases}
 				\displaystyle
-				\frac{1}{m} \sum_{\ell=2}^{m} \frac{\nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}
-					{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}, &\mbox{if } j \text{ is even}, \\[20pt]
-				\displaystyle
 				\frac{1}{m} \sum_{\ell=1}^{m}\frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)
 					\right)\cos((j-1)\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}, &\mbox{if } j
-					\text{ is odd}.
+					\text{ is odd}, \\[20pt]
+				\displaystyle
+				\frac{1}{m} \sum_{\ell=1}^{m} \frac{\nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}
+					{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}, &\mbox{if } j \text{ is even}.
 			  \end{cases}
 \end{align*}
 Considering  the above expression for $j = m$ we have
 \begin{align*}
-    M_{1,m} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
+    M_{1,m} & =  \frac{1}{m} \sum_{\ell=1}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
 \end{align*}
 %$\bullet$ For \emph{even} $m=2k\ge 4$, consider the above expression for $M_{1,m}$. The sum over the first term in the numerator vanishes due to symmetry, and $\sin(\xi_1)=0$, so we have
 %\begin{align*}
@@ -377,7 +378,7 @@ Considering  the above expression for $j = m$ we have
 Thus this method cannot preserve positivity when $m$ is even, regardless of the values
 of $\theta\in[0,1]$ and $\nu>0$.
 \begin{remark}
-It can be easily seen that for any $m=2k\ge 2$ we have $M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$
+It can be easily seen that for any $m=2k\ge 4$ we have $M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$
 is impossible for $\te\in[0,1]$ and $\nu>0$.
 \end{remark}
 %\begin{remark}
