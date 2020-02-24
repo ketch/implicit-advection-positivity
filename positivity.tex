@@ -52,13 +52,32 @@
 
 
 \title{Positivity of implicit discretizations of the advection equation}
-\author{Yiannis Hadjimichael\thanks{\texttt{@} }\and David I. Ketcheson\thanks{\texttt{@kaust.edu.sa}}\and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. Project no.~ED\_18-1-2019-0030 (Application-specific highly reliable IT solutions) has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme funding scheme.}}
+\author{Yiannis Hadjimichael\thanks{\texttt{@} }\and David I. Ketcheson\thanks{\texttt{david.ketcheson@kaust.edu.sa}}\and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. Project no.~ED\_18-1-2019-0030 (Application-specific highly reliable IT solutions) has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme funding scheme.}}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-In this work we analyze---from the viewpoint of positivity preservation---certain discretizations of a fundamental partial differential equation, the one-dimensional advection equation with periodic boundary condition. The full discretization is obtained by coupling a second-order centered difference scheme in space with an arbitrary $\te$-method in time (including the forward and backward Euler methods, and a second-order method by choosing $\te\in [0,1]$ suitably). The full discretization yields a two-parameter family of circulant matrices $M\in\mathbb{R}^{m\times m}$, 
-where $m$ is the number of spatial grid points, and each matrix entry is a rational function in $\te$ and $\nu$. Here $\nu>0$ denotes the CFL number, being proportional to the ratio between the temporal and spatial discretization step sizes. The entrywise non-negativity of the matrix $M$---which is equivalent to the positivity preservation of the full discretization scheme---is investigated via discrete Fourier analysis and some low-order linear recursions. We get that positivity preservation is impossible for even values of $m$, but the case $m=2k+1$ is more subtle. It turns out, surprisingly, that positivity preservation is recovered for odd values of $m$ provided that $\te\ge 1/2$ and $\nu$ is bounded by two positive constants (the upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and $\nu$ governing non-negativity of the matrix $M$ is explicitly described in terms of roots of certain sparse polynomials. %Finally, some connections with 
+In this work we analyze---from the viewpoint of positivity
+preservation---certain discretizations of a fundamental partial differential
+equation, the one-dimensional advection equation with periodic boundary
+condition. The full discretization is obtained by coupling a second-order
+centered difference scheme in space with an arbitrary $\te$-method in time
+(including the forward and backward Euler methods, and a second-order method by
+choosing $\te\in [0,1]$ suitably). The full discretization yields a
+two-parameter family of circulant matrices $M\in\mathbb{R}^{m\times m}$, 
+where $m$ is the number of spatial grid points, and each matrix entry is a
+rational function in $\te$ and $\nu$. Here $\nu>0$ denotes the CFL number,
+being proportional to the ratio between the temporal and spatial discretization
+step sizes. The entrywise non-negativity of the matrix $M$---which is
+equivalent to the positivity preservation of the full discretization
+scheme---is investigated via discrete Fourier analysis and some low-order
+linear recursions. We get that positivity preservation is impossible for even
+values of $m$, but the case $m=2k+1$ is more subtle. It turns out,
+surprisingly, that positivity preservation is recovered for odd values of $m$
+provided that $\te\ge 1/2$ and $\nu$ is bounded by two positive constants (the
+upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and
+$\nu$ governing non-negativity of the matrix $M$ is explicitly described in
+terms of roots of certain sparse polynomials. %Finally, some connections with 
 %non-negative inverse eigenvalue problems are pointed out.
 \end{abstract}
 \blfootnote{This work was supported by the King Abdullah University of Science and Technology (KAUST), 4700
@@ -68,20 +87,21 @@ Thuwal, 23955-6900, Saudi Arabia.}
 In this work we investigate the positivity of some discretizations of the advection equation
 \begin{subequations} \label{advection}
 \begin{align}
-U_t (x,t)& = a U_x(x,t) \\
-U(x,0) & = U_0(x),
+U_t (x,t)& = a U_x(x,t) & x\in[0,1], t>0, \\
+U(x,0) & = U_0(x), \\
+U(0,t) & = U(1,t),
 \end{align}
 \end{subequations}
 where $U:\mathbb{R}\times [0,+\infty)\to\mathbb{R}$ is the unknown function, $U_0:\mathbb{R}\to\mathbb{R}$ is a given differentiable initial function, and $a>0$ is a constant. 
 The exact solution of the Cauchy problem \eqref{advection}, given by $U(x,t) =
-U_0(x+a t)$, is positivity preserving; i.e.
+U_0(\{x+a t\})$ (where $\{\cdot\}$ denotes the fractional part), is positivity preserving; i.e.
 %\begin{align} \label{implies-positivity}
 \[
 \forall x, \forall t\quad\quad U_0(x) \ge 0 \implies U(x,t) \ge 0.
 \]
 %\end{align}
-This property also holds on a finite domain with periodic boundary
-condition, which will be the setting for this work. \boxed{\text{WE NEED A SENTENCE about the significance of positivity preservation}}
+Positivity is often important in this context, since $U$ may represent a
+concentration or density that cannot be negative.
 
 \begin{remark}
 Following the usual terminology, the term {\emph{positivity}} in the context of {positivity preservation} is always meant in the weak sense; i.e.~it means {\emph{non-negativity}}. 
@@ -92,14 +112,13 @@ Any finite difference semi-discretization of \eqref{advection} yields a system o
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
-where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a Toeplitz matrix \cite[Section 3.1]{matmat}, and $\dx>0$ denotes the spatial discretization step size.  
+where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $\dx>0$ denotes the spatial discretization step size.  
 If one uses an upwind spatial discretization
-%\begin{align}
-\[
-    L_{i,i}  := -1,\quad\quad L_{i,i+1} :=  1,
-\]
-%\end{align}
-\boxed{\text{WHAT WHEN i=m?}} then the exact solution of \eqref{semi-discrete} is also positivity
+\begin{align*}
+    L_{i,i}  & := -1,\quad\quad L_{i,i+1} :=  1 \ \ \ \ 1\le i < m \\
+    L_{m,1} & := 1
+\end{align*}
+then the exact solution of \eqref{semi-discrete} is also positivity
 preserving. Moreover, a corresponding full discretization will be positivity preserving too,
 under an appropriate time step size restriction $0<\dt\le\dt_0$
 if the forward (explicit) Euler method or any strong stability preserving
@@ -108,9 +127,12 @@ method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.
 Since the upwind discretization is only of order one, it is natural to use a more accurate spatial discretization. A second-order scheme is
 obtained with the centered difference
 \begin{align} \label{centered-difference}
-    L_{i,i-1} & := -\frac{1}{2},\quad\quad L_{i,i+1} :=  \frac{1}{2}.
+    L_{i,i-1} & := -\frac{1}{2},\quad\quad L_{i,i+1} :=  \frac{1}{2} \\
+    L_{1,m} & := -\frac{1}{2} \quad \quad L_{m,1} := \frac{1}{2}.
 \end{align}
-\boxed{\text{WHAT WHEN i=m?}} However, this semi-discretization is not positivity preserving, because the matrix $L$ has at least one negative off-diagonal entry \cite[Chapter I, Theorem 7.2]{hundsdorferverwer}.
+However, this semi-discretization is not positivity preserving, because the
+matrix $L$ has at least one negative off-diagonal entry \cite[Chapter I,
+Theorem 7.2]{hundsdorferverwer}.
 This implies that any consistent full discretization based on \eqref{centered-difference}
 must fail to preserve positivity under sufficiently small step sizes $\dt>0$.
 Indeed, a full discretization based on the scheme \eqref{centered-difference}
@@ -192,12 +214,10 @@ step sizes much larger than those suggested by the existing theory.
 
 
 \section{Discrete Fourier analysis}\label{sectiondiscFourier}
-\boxed{\text{WE NEED TO SPECIFY EXACTLY IN WHICH WAY WE SUBDIVIDE $[0,1]$ BY $m$ DISCRETIZATION POINTS.}}\\
-
 From here on, we consider the problem \eqref{advection} on the domain $x\in[0,1]$
 with periodic boundary condition $U(0,t)=U(1,t)$.  Finite difference discretization
-in space leads to \eqref{semi-discrete}, where $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}
-which has the eigendecomposition
+in space leads to \eqref{semi-discrete} with $u_j\approx u(j\dx)$ for $1\le j\le m$. 
+The circulant matrix $L\in\mathbb{R}^{m\times m}$ has the eigendecomposition
 %\begin{align}
 \[
     L  = \cF \Lambda \cF^*,
@@ -432,18 +452,24 @@ differences in space and the $\theta$-method in time with $m$ spatial grid point
 The discretization takes the form \eqref{M},
 where\\
 (i) if $m$ is even, then $M$ has at least one negative entry;\\
-(ii) if $m$ is odd and $\theta\in\left[\frac{m-1}{m},1\right]$, then for large CFL numbers $\nu$, all
+(ii) if $m$ is odd and $\theta\in\left[\frac{m-1}{m},1\right]$, then for large enough $\dt$ all
 entries of $M$ are non-negative.
 \end{theorem}
 
 \noindent\rule{10cm}{0.4pt}\\
 \noindent\rule{10cm}{0.4pt}\\
-\boxed{\text{SOME INTERPRETATION OF THIS THM IS NEED HERE}}\\
-large enough $\dt$ if $\dx$ is fixed, or small enough $\dx$ if $\dt$ is chosen before carrying out spatial discretization
+This result is rather unusual, since in numerical analysis one typically makes
+statements about small enough mesh parameters, and parity is rarely important.
+We see that the full discretization can be positivity preserving only if $m$ is
+odd.  Furthermore, we see that from the point of view of positivity preservation,
+it is better to use larger values of both $\dt$ and $\dx$.
 
 \textbf{Y.H.: In my opinion we could avoid any discussion about $\dt$ or $\dx$ and say that for large
 enough CFL numbers in theorem 1, the matrix $M$ is non-negative.
 In general for hyperbolic problems $\dt$ is proportional to  $\dx$.}
+\textbf{D.K.: Since we reference $m$ we are discussing $\dx$ anyway, and with $m$ fixed then
+$\nu$ and $\dt$ vary proportionally to one another.  I prefer using $\dt$ since then both
+ODE and PDE readers will have a good idea of what we mean.}
 
 WE CAN emphasize the following again: positivity preservation of the fully discrete numerical solution  
 $\Longleftrightarrow  M\ge 0$
