@@ -317,9 +317,9 @@ so with the centered difference in space we get from \eqref{M-entries} for $1\le
 		{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
 \end{split}
 \end{equation}
-Note that the angles $\{(j-1)\xi_\ell)\}_{\ell=1}^m$ are symmetric about the $x$-axis if $m$ is odd, and
+Note that the angles $\{(j-1)\xi_\ell\}_{\ell=1}^m$ are symmetric about the $x$-axis if $m$ is odd, and
 also if $m$ is even and $j$ is odd.
-If both $m$ and $j$ are even then the angles are symmetric about the origin.
+If both $m$ and $j$ are even, then the angles are symmetric about the origin.
 Therefore, we have that
 \begin{align*}
 	\sum_{\ell=1}^{m} \sin((j-1)\xi_\ell)) = 0 \qquad \text{and} \qquad
@@ -328,8 +328,8 @@ Therefore, we have that
 for all $1\le j\le m$  and for any value of $m$.
 Moreover the multiplying terms
 $\frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$
-and $\frac{\nu}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$ in \eqref{matrix_entries} keep the symmetry invariant.
-Thus, the imaginary part of \eqref{matrix_entries} vanishes and yielding $M_{1,j}\in\mathbb{R}$ for all $j$
+and $\frac{\nu}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$ in \eqref{matrix_entries} keep this symmetry.
+Thus, the imaginary part of \eqref{matrix_entries} vanishes, yielding $M_{1,j}\in\mathbb{R}$ for all $j$,
 as expected.
 So for $1\le j\le m$ we get
 %Since $ M_{1,j}\in\mathbb{R}$, the imaginary part of the above sum vanishes, so for $1\le j\le m$ we also
@@ -351,10 +351,10 @@ row of $M$:
 		\cos(\xi_\ell) - \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
 \end{align*}
 These entries will have a special role in the forthcoming analysis. 
-We distinguish two cases:
+We distinguish two cases.
 \begin{description}[style=unboxed,leftmargin=0cm]
-\item [\emph{Case 1:} $m$ is \emph{even}.]
-\item \noindent By using similar symmetry arguments as before, we conclude that for \emph{even} $m=2k\ge 4$
+\item [{Case 1:} $m$ is {even}.]
+\item \noindent By using similar symmetry arguments as before, we conclude that for {even} $m=2k\ge 4$
 the entries of matrix $M$ are given by
 \begin{align*}
 	M_{1,j} = \begin{cases}
@@ -385,8 +385,8 @@ is impossible for $\te\in[0,1]$ and $\nu>0$.
 %By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
 %$M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
 %\end{remark}
-\item [\emph{Case 2:} $m$ is \emph{odd}.]
-\item \noindent Let us now consider the case of \emph{odd} $m=2k+1\ge 3$. Then $\sin(\xi_\ell)\ne0$ for
+\item [{Case 2:} $m$ is {odd}.]
+\item \noindent Let us now consider the case of {odd} $m=2k+1\ge 3$. Then $\sin(\xi_\ell)\ne0$ for
 $2\le\ell\le m$.
  Writing
 \begin{align*} 
@@ -423,7 +423,7 @@ Its partial derivative with respect to $\nu$ is
 \]
 and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$, completing the proof of the claim.\\
 
-Summarizing the above, we have proved the following for any odd number $m\ge 3$, $\te\in[0,1]$ and
+Summarizing the above, we have proved the following for any $m\ge 3$, $\te\in[0,1]$ and
 $\nu>0$.
 \end{description}
 \begin{theorem}\label{thm1}
@@ -432,7 +432,7 @@ differences in space and the $\theta$-method in time with $m$ spatial grid point
 The discretization takes the form \eqref{M},
 where\\
 (i) if $m$ is even, then $M$ has at least one negative entry;\\
-(ii) if $m$ is odd and $\theta\in\left[\frac{m-1}{m},1\right]$, then for large CFL numbers $\nu$ all
+(ii) if $m$ is odd and $\theta\in\left[\frac{m-1}{m},1\right]$, then for large CFL numbers $\nu$, all
 entries of $M$ are non-negative.
 \end{theorem}
 
