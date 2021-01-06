@@ -108,29 +108,36 @@ Following the usual terminology, the term {\emph{positivity}} in the context of 
 \end{remark}
 
 
-Any finite difference semi-discretization of \eqref{advection} yields a system of ODEs
+Finite difference semi-discretization of \eqref{advection} yields a system of ODEs
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
 where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $\dx>0$ denotes the spatial discretization step size.  
 If one uses an upwind spatial discretization
-\begin{align*}
+\begin{subequations}
+\label{upwind1}
+\begin{align} 
     L_{i,i}  & := -1,\quad\quad L_{i,i+1} :=  1 \ \ \ \ 1\le i < m \\
     L_{m,1} & := 1
-\end{align*}
+\end{align}
+\end{subequations}
 then the exact solution of \eqref{semi-discrete} is also positivity
 preserving. Moreover, a corresponding full discretization will be positivity preserving too,
 under an appropriate time step size restriction $0<\dt\le\dt_0$
 if the forward (explicit) Euler method or any strong stability preserving
 method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.  
 
-Since the upwind discretization is only of order one, it is natural to use a more accurate spatial discretization. A second-order scheme is
+The upwind discretization \eqref{upwind1} is only of order one; it is natural
+to use a more accurate spatial discretization. A second-order scheme is
 obtained with the centered difference
-\begin{align} \label{centered-difference}
+\begin{subequations}
+\label{centered-difference}
+\begin{align}
     L_{i,i-1} & := -\frac{1}{2},\quad\quad L_{i,i+1} :=  \frac{1}{2} \\
-    L_{1,m} & := -\frac{1}{2} \quad \quad L_{m,1} := \frac{1}{2}.
+    L_{1,m} & := -\frac{1}{2}, \quad \quad L_{m,1} := \frac{1}{2}.
 \end{align}
-However, this semi-discretization is not positivity preserving, because the
+\end{subequations}
+However, this semi-discretization is not positivity preserving, since the
 matrix $L$ has at least one negative off-diagonal entry \cite[Chapter I,
 Theorem 7.2]{hundsdorferverwer}.
 This implies that any consistent full discretization based on \eqref{centered-difference}
@@ -230,12 +237,12 @@ where the (unitary) matrix of eigenvectors $\cF$ has entries
 \]
 %\end{align}
 and $\Lambda$ is the diagonal matrix of eigenvalues $\lambda_\ell$, which depends on the
-particular finite difference method chosen.  Here $\xi_\ell$ are evenly
-spaced angles such that $\exp(\imath\xi_\ell)$ are the $m$th roots of unity:
+particular finite difference method chosen.  Here $\xi_\ell$ are evenly spaced angles 
 %\begin{align}
 \[
-    \xi_\ell  := \frac{2\pi(\ell-1)}{m} \quad\quad (1 \le \ell \le m).
+    \xi_\ell  := \frac{2\pi(\ell-1)}{m} \quad\quad (1 \le \ell \le m),
 \]
+such that $\exp(\imath\xi_\ell)$ are the $m$th roots of unity.
 %\end{align}
 Applying a one-step time
 discretization with stability function $R:\mathbb{C}\to\mathbb{C}$ to \eqref{semi-discrete} leads to
@@ -268,7 +275,7 @@ In what follows we assume $3\le m\in\nplus$. Consider the case of a 3-point cent
 \]
 %\end{align}
 so that $L\in\mathbb{R}^{m\times m}$ is a circulant matrix with entries $(-1/2, 0, 1/2)$ on the central
-three diagonals,
+three diagonals:
 \begin{equation}\label{Ldef}
 L:=\left(
 \begin{array}{cccccc}
@@ -346,7 +353,7 @@ Therefore, we have that
 		\sum_{\ell=1}^{m} \sin(\xi_\ell)\cos((j-1)\xi_\ell) = 0,
 \end{align*}
 for all $1\le j\le m$  and for any value of $m$.
-Moreover the multiplying terms
+Moreover the factors
 $\frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$
 and $\frac{\nu}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$ in \eqref{matrix_entries} keep this symmetry.
 Thus, the imaginary part of \eqref{matrix_entries} vanishes, yielding $M_{1,j}\in\mathbb{R}$ for all $j$,
@@ -395,12 +402,13 @@ Considering  the above expression for $j = m$ we have
 %\begin{align*}
 %    M_{1,m} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
 %\end{align*}
-Thus this method cannot preserve positivity when $m$ is even, regardless of the values
-of $\theta\in[0,1]$ and $\nu>0$.
-\begin{remark}
-It can be easily seen that for any $m=2k\ge 4$ we have $M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$
-is impossible for $\te\in[0,1]$ and $\nu>0$.
-\end{remark}
+Thus the discretization using centered differences in space and the $\theta$
+method in time cannot preserve positivity when $m$ is even, regardless of the
+values of $\theta\in[0,1]$ and $\nu>0$.
+
+We can arrive at the same conclusion by observing that
+for any $m=2k\ge 4$ we have $M_{1,2}=-M_{1,m}$, so that one of
+these entries must always be negative.
 %\begin{remark}
 %By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
 %$M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
