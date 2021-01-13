@@ -226,9 +226,9 @@ with periodic boundary condition $U(0,t)=U(1,t)$.  Finite difference discretizat
 in space leads to \eqref{semi-discrete} with $u_j\approx u(j\dx)$ for $1\le j\le m$. 
 The circulant matrix $L\in\mathbb{R}^{m\times m}$ has the eigendecomposition
 %\begin{align}
-\[
+\begin{align} \label{eigen}
     L  = \cF \Lambda \cF^*,
-\]
+\end{align}
 %\end{align}
 where the (unitary) matrix of eigenvectors $\cF$ has entries
 %\begin{align}
@@ -1154,6 +1154,30 @@ M\left(3,\frac{1}{2},4\right)=\left(
 
 
 \section{Other discretizations/Conclusions?}\label{SNIEP}
+
+\subsection{Fourier spectral collocation}
+Here we consider the spectral method that results from extending the
+finite difference stencil to include the whole spatial grid.  The resulting
+semi-discretization can again be written in the form \eqref{semi-discrete}
+where the matrix $L$ is given by \eqref{eigen} but now the entries of the
+diagonal matrix $\Lambda$ are
+\begin{align}
+    \lambda_{\ell+1} & = 
+    \begin{cases}
+        \frac{2\pi \ell}{m} & 0 \le \ell \le (m-1)/2 \\
+        0 & \ell = m/2 \\
+        \frac{2\pi (\ell-m)}{m} & (m+1)/2 \le \ell \le m-1.
+    \end{cases}
+\end{align}
+The entries of the first row of this circulant matrix are again
+given by \eqref{M-entries}.  Taking $\theta=1$ (backward Euler)
+and recognizing that the imaginary part vanishes, this leads to
+\begin{align}
+    M_{1j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos(j\xi_\ell) + \nu \lambda_\ell \sin(j\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
+           & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
+\end{align}
+
+blah
 
 \boxed{\text{MAYBE some sentences from dknotes.tex here?}}
 
