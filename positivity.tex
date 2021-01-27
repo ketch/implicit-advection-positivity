@@ -11,6 +11,7 @@
 
 %% Useful packages
 \usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
@@ -85,16 +86,17 @@ Thuwal, 23955-6900, Saudi Arabia.}
 
 \section{Background and motivation}
 In this work we investigate the positivity of some discretizations of the advection equation
-\begin{subequations} \label{advection}
-\begin{align}
-U_t (x,t)& = a U_x(x,t) & x\in[0,1], t>0, \\
+\begin{align}\label{advection}
+\begin{split}
+U_t (x,t)& = a U_x(x,t), \qquad x\in[0,1], t>0, \\
 U(x,0) & = U_0(x), \\
 U(0,t) & = U(1,t),
+\end{split}
 \end{align}
-\end{subequations}
-where $U:\mathbb{R}\times [0,+\infty)\to\mathbb{R}$ is the unknown function, $U_0:\mathbb{R}\to\mathbb{R}$ is a given differentiable initial function, and $a>0$ is a constant. 
-The exact solution of the Cauchy problem \eqref{advection}, given by $U(x,t) =
-U_0(\{x+a t\})$ (where $\{\cdot\}$ denotes the fractional part), is positivity preserving; i.e.
+where $U:\mathbb{R}\times [0,+\infty)\to\mathbb{R}$ is the unknown function,
+$U_0:\mathbb{R}\to\mathbb{R}$ is a given differentiable initial function, and $a>0$ is a constant.
+The exact solution of the Cauchy problem \eqref{advection}, given by $U(x,t) =U_0(\{x+a t\})$ (where
+$\{\cdot\}$ denotes the fractional part), is positivity preserving; i.e.
 %\begin{align} \label{implies-positivity}
 \[
 \forall x, \forall t\quad\quad U_0(x) \ge 0 \implies U(x,t) \ge 0.
@@ -117,8 +119,8 @@ If one uses an upwind spatial discretization
 \begin{subequations}
 \label{upwind1}
 \begin{align} 
-    L_{i,i}  & := -1,\quad\quad L_{i,i+1} :=  1 \ \ \ \ 1\le i < m \\
-    L_{m,1} & := 1
+    L_{i,i}  & \coloneqq -1,\quad\quad L_{i,i+1} \coloneqq  1 \ \ \ \ 1\le i < m \\
+    L_{m,1} & \coloneqq 1
 \end{align}
 \end{subequations}
 then the exact solution of \eqref{semi-discrete} is also positivity
@@ -133,8 +135,8 @@ obtained with the centered difference
 \begin{subequations}
 \label{centered-difference}
 \begin{align}
-    L_{i,i-1} & := -\frac{1}{2},\quad\quad L_{i,i+1} :=  \frac{1}{2} \\
-    L_{1,m} & := -\frac{1}{2}, \quad \quad L_{m,1} := \frac{1}{2}.
+    L_{i,i-1} & \coloneqq -\frac{1}{2},\quad\quad L_{i,i+1} \coloneqq  \frac{1}{2} \\
+    L_{1,m} & \coloneqq -\frac{1}{2}, \quad \quad L_{m,1} \coloneqq \frac{1}{2}.
 \end{align}
 \end{subequations}
 However, this semi-discretization is not positivity preserving, since the
@@ -230,17 +232,17 @@ The circulant matrix $L\in\mathbb{R}^{m\times m}$ has the eigendecomposition
     L  = \cF \Lambda \cF^*,
 \end{align}
 %\end{align}
-where the (unitary) matrix of eigenvectors $\cF$ has entries
+where the (unitary) matrix of normalized eigenvectors $\cF$ has entries
 %\begin{align}
 \[
-    f_{j,\ell}  := \frac{1}{\sqrt{m}}\exp(\imath  (j-1) \xi_\ell)  \quad\quad (1 \le j, \ell \le m),
+    f_{j,\ell}  \coloneqq \frac{1}{\sqrt{m}}\exp(\imath j \xi_\ell)  \quad\quad (1 \le j, \ell \le m),
 \]
 %\end{align}
 and $\Lambda$ is the diagonal matrix of eigenvalues $\lambda_\ell$, which depends on the
 particular finite difference method chosen.  Here $\xi_\ell$ are evenly spaced angles 
 %\begin{align}
 \[
-    \xi_\ell  := \frac{2\pi(\ell-1)}{m} \quad\quad (1 \le \ell \le m),
+    \xi_\ell  \coloneqq \frac{2\pi \ell}{m} \quad\quad (1 \le \ell \le m),
 \]
 such that $\exp(\imath\xi_\ell)$ are the $m$th roots of unity.
 %\end{align}
@@ -261,13 +263,13 @@ Then it is easily seen that
 \]
 For one-step methods, $R$ is a rational function, and products and inverses of circulant matrices are also circulant \cite[Fact 5.16.7]{matmat}, so
 $M$ is also a real, circulant matrix.
-Thus it is defined completely by the entries of its first row, which
+Thus it is defined completely by the entries of its last row, which
 are given by
 \begin{align} \label{M-entries}
-    M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m R(\nu\lambda_\ell) \exp(-\imath(j-1)\xi_\ell) \quad\quad (1\le j\le m).
+    M_{m,j} & = \frac{1}{m} \sum_{\ell=1}^m R(\nu\lambda_\ell) \exp(-\imath j \xi_\ell) \quad\quad (1\le j\le m).
 \end{align}
 
-\subsection{Centered in space, $\theta$-method in time}\label{sectioncentered}
+\subsection{Second-order centered discretization in space, $\theta$-method in time}\label{sectioncentered}
 In what follows we assume $3\le m\in\nplus$. Consider the case of a 3-point centered difference approximation in space:
 %\begin{align}
 \[
@@ -330,52 +332,52 @@ It is known that the eigenvalues of $L$ are
 %Meanwhile, if $m$ is odd...
 The stability function $R$ for the $\theta$-method \cite[Chapter IV.3]{hairerwanner} is
 \begin{align}\label{R}
-    R(z)  := \frac{1+(1-\theta)z}{1-\theta z},
+    R(z)  \coloneqq \frac{1+(1-\theta)z}{1-\theta z},
 \end{align}
 so with the centered difference in space we get from \eqref{M-entries} for $1\le j\le m$ that
 \begin{equation}\label{matrix_entries}
 \begin{split}
-	M_{1,j} &= \frac{1}{m} \sum_{\ell=1}^m \frac{1+(1-\theta)\nu \imath\sin(\xi_\ell)}
-		{1-\theta\nu \imath\sin(\xi_\ell)}\exp\left(-\imath(j-1)\xi_\ell\right) \\
+	M_{m,j} &= \frac{1}{m} \sum_{\ell=1}^m \frac{1+(1-\theta)\nu \imath\sin(\xi_\ell)}
+		{1-\theta\nu \imath\sin(\xi_\ell)}\exp\left(-\imath j \xi_\ell\right) \\
 		&= \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
-		\cos((j-1)\xi_\ell) + \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)} \\
+		\cos(j\xi_\ell) + \nu \sin(\xi_\ell)\sin(j\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)} \\
 		&\quad - \frac{\imath}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)
-		\right)\sin((j-1)\xi_\ell) - \nu \sin(\xi_\ell)\cos((j-1)\xi_\ell)}
+		\right)\sin(j\xi_\ell) - \nu \sin(\xi_\ell)\cos(j\xi_\ell)}
 		{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
 \end{split}
 \end{equation}
-Note that the angles $\{(j-1)\xi_\ell\}_{\ell=1}^m$ are symmetric about the $x$-axis if $m$ is odd, and
+Note that the angles $\{j\xi_\ell\}_{\ell=1}^m$ are symmetric about the $x$-axis if $m$ is odd, and
 also if $m$ is even and $j$ is odd.
 If both $m$ and $j$ are even, then the angles are symmetric about the origin.
 Therefore, we have that
 \begin{align*}
-	\sum_{\ell=1}^{m} \sin((j-1)\xi_\ell) = 0 \qquad \text{and} \qquad
-		\sum_{\ell=1}^{m} \sin(\xi_\ell)\cos((j-1)\xi_\ell) = 0,
+	\sum_{\ell=1}^{m} \sin(j\xi_\ell) = 0 \qquad \text{and} \qquad
+		\sum_{\ell=1}^{m} \sin(\xi_\ell)\cos(j\xi_\ell) = 0,
 \end{align*}
 for all $1\le j\le m$  and for any value of $m$.
 Moreover the factors
 $\frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$
 and $\frac{\nu}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}$ in \eqref{matrix_entries} keep this symmetry.
-Thus, the imaginary part of \eqref{matrix_entries} vanishes, yielding $M_{1,j}\in\mathbb{R}$ for all $j$,
+Thus, the imaginary part of \eqref{matrix_entries} vanishes, yielding $M_{m,j}\in\mathbb{R}$ for all $j$,
 as expected.
 So for $1\le j\le m$ we get
-%Since $ M_{1,j}\in\mathbb{R}$, the imaginary part of the above sum vanishes, so for $1\le j\le m$ we also
+%Since $ M_{m,j}\in\mathbb{R}$, the imaginary part of the above sum vanishes, so for $1\le j\le m$ we also
 %have
 %\begin{align}\label{firstrow-theta}
 \[
-  M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
-  \cos((j-1)\xi_\ell) + \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
+  M_{m,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
+  \cos(j\xi_\ell) + \nu \sin(\xi_\ell)\sin(j\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
 \]
 %\end{align}
 This leads to the following expressions for the first, second and last entries of the first
 row of $M$:
 \begin{align*}
-	M_{1,1} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
-		{1+\theta^2\nu^2\sin^2(\xi_\ell)}, \\
-	M_{1,2} & = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
+	M_{m,1} & = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
 		\cos(\xi_\ell) + \nu \sin^2(\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}, \\
-	M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
-		\cos(\xi_\ell) - \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}.
+	M_{m,m-1} & = \frac{1}{m} \sum_{\ell=1}^m \frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)\right)
+		\cos(\xi_\ell) - \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}, \\
+	M_{m,m} & = \frac{1}{m} \sum_{\ell=1}^m \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
+		{1+\theta^2\nu^2\sin^2(\xi_\ell)}.
 \end{align*}
 These entries will have a special role in the forthcoming analysis. 
 We distinguish two cases.
@@ -384,63 +386,63 @@ We distinguish two cases.
 \item \noindent By using similar symmetry arguments as before, we conclude that for {even} $m=2k\ge 4$
 the entries of matrix $M$ are given by
 \begin{align*}
-	M_{1,j} = \begin{cases}
+	M_{m,j} = \begin{cases}
+				\displaystyle
+				\frac{1}{m} \sum_{\ell=1}^{m} \frac{\nu \sin(\xi_\ell)\sin(j\xi_\ell)}
+					{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}, &\mbox{if } j \text{ is odd}, \\[20pt]
 				\displaystyle
 				\frac{1}{m} \sum_{\ell=1}^{m}\frac{\left(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)
-					\right)\cos((j-1)\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}, &\mbox{if } j
-					\text{ is odd}, \\[20pt]
-				\displaystyle
-				\frac{1}{m} \sum_{\ell=1}^{m} \frac{\nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}
-					{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}, &\mbox{if } j \text{ is even}.
+					\right)\cos(j\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}, &\mbox{if } j
+					\text{ is even},
 			  \end{cases}
 \end{align*}
-Considering  the above expression for $j = m$ we have
+Considering  the above expression for $j = m-1$ we have
 \begin{align*}
-    M_{1,m} & =  \frac{1}{m} \sum_{\ell=1}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
+    M_{m,m-1} & =  \frac{1}{m} \sum_{\ell=1}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
 \end{align*}
-%$\bullet$ For \emph{even} $m=2k\ge 4$, consider the above expression for $M_{1,m}$. The sum over the first term in the numerator vanishes due to symmetry, and $\sin(\xi_1)=0$, so we have
+%$\bullet$ For \emph{even} $m=2k\ge 4$, consider the above expression for $M_{m,m-1}$. The sum over the first term in the numerator vanishes due to symmetry, and $\sin(\xi_1)=0$, so we have
 %\begin{align*}
-%    M_{1,m} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
+%    M_{m,m-1} & =  \frac{1}{m} \sum_{\ell=2}^{m} \frac{- \nu \sin^2 (\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)} < 0.
 %\end{align*}
 Thus the discretization using centered differences in space and the $\theta$
 method in time cannot preserve positivity when $m$ is even, regardless of the
 values of $\theta\in[0,1]$ and $\nu>0$.
 
 We can arrive at the same conclusion by observing that
-for any $m=2k\ge 4$ we have $M_{1,2}=-M_{1,m}$, so that one of
+for any $m=2k\ge 4$ we have $M_{m,1}=-M_{m,m-1}$, so that one of
 these entries must always be negative.
 %\begin{remark}
 %By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
-%$M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
+%$M_{m,1}=-M_{m,m-1}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
 %\end{remark}
 \item [{Case 2:} $m$ is {odd}.]
 \item \noindent Let us now consider the case of {odd} $m=2k+1\ge 3$. Then $\sin(\xi_\ell)\ne0$ for
 $2\le\ell\le m$.
  Writing
-\begin{align*} 
-	M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
-		{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
-	M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))
-		\cos((j-1)\xi_\ell) + \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}
-		\right) \quad (j\ge 2),
+\begin{align*}
+	M_{m,j} &= \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))
+		\cos(j\xi_\ell) + \nu \sin(\xi_\ell)\sin(j\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}
+		\right) \quad ( 1 \le j \le m-1), \\
+	M_{m,m} &= \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
+		{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right),
 \end{align*}
 and taking $\nu \to +\infty$ with $m$ and $\te\in(0,1]$ fixed, we find that
 \begin{align*} 
-    M_{1,1}^\infty := \lim_{\nu \to +\infty} M_{1,1} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  1-\frac{m-1}{m\theta}\\
-    M_{1,j}^\infty := \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta} \quad\quad (j\ge 2).
+    M_{m,j}^\infty &\coloneqq \lim_{\nu \to +\infty} M_{m,j} = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos(j\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta} \quad\quad ( 1 \le j \le m-1), \\
+    M_{m,m}^\infty &\coloneqq \lim_{\nu \to +\infty} M_{m,m} = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  1-\frac{m-1}{m\theta}.
 \end{align*}
 We see that
-\[M_{1,j}^\infty>0 \text{ for all } 2\le j\le m \text{ and } \te\in(0,1],
+\[M_{m,j}^\infty>0 \text{ for all } 1\le j\le m-1 \text{ and } \te\in(0,1],
 \]
  while 
-\[M_{1,1}^\infty>0 \quad\Longleftrightarrow\quad \theta>\frac{m-1}{m}.
+\[M_{m,m}^\infty>0 \quad\Longleftrightarrow\quad \theta>\frac{m-1}{m}.
 \]
 Thus for fixed $m\ge 3$ and $\theta>\frac{m-1}{m}$, the matrix $M$ is non-negative 
 if $\nu>0$ is large enough.
 
 We now show that $M\ge 0$ also holds for $\theta=\frac{m-1}{m}$ with $m$ fixed and for $\nu>0$ large enough. 
-Clearly, we only need to verify the non-negativity of entry $M_{1,1}$ for $\nu>0$ large enough. 
-In fact, for $\theta=\frac{m-1}{m}$ and for \emph{any} $\nu>0$ we have $M_{1,1}> 0$. To see this, consider a summand with $2\le\ell\le m$ in $M_{1,1}$: 
+Clearly, we only need to verify the non-negativity of entry $M_{m,m}$ for $\nu>0$ large enough.
+In fact, for $\theta=\frac{m-1}{m}$ and for \emph{any} $\nu>0$ we have $M_{m,m}> 0$. To see this, consider a summand with $2\le\ell\le m$ in $M_{m,m}$:
 \[
  \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\Big|_{\theta=\frac{m-1}{m}}=
  \frac{m^2-(m-1) \nu ^2 \sin ^2\left(\xi _\ell\right)}{m^2+(m-1)^2 \nu ^2 \sin ^2\left(\xi _\ell\right)}=:\varphi(\nu,\ell).
@@ -449,7 +451,7 @@ Its partial derivative with respect to $\nu$ is
 \[
 \partial_\nu\varphi(\nu,\ell)=-\frac{2 (m-1) m^3 \nu  \sin ^2\left(\xi _\ell\right)}{\left(m^2+(m-1)^2 \nu ^2 \sin ^2\left(\xi _\ell\right)\right)^2}<0,
 \]
-and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$, completing the proof of the claim.\\
+and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{m,m}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{m,m}^\infty=0$, completing the proof of the claim.\\
 
 Summarizing the above, we have proved the following for any $m\ge 3$, $\te\in[0,1]$ and
 $\nu>0$.
@@ -472,12 +474,12 @@ We see that the full discretization can be positivity preserving only if $m$ is
 odd.  Furthermore, we see that from the point of view of positivity preservation,
 it is better to use larger values of both $\dt$ and $\dx$.
 
-\textbf{Y.H.: In my opinion we could avoid any discussion about $\dt$ or $\dx$ and say that for large
-enough CFL numbers in theorem 1, the matrix $M$ is non-negative.
-In general for hyperbolic problems $\dt$ is proportional to  $\dx$.}
-\textbf{D.K.: Since we reference $m$ we are discussing $\dx$ anyway, and with $m$ fixed then
-$\nu$ and $\dt$ vary proportionally to one another.  I prefer using $\dt$ since then both
-ODE and PDE readers will have a good idea of what we mean.}
+%\textbf{Y.H.: In my opinion we could avoid any discussion about $\dt$ or $\dx$ and say that for large
+%enough CFL numbers in theorem 1, the matrix $M$ is non-negative.
+%In general for hyperbolic problems $\dt$ is proportional to  $\dx$.}
+%\textbf{D.K.: Since we reference $m$ we are discussing $\dx$ anyway, and with $m$ fixed then
+%$\nu$ and $\dt$ vary proportionally to one another.  I prefer using $\dt$ since then both
+%ODE and PDE readers will have a good idea of what we mean.}
 
 WE CAN emphasize the following again: positivity preservation of the fully discrete numerical solution  
 $\Longleftrightarrow  M\ge 0$
@@ -571,7 +573,7 @@ As we will see, the precise lower bound for this matrix---according to our Theor
 \end{remark}
 
 \begin{remark}
-It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ instead, then the results of Theorems \ref{thm1} and \ref{thm2} would remain valid (together with Figures \ref{fig_variousk}--\ref{fig_boundary}, for example), with all the arguments in their proofs being essentially the same.  For example, as we will see in Section \ref{section3}, the non-negativity of (the first row of) matrix $M$ is governed by the elements $M_{1,1}$ and $M_{1,m}$ for $a>0$ and $m$ odd---this would change to elements $M_{1,1}$ and $M_{1,2}$ for $a<0$ and $m$ odd.
+It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ instead, then the results of Theorems \ref{thm1} and \ref{thm2} would remain valid (together with Figures \ref{fig_variousk}--\ref{fig_boundary}, for example), with all the arguments in their proofs being essentially the same.  For example, as we will see in Section \ref{section3}, the non-negativity of (the last row of) matrix $M$ is governed by the elements $M_{m,m}$ and $M_{m,m-1}$ for $a>0$ and $m$ odd---this would change to elements $M_{m,m}$ and $M_{m,1}$ for $a<0$ and $m$ odd.
 \end{remark}
 
 %\subsection{Structured non-negative inverse eigenvalue problems}
@@ -605,11 +607,11 @@ m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
 
 
 
-To illustrate the structure of $M$, we present its first row (as a vector, and with the common denominator of the entries in front of it) for the smallest values of $m$. 
+To illustrate the structure of $M$, we present its last row (as a vector, and with the common denominator of the entries in front of it) for the smallest values of $m$.
 \begin{example}\label{example1} 
 %For $m=2$, 
 %\[\frac{1}{{\theta ^2 \nu ^2}/{4}+1}\left(-\frac{1}{4} \theta ^2 \nu ^2+\frac{\theta  \nu ^2}{4}+1,\theta  \nu -\frac{\nu }{2}\right),\]
-For $m=3$ the first row of \eqref{Mdef} is 
+For $m=3$ the last row of \eqref{Mdef} is
 \[
 \frac{1}{{3 \theta ^2 \nu ^2}/{4}+1}\left(\frac{3 \theta ^2 \nu ^2}{4}-\frac{\theta  \nu ^2}{2}+1,\frac{\theta  \nu ^2}{4}+\frac{\nu }{2},\frac{\theta  \nu ^2}{4}-\frac{\nu }{2}\right),
 \]
@@ -635,7 +637,7 @@ where $\cP_{j,k}$ and $\cD_{k}$ are certain bivariate polynomials in $\te$ and $
 \cD_k:=\det\left(I_{(2k+1)\times(2k+1)}-\te\nu L_{(2k+1)\times(2k+1)}\right).
 \end{equation}
 \begin{remark}
-The subscripts of $\cP_{j,k}$ thus refer to the position of the polynomial within the first row of $M$, and the size of $M\in\mathbb{R}^{(2k+1)\times(2k+1)}$, respectively.
+The subscripts of $\cP_{j,k}$ thus refer to the position of the polynomial within the last row of $M$, and the size of $M\in\mathbb{R}^{(2k+1)\times(2k+1)}$, respectively.
 \end{remark}
 
 
@@ -675,7 +677,7 @@ and
 \begin{equation}\label{fromytonu}
 \nu=\frac{2y}{1-y^2}\cdot\frac{1}{\te}
 \end{equation}
-are easily verified. We can now start describing the entries of the first row of $M$.
+are easily verified. We can now start describing the entries of the last row of $M$.
 \begin{remark}
 Although the expressions $\cP_{j,k}$ and $\cD_{k}$ will become in general rational functions in the variable $y$, we still call them polynomials (referring to their structure in the original variables $\te$ and $\nu$). 
 \end{remark}
@@ -769,7 +771,7 @@ For the initial conditions of this final recursion, we use the general forms of 
 \end{equation}
 where the polynomials $P_{j,k}$ are defined as
 \begin{equation}\label{Pjky}
-P_{j,k}(y):=(-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}.
+P_{j,k}(y)\coloneqq(-1)^{j-1} y^{4 k+2-j}+y^{2 k-1+j}+(-1)^j y^{2 k+1-j}+y^{j-2}.
 \end{equation}
 As a special case, we set
 \[
@@ -909,7 +911,7 @@ On the other hand, for fixed $k\in\nplus$, the function $\left(0,\frac{2k}{2k+1}
 \begin{proof}
 We notice that the expression $\Pol$ is linear in $\te$, so by setting 
 \[
-\Theta(y,k):=\frac{2 y^2 \left(1-y^{4 k}\right)}{\left(1+y^2\right) \left(1-y^{4 k+2}\right)},
+\Theta(y,k)\coloneqq\frac{2 y^2 \left(1-y^{4 k}\right)}{\left(1+y^2\right) \left(1-y^{4 k+2}\right)},
 \]
 we easily get for any $y\in(0,1)$ that
 \begin{equation}\label{lem4equi}
@@ -952,7 +954,7 @@ We finally discuss the monotonicity and limit properties of the root $\yl$. For 
    k+6}\right)}>0.
 \]
 This implies that, for any fixed $\te\in\left(0,\frac{2k}{2k+1}\right)$, the function $k\mapsto\yl$ is strictly decreasing. Moreover, for fixed $y\in(0,1)$, we see from the definition that $\lim_{k\to+\infty} \Theta(y,k)=\frac{2 y^2}{1+y^2}$,
-so, due to \eqref{lem4equi} with ``equality'', one has for fixed $\te\in\left(0,\frac{2k}{2k+1}\right)$ that $y_{\infty}(\te):=\lim_{k\to+\infty} \yl$ solves $\te=\frac{2 y_{\infty}(\te)^2}{1+y_{\infty}(\te)^2}$; in other words, $y_{\infty}(\te)=\sqrt{\frac{\te}{2-\te}}\in(0,1)$. To show the validity of the last sentence of the lemma, we fix $k\in\nplus$, and simply take into account again \eqref{lem4equi} with ``equality'', \eqref{lem4lim} and \eqref{Thetaincr}.
+so, due to \eqref{lem4equi} with ``equality'', one has for fixed $\te\in\left(0,\frac{2k}{2k+1}\right)$ that $y_{\infty}(\te)\coloneqq\lim_{k\to+\infty} \yl$ solves $\te=\frac{2 y_{\infty}(\te)^2}{1+y_{\infty}(\te)^2}$; in other words, $y_{\infty}(\te)=\sqrt{\frac{\te}{2-\te}}\in(0,1)$. To show the validity of the last sentence of the lemma, we fix $k\in\nplus$, and simply take into account again \eqref{lem4equi} with ``equality'', \eqref{lem4lim} and \eqref{Thetaincr}.
 \end{proof}
 \begin{figure}
 \begin{center}
@@ -1136,7 +1138,7 @@ Finally, for $\te=1$, $\nu_L(k,1)=+\infty$ and we can use Corollary \ref{cor5} (
 
 \begin{remark}
 The ``lower left corner point'' of each shaded region in Figure \ref{fig_variousk} corresponds to a pair 
-$(\te,\nu)$  for which $\nu=\nur=\nul$. This means that here the leftmost and the rightmost entries of the first row of $M(2k+1,\te,\nu)$ simultaneously vanish (and the other entries are non-negative). For $k=1$, this happens for $\te=\te_1=1/2$ and $\nu=4$; the corresponding matrix is
+$(\te,\nu)$  for which $\nu=\nur=\nul$. This means that here the leftmost and the rightmost entries of the last row of $M(2k+1,\te,\nu)$ simultaneously vanish (and the other entries are non-negative). For $k=1$, this happens for $\te=\te_1=1/2$ and $\nu=4$; the corresponding matrix is
 \begin{equation}\label{rem10thetahalfmatrix}
 M\left(3,\frac{1}{2},4\right)=\left(
 \begin{array}{ccc}
@@ -1162,18 +1164,23 @@ semi-discretization can again be written in the form \eqref{semi-discrete}
 where the matrix $L$ is given by \eqref{eigen} but now the entries of the
 diagonal matrix $\Lambda$ are
 \begin{align}
-    \lambda_{\ell+1} & = 
+    \lambda_\ell & =
     \begin{cases}
-        \frac{2\pi \ell}{m} & 0 \le \ell \le (m-1)/2 \\
-        0 & \ell = m/2 \\
-        \frac{2\pi (\ell-m)}{m} & (m+1)/2 \le \ell \le m-1.
+        -\imath \xi_\ell, & 1 \le \ell < m/2, \\
+        0, & \ell = m/2 \text{ and } m \text{ is even,} \\
+        \imath(2\pi - \xi_\ell), & m/2 < \ell \le m.
     \end{cases}
 \end{align}
-The entries of the first row of this circulant matrix are again
-given by \eqref{M-entries}.  Taking $\theta=1$ (backward Euler)
+The entries of the last row of this circulant matrix are again
+given by \eqref{M-entries} and take the form
+\begin{align}
+	M_{m,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+  \cos(j\xi_\ell) + \nu\lambda_\ell\sin(j\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
+\end{align}
+Taking $\theta=1$ (backward Euler)
 and recognizing that the imaginary part vanishes, this leads to
 \begin{align}
-    M_{1j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos(j\xi_\ell) + \nu \lambda_\ell \sin(j\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
+    M_{m,j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos(j\xi_\ell) + \nu \lambda_\ell \sin(j\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
            & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
 \end{align}
 
