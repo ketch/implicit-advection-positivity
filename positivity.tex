@@ -227,16 +227,14 @@ with periodic boundary condition $U(0,t)=U(1,t)$.  Finite difference discretizat
 in space leads to \eqref{semi-discrete} with $u_j\approx u(j\dx)$ for $1\le j\le m$. 
 The circulant matrix $L\in\mathbb{R}^{m\times m}$ has the eigendecomposition
 %\begin{align}
-\begin{align} \label{eigen}
+\begin{align}\label{eigen}
     L  = \cF \Lambda \cF^*,
 \end{align}
 %\end{align}
 where the (unitary) matrix of normalized eigenvectors $\cF$ has entries
-%\begin{align}
-\[
+\begin{align}\label{eigenvectrors}
     f_{j,\ell}  \coloneqq \frac{1}{\sqrt{m}}\exp(\imath  (j-1) \xi_\ell)  \quad\quad (1 \le j, \ell \le m),
-\]
-%\end{align}
+\end{align}
 and $\Lambda$ is the diagonal matrix of eigenvalues $\lambda_\ell$, which depends on the
 particular finite difference method chosen.  Here $\xi_\ell$ are evenly spaced angles 
 %\begin{align}
@@ -248,7 +246,7 @@ such that $\exp(\imath\xi_\ell)$ are the $m$th roots of unity.
 Applying a one-step time
 discretization with stability function $R:\mathbb{C}\to\mathbb{C}$ to \eqref{semi-discrete} leads to
 the iteration
-\begin{align} \label{M}
+\begin{align}\label{M}
     u^{n+1} & = M u^n,
 \end{align}
 where 
@@ -1160,32 +1158,52 @@ M\left(3,\frac{1}{2},4\right)=\left(
 Here we consider the spectral method that results from extending the
 finite difference stencil to include the whole spatial grid.  The resulting
 semi-discretization can again be written in the form \eqref{semi-discrete}
-where the matrix $L$ is given by \eqref{eigen} but now the entries of the
-diagonal matrix $\Lambda$ are
+where the matrix $L$ takes the form
+\begin{align*}
+	L_{i,j} = \begin{cases}
+						0 & \text{if } i = j, \\[10pt]
+						\dfrac{\pi}{m}(-1)^{i+j}\cot{\!\left(\frac{(i-j)\pi}{m}\right)} & \text{if } i \neq j,
+					\end{cases}
+\end{align*}
+for even collocation, and
+\begin{align*}
+	L_{i,j} = \begin{cases}
+						0 & \text{if } i = j, \\[10pt]
+						\dfrac{\pi}{m}(-1)^{i+j}\csc{\!\left(\frac{(i-j)\pi}{m}\right)} & \text{if } i \neq j,
+					\end{cases}
+\end{align*}
+for odd collocation methods.
+As in section \ref{sectiondiscFourier} the spectral collocation matrices have an eigendecomposition given by
+\eqref{eigen}, with eigenvectors \eqref{eigenvectrors} but now the entries of the diagonal matrix $\Lambda$ are
 \begin{align}
-    \lambda_\ell & =
+    \imath\lambda_\ell & =
     \begin{cases}
-        \imath\xi_\ell, & 1 \le \ell \le \frac{m}{2}+1 \\
-        0, & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
-        \imath(\xi_\ell - 2\pi), & \frac{m}{2}+1 \le \ell \le m.
+        \imath\xi_\ell & 1 \le \ell \le \frac{m}{2}+1, \\
+        0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
+        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 \le \ell \le m.
     \end{cases}
 \end{align}
-The entries of the first row of this circulant matrix are again
-given by \eqref{M-entries} and take the form
+The entries of the first row of this circulant matrix are again given by \eqref{M-entries} and for the
+$\theta$-method take the form
 \begin{align}
 	M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos((j-1)\xi_\ell) + \nu\lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
 \end{align}
-Taking $\theta=1$ (backward Euler)
-and recognizing that the imaginary part vanishes, this leads to
-\begin{align}
-    M_{1,j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos((j-1)\xi_\ell) + \nu \lambda_\ell \sin((j-1)\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
-           & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
-\end{align}
-
-\boxed{\text{MAYBE some sentences from dknotes.tex here?}}
-
-
+%Taking $\theta=1$ (backward Euler)
+%and recognizing that the imaginary part vanishes, this leads to
+%\begin{align}
+%    M_{1,j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos((j-1)\xi_\ell) + \nu \lambda_\ell \sin((j-1)\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
+%           & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
+%\end{align}
+Similarly to section \ref{sectiondiscFourier} we can distinguish between even and odd sizes of the discretization
+matrices.
+When $m$ is even we conclude that
+\begin{align*}
+    M_{1,2}=\frac{1}{m} \sum_{\ell=1}^{m}\frac{\nu \lambda_\ell \sin(\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}
+    = -M_{1,m}
+\end{align*}
+and therefore fourrier spectral collocation in space and the $\theta$ method in time cannot preserve positivity, 
+regardless of the values of $\theta\in[0,1]$ and $\nu>0$.
 
 
 \begin{thebibliography}{99}
