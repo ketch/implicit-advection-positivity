@@ -1197,14 +1197,12 @@ $\theta$-method take the form
 %\end{align}
 Similarly to section \ref{sectiondiscFourier} we can distinguish between even and odd sizes of the discretization
 matrices.
-When $m$ is even we conclude that
+When $m$ is even we have that
 \begin{align*}
-    M_{1,2}=\frac{1}{m} \sum_{\ell=1}^{m}\frac{\nu \lambda_\ell \sin(\xi_\ell)}{1+\theta^2\nu^2 \sin^2 (\xi_\ell)}
-    = -M_{1,m}
+  M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2},
 \end{align*}
-and therefore fourrier spectral collocation in space and the $\theta$ method in time cannot preserve positivity, 
-regardless of the values of $\theta\in[0,1]$ and $\nu>0$.
-
+and it turns out that $M_{1,m} <0$ for any value of $\theta\in[0,1]$ and $\nu>0$; hence the Fourier spectral collocation in space and the $\theta$ method in time cannot preserve positivity.
 
 \begin{thebibliography}{99}
 
