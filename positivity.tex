@@ -181,7 +181,7 @@ In Section \ref{explsect} ...  To reveal more information on the signs of the ma
 The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well.\\
 \boxed{\text{LL POINT OUT: Corollary 1, asymptotic bounds, and the relevant figures, definitions}}
 
-Finally, in Section \ref{SNIEP} ...\\
+Finally, in Section \ref{otherdisc} ...\\
 
 The computations in this work have been carried out by using Wolfram \textit{Mathematica} version 11.
 
@@ -218,6 +218,14 @@ and SSP methods. These results provide a theoretical basis for some empirical ob
 step sizes much larger than those suggested by the existing theory.
 --------------------------------------------------------------------------------\\
 
+We have chosen the $\theta$-method (where $\theta\in[0,1]$ is a fixed parameter) as time discretization because it is one of the simplest families of numerical methods, also containing the explicit and implicit Euler schemes.  The explicit and implicit Euler methods are recovered when $\theta=0$ and $\theta=1$, respectively. The $\theta$-method has order 1 for $\theta\ne 1/2$, and has order 2 for $\theta=1/2$.
+--------------------------------------------------------------------------------\\
+
+Final sentence: possible future directions: investigate also higher-order time discretizations.
+--------------------------------------------------------------------------------\\
+
+
+
 
 
 
@@ -238,9 +246,9 @@ where the (unitary) matrix of normalized eigenvectors $\cF$ has entries
 and $\Lambda$ is the diagonal matrix of eigenvalues $\lambda_\ell$, which depends on the
 particular finite difference method chosen.  Here $\xi_\ell$ are evenly spaced angles 
 %\begin{align}
-\[
+\begin{equation}\label{xildef}
     \xi_\ell  \coloneqq \frac{2\pi(\ell-1)}{m} \quad\quad (1 \le \ell \le m),
-\]
+\end{equation}
 such that $\exp(\imath\xi_\ell)$ are the $m$th roots of unity.
 %\end{align}
 Applying a one-step time
@@ -1152,13 +1160,42 @@ M\left(3,\frac{1}{2},4\right)=\left(
 
 
 
-\section{Other discretizations/Conclusions?}\label{SNIEP}
+\section{Some other discretizations}\label{otherdisc}
 
-\subsection{Fourier spectral collocation}
-Here we consider the spectral method that results from extending the
+\boxed{\text{TO BE REMARKED: although we consider some spatial discretizations that are of higher order,
+due to the low order of the time discretizations we consider, the total discretization is also of low order.}}
+
+TO BE REMARKED: Here we just make some observations, without proving them.\\
+
+
+\subsection{Higher-order centered discretizations in space, $\theta$-method in time}
+
+The coefficients of the central differences can be found, e.g., in \cite{bengt}, from which the corresponding circulant matrices $L$ can be constructed.
+Here, we consider the first few cases.
+
+The matrix $L$ in \eqref{Ldef} corresponds to a $2^\text{nd}$-order scheme with stencil width 3 (and hence, $m\ge 3$) with entries $(-1/2, 0, 1/2)$ on the central diagonals.
+
+When the stencil width is 5 (implying  $m\ge 5$ and $4^\text{th}$-order), the entries on the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$ (with the middle 0s on the main diagonal).
+
+When the stencil width is 7 (implying $m\ge 7$ and $6^\text{th}$-order), the entries on the central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.
+
+Our computations suggest that the non-negativity properties of the matrix $M$ again depend on the parity of $m$. 
+
+\begin{description}[style=unboxed,leftmargin=0cm]
+\item [{Case 1:} $m$ is {even}.] For the $4^\text{th}$-order scheme, we have found that $M\ge 0$ cannot not hold for any $\theta\in[0,1]$ and $\nu>0$ when $m\in\{6,8,10\}$.
+
+For the $6^\text{th}$-order scheme, we checked that $M\ge 0$ does not hold for any $\theta\in[0,1]$ and $\nu>0$ when $m\in\{8,10\}$.
+
+\item [{Case 2:} $m$ is {odd}.] In this case we have found a similar 
+\end{description}
+
+
+\subsection{Fourier spectral collocation in space, $\theta$-method in time}
+Here, we consider the spectral method that results from extending the
 finite difference stencil to include the whole spatial grid.  The resulting
 semi-discretization can again be written in the form \eqref{semi-discrete}
-where the matrix $L$ takes the form
+where the matrix $L$ takes the form \boxed{\text{REFERENCE?}}
+
 \begin{align*}
 	L_{i,j} = \begin{cases}
 						0 & \text{if } i = j, \\[10pt]
@@ -1173,19 +1210,35 @@ for even collocation, and
 					\end{cases}
 \end{align*}
 for odd collocation methods.
-As in section \ref{sectiondiscFourier} the spectral collocation matrices have an eigendecomposition given by
+As in Section \ref{sectiondiscFourier}, the spectral collocation matrices have an eigendecomposition given by
 \eqref{eigen}, with eigenvectors \eqref{eigenvectrors} but now the entries of the diagonal matrix $\Lambda$ are
 \begin{align}
     \imath\lambda_\ell & =
     \begin{cases}
         \imath\xi_\ell & 1 \le \ell \le \frac{m}{2}+1, \\
         0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
-        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 \le \ell \le m.
+        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 \le \ell \le m,
     \end{cases}
 \end{align}
-The entries of the first row of this circulant matrix are again given by \eqref{M-entries} and for the
-$\theta$-method take the form
+where $\xi_\ell$ has been defined in \eqref{xildef}.\\
+
+\boxed{\text{QUESTION, LL.}}
+------------------------------------------------------------
+Should this be
 \begin{align}
+    \imath\lambda_\ell & =
+    \begin{cases}
+        \imath\xi_\ell & 1 \le \ell < \frac{m}{2}+1, \\
+        0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
+        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 < \ell \le m.
+    \end{cases}
+\end{align}
+to properly describe the even case?\\
+------------------------------------------------------------\\
+
+The entries of the first row of this circulant matrix are again given by \eqref{M-entries}, and for the
+$\theta$-method they take the form
+\begin{align}\label{eq51}
 	M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos((j-1)\xi_\ell) + \nu\lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
 \end{align}
@@ -1195,14 +1248,28 @@ $\theta$-method take the form
 %    M_{1,j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos((j-1)\xi_\ell) + \nu \lambda_\ell \sin((j-1)\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
 %           & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
 %\end{align}
-Similarly to section \ref{sectiondiscFourier} we can distinguish between even and odd sizes of the discretization
-matrices.
-When $m$ is even we have that
+Similarly to Section \ref{sectiondiscFourier} we can distinguish between even and odd sizes of the discretization
+matrices.\\
+
+\begin{description}[style=unboxed,leftmargin=0cm]
+\item [{Case 1:} $m$ is {even}.]
+From \eqref{eq51} we have that \boxed{\text{I DON'T SEE THIS, LL.}}
 \begin{align*}
   M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2},
+  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
 \end{align*}
-and it turns out that $M_{1,m} <0$ for any value of $\theta\in[0,1]$ and $\nu>0$; hence the Fourier spectral collocation in space and the $\theta$ method in time cannot preserve positivity.
+It turns out that $M_{1,m} <0$ for any value of $\theta\in[0,1]$ and $\nu>0$ for $m\in\{4,6,8,10\}$, hence the Fourier spectral collocation in space and the 
+$\theta$-method in time cannot preserve positivity for such values of $m$. 
+
+Indeed, the expression $M_{1,m}$ is a rational function in $\nu$ and $\theta$, whose denominator is easily seen to be positive. Then, by keeping only its numerator, and dividing it by $\nu>0$, we can introduce a new variable $y:=\pi\theta\nu\ge 0$. The resulting expression becomes a univariate polynomial in $y$ which is negative for any $y\ge 0$---at least for $m\in\{4,6,8,10\}$. (In the $m=8$ case, for example, this polynomial is
+$-3 \left(8+3 \sqrt{2}\right) y^4+64 y^3-32 \left(7+5 \sqrt{2}\right) y^2+256 y-256 \left(2+\sqrt{2}\right)$.)
+
+It is reasonable to expect that the pattern $M_{1,m} <0$ continues to hold for higher values of $m$, however, we did not investigate this.\\
+
+\item [{Case 2:} $m$ is {odd}.]
+This time we find a similar behavior observed earlier, see Figures ...
+\end{description}
+
 
 \begin{thebibliography}{99}
 
@@ -1233,6 +1300,9 @@ and Differential-Algebraic Problems. Springer, Berlin (2002)
  \bibitem{rojosoto}
 O.~Rojo, R.~L.~Soto, Existence and construction of nonnegative matrices with complex spectrum, 
 Lin.~Alg.~Appl., Vol.~368, 53--69 (2003), \href{https://doi.org/10.1016/S0024-3795(02)00650-X}{https://doi.org/10.1016/S0024-3795(02)00650-X}
+
+ \bibitem{bengt}
+F.~Bengt, Generation of Finite Difference Formulas on Arbitrarily Spaces Grids, Math.~Comp., Vol.~51, 699--706 (1988)
 
 
 
