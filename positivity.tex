@@ -108,13 +108,26 @@ concentration or density that cannot be negative.
 Following the usual terminology, the term {\emph{positivity}} in the context of {positivity preservation} is always meant in the weak sense; i.e.~it means {\emph{non-negativity}}. 
 \end{remark}
 
+\boxed{\text{LL: The intro should be rewritten to take into account the results of the last sections as well.}}\\
+\boxed{\text{LL: Mention somewhere: the matrices $L$ stand for spatial discretization, $M$ for the full discretization matrices (terminology???)}}\\
+\boxed{\text{LL: I've modified the section title in Section 3 to emphasize 2nd-order centered spat. discr. + $\theta$-method}}\\
+\boxed{\text{LL: terminology? central differences, centered difference, centered discretizations?}}\\
+\boxed{\text{LL: terminology? $L$ spatial discretization matrix, or matrix corresponding to the spat. discr.?}}\\
+\boxed{\text{LL: terminology? $M$ full-discretization matrix, or matrix corresponding to the full discr.?}}\\
+\boxed{\text{1st page MISSING EMAIL for Yiannis}}
+\boxed{\text{Notation to mention: $L$, $M$, $m$}}
+
+
 
 Finite difference semi-discretization of \eqref{advection} yields a system of ODEs
+\boxed{\text{Is the spectral collocation method a finite difference semi-discr.?}}
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
 where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $\dx>0$ denotes the spatial discretization step size.  
 If one uses an upwind spatial discretization
+
+\boxed{\text{Shall we use a format similar to \eqref{Ldef}}?}
 \begin{subequations}
 \label{upwind1}
 \begin{align} 
@@ -131,6 +144,8 @@ method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.
 The upwind discretization \eqref{upwind1} is only of order one; it is natural
 to use a more accurate spatial discretization. A second-order scheme is
 obtained with the centered difference
+\boxed{\text{Shall we use a format similar to \eqref{Ldef}}?}
+
 \begin{subequations}
 \label{centered-difference}
 \begin{align}
@@ -582,7 +597,7 @@ It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ 
 
 
 
-\section{An algebraic characterization of the matrix entries}\label{section3}
+\section{An algebraic characterization of the matrix entries: $2^\text{nd}$-order centered discretization in space, $\theta$-method in time}\label{section3}
 
 The results of Section \ref{sectiondiscFourier} are based on the eigendecomposition of the full discretization matrix $M=\cF R(\nu \Lambda) \cF^*$. In this section, instead of using trigonometric functions, we give an algebraic description of the matrix entires by exploiting the relation $M=R(\nu L)$ in \eqref{Mdualdef} with $L$ defined in \eqref{Ldef}.
 Explicitly, this means 
@@ -1158,27 +1173,22 @@ M\left(3,\frac{1}{2},4\right)=\left(
 \section{Some other discretizations}\label{otherdisc}
 
 \boxed{\text{TO BE REMARKED HERE OR in the INTRO: although we consider some spatial discretizations that are of higher order,
-due to the low order of the time discretizations we consider, the total discretization is also of low order.}}
+due to the low order of the time discretizations we consider, the total discretization is also of low order.}}\\
 
-TO BE REMARKED: Here we just make some observations, without proving them.\\
+\boxed{\text{TO BE REMARKED: Here we just make some observations, without proving them.}}
 
 
 \subsection{Higher-order centered discretizations in space, $\theta$-method in time}\label{highercentered}
 
-The coefficients of the central differences can be found, e.g., in \cite{bengt}, from which the corresponding circulant matrices $L$ can be constructed.
-Here, we consider the first few cases.
+The coefficients of the central differences can be found, e.g., in \cite{bengt}, from which the corresponding circulant matrices $L$ describing the spatial discretization can be constructed.
+Here, we examine the first few cases.
+\begin{itemize}
+\item When the stencil width is 3 (implying  $m\ge 3$ and $2^\text{nd}$-order accuracy), the entries on the central diagonals are $(-1/2, 0, 1/2)$ (with the middle 0s on the main diagonal). This is matrix $L$ in \eqref{Ldef} that has been considered in Sections \ref{sectioncentered}--\ref{section3}.
+\item When the stencil width is 5 (implying  $m\ge 5$ and $4^\text{th}$-order), the entries on the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$ (with the middle 0s on the main diagonal).
+\item When the stencil width is 7 (implying $m\ge 7$ and $6^\text{th}$-order), the entries on the central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.
+\end{itemize}
 
-The matrix $L$ in \eqref{Ldef} corresponds to a $2^\text{nd}$-order scheme with stencil width 3 (and hence, $m\ge 3$) with entries $(-1/2, 0, 1/2)$ on the central diagonals.
-
-When the stencil width is 5 (implying  $m\ge 5$ and $4^\text{th}$-order), the entries on the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$ (with the middle 0s on the main diagonal).
-
-When the stencil width is 7 (implying $m\ge 7$ and $6^\text{th}$-order), the entries on the central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.\\
-
-After the spatial discretization matrix $L$ has been chosen, it is coupled with the $\theta$-method as time discretization, and the full-discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}).
-
-\begin{remark} 
-In \eqref{Mdualdef}, the matrix $R(\nu L)$ is computationally more difficult to evaluate (due to the presence of the inverse of a non-diagonal matrix), whereas the matrix $R(\nu \Lambda)$ is much easier to evaluate (since one needs to take the inverse of a diagonal matrix only).
-\end{remark} 
+After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time discretization, and the full-discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}). 
 
 Our computations suggest that the non-negativity properties of the matrix family $M(m,\theta,\nu)$ again depend on the parity of $m$. 
 
@@ -1212,7 +1222,7 @@ Figures \ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
 
 \subsection{Fourier spectral collocation in space, $\theta$-method in time}\label{spectrcoll}
 Here, we consider the spectral method that results from extending the
-finite difference stencil to include the whole spatial grid.  The resulting
+finite difference stencil to include the whole spatial grid.  The resulting spatial 
 semi-discretization can again be written in the form \eqref{semi-discrete}
 where the matrix $L$ takes the form \boxed{\text{REFERENCE?}}
 
@@ -1240,7 +1250,8 @@ As in Section \ref{sectiondiscFourier}, the spectral collocation matrices have a
         \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 \le \ell \le m,
     \end{cases}
 \end{align}
-where $\xi_\ell$ has been defined in \eqref{xildef}.\\
+where $\xi_\ell$ has been defined in \eqref{xildef}.
+
 
 \boxed{\text{QUESTION, LL.}}
 ------------------------------------------------------------
@@ -1256,8 +1267,13 @@ Should this be
 to properly describe the even case?\\
 ------------------------------------------------------------\\
 
-The entries of the first row of this circulant matrix are again given by \eqref{M-entries}, and for the
-$\theta$-method they take the form
+When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full-discretization matrix $M$ is obtained. 
+\begin{remark} 
+In \eqref{Mdualdef}, the matrix $R(\nu L)$ is computationally more difficult to evaluate due to the presence of the inverse of a non-sparse matrix, whereas the matrix $R(\nu \Lambda)$ is easier to deal with (since one needs to take the inverse of a diagonal matrix only).
+\end{remark} 
+
+The entries of the first row of the circulant matrix $M$ are again given by \eqref{M-entries}, and now %for the $\theta$-method 
+they take the form
 \begin{align}\label{eq51}
 	M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos((j-1)\xi_\ell) + \nu\lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
@@ -1269,7 +1285,7 @@ $\theta$-method they take the form
 %           & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
 %\end{align}
 Similarly to Section \ref{sectiondiscFourier} we can distinguish between even and odd sizes of the discretization
-matrices.\\
+matrices $M$.\\
 
 \begin{description}[style=unboxed,leftmargin=0cm]
 \item [{Case 1:} $m$ is {even}.]
