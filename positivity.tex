@@ -175,13 +175,13 @@ For $\te\in[0,1]$, this family of time integrators includes both Euler methods a
 The motivation for this work is not to develop new positivity preserving
 methods, but to study the positivity of some of fundamental discretizations
 such as the centered difference method \eqref{centered-difference} and the
-$\theta$ method \eqref{firsttheta}.  As we will see, the combination of
+$\theta$-method \eqref{firsttheta}.  As we will see, the combination of
 these methods does not preserve positivity in general, nor in the limit
 of small time step size, so it is not typically recommended in practice.
 Nevertheless, this study may both shed light on the
 behavior of more complicated methods used in practice and provide tools
 that can be used to study the positivity of those methods.
-In the later sections of the paper, we combine the $\theta$ method in time
+In the later sections of the paper, we combine the $\theta$-method in time
 with high-order methods in space, as a next step in this direction.
 
 %Thus our main focus is on a discretization of \eqref{advection} that is
@@ -192,7 +192,7 @@ with high-order methods in space, as a next step in this direction.
 %independent interest.
 
 \subsection{Structure of the paper}
-In Section \ref{sectiondiscFourier} we study positivity of the $\theta$ method in
+In Section \ref{sectiondiscFourier} we study positivity of the $\theta$-method in
 time combined with second-order centered differences in space, using discrete Fourier
 analysis.  In Section \ref{section3}, we study this discretization in more detail. 
 We derive an explicit formula for the matrix entries in Section \ref{explsect}
@@ -1251,7 +1251,7 @@ matrices $M$.\\
 
 \begin{description}[style=unboxed,leftmargin=0cm]
 \item [{Case 1:} $m$ is {even}.]
-From \eqref{eq51} we have (using \eqref{angle-identities} that
+From \eqref{eq51} we have (using \eqref{angle-identities}) that
 \begin{align*}
   M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
@@ -1309,7 +1309,7 @@ in Figures \ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
 and \ref{fig_spectral}.
 
 Our detailed analysis in Sections \ref{sectiondiscFourier}-\ref{section3}
-was devoted to the $\theta$ method in time and second-order centered
+was devoted to the $\theta$-method in time and second-order centered
 differences in space.  The characterization of the full discretization
 matrix for this case, along with the related trigonometric identities
 presented in Corollary \ref{corollary1}, may be of independent interest.
@@ -1371,7 +1371,7 @@ F.~Bengt, Generation of Finite Difference Formulas on Arbitrarily Spaces Grids, 
 L.~N.~Trefethen, Spectral methods in MATLAB. SIAM (2000)
 
 \bibitem{peyret}
-R.~Peyret, Spectral methods for incompressible viscous flow. Springer Science \& Business Media, Vol.~148,
+R.~Peyret, Spectral methods for incompressible viscous flow. Springer Science \& Business Media, Vol.~148 
 (2013)
 
 \end{thebibliography}
