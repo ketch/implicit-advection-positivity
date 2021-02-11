@@ -86,6 +86,7 @@ Thuwal, 23955-6900, Saudi Arabia.}
 
 \section{Background and motivation}
 In this work we investigate the positivity of some discretizations of the advection equation
+with periodic boundary conditions
 \begin{align}\label{advection}
 \begin{split}
 	U_t (x,t) &= a U_x(x,t), \qquad x\in[0,1], t>0, \\
@@ -105,7 +106,8 @@ Positivity is often important in this context, since $U$ may represent a
 concentration or density that cannot be negative.
 
 \begin{remark}
-Following the usual terminology, the term {\emph{positivity}} in the context of {positivity preservation} is always meant in the weak sense; i.e.~it means {\emph{non-negativity}}. 
+Herein the term {\emph{positivity}} is always meant in the weak sense;
+i.e.~it means {\emph{non-negativity}}. 
 \end{remark}
 
 \boxed{\text{LL: The intro should be rewritten to take into account the results of the last sections as well.}}\\
@@ -119,12 +121,12 @@ Following the usual terminology, the term {\emph{positivity}} in the context of 
 
 
 
-Finite difference semi-discretization of \eqref{advection} yields a system of ODEs
-\boxed{\text{Is the spectral collocation method a finite difference semi-discr.? Is it better? Many spatial semi-discr's}}
+Finite difference semi-discretization of \eqref{advection} on a uniform grid
+with mesh spacing $\dx$ yields a system of ODEs
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
-where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $\dx = 1/m$ denotes the spatial discretization step size.
+where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $m = 1/\dx$ is the number of grid points.
 If one uses an upwind spatial discretization
 
 \boxed{\text{Shall we use a format similar to \eqref{Ldef}}?}
@@ -138,12 +140,11 @@ If one uses an upwind spatial discretization
 then the exact solution of \eqref{semi-discrete} is also positivity
 preserving. Moreover, a corresponding full discretization will be positivity preserving too,
 under an appropriate time step size restriction $0<\dt\le\dt_0$
-if the forward (explicit) Euler method or any strong stability preserving
+if, for example, the forward (explicit) Euler method or any strong stability preserving
 method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.  
 
-The upwind discretization \eqref{upwind1} is only of order one; it is natural
-to use a more accurate spatial discretization. A second-order scheme is
-obtained with the centered difference
+The upwind discretization \eqref{upwind1} is only of order one.
+A second-order scheme is obtained with the centered difference discretization
 \boxed{\text{Shall we use a format similar to \eqref{Ldef}}?}
 
 \begin{subequations}
@@ -171,11 +172,17 @@ of the forward and backward Euler methods, we will study the $\theta$-method \ci
 For $\te\in[0,1]$, this family of time integrators includes both Euler methods as limiting cases: the forward Euler method for $\te=0$, the backward 
  Euler method for $\te=1$, and the only second-order $\te$-method for $\te=1/2$. 
 
-
-
-
-
-
+The motivation for this work is not to develop new positivity preserving
+methods, but to study the positivity of some of fundamental discretizations
+such as the centered difference method \eqref{centered-difference} and the
+$\theta$ method \eqref{firsttheta}.  As we will see, the combination of
+these methods does not preserve positivity in general, nor in the limit
+of small time step size, so it is not typically recommended in practice.
+Nevertheless, this study may both shed light on the
+behavior of more complicated methods used in practice and provide tools
+that can be used to study the positivity of those methods.
+In the later sections of the paper, we combine the $\theta$ method in time
+with high-order methods in space, as a next step in this direction.
 
 %Thus our main focus is on a discretization of \eqref{advection} that is
 %centered in space and backward in time.  For various reasons, this
@@ -184,23 +191,15 @@ For $\te\in[0,1]$, this family of time integrators includes both Euler methods a
 %partial differential equations (PDEs), so its behavior seems to be of
 %independent interest.
 
-%Any linear one-step discretization of a time-dependent PDE in one spatial
-%dimension with $m$ grid points in space yields an approximate solution given by
-%an iteration of the form
-%where $M$ is a fixed $m\times m$ matrix.
-
-\subsection{Structure of the paper and main results}
-In Section \ref{sectiondiscFourier} ... In Section \ref{sectioncentered} ... Theorem \ref{thm1} 
-
-In Section \ref{explsect} ...  To reveal more information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
-The results obtained in this section are independent of the question of non-negativity, and may be applicable in other contexts as well.\\
-\boxed{\text{LL POINT OUT: Corollary 1, asymptotic bounds, and the relevant figures, definitions}}
-
-In Section \ref{otherdisc}:\\
-\boxed{\text{Here we just make some observations, without proving them. EARLIER: detailed analysis}}\\
-\boxed{\text{Although we consider some spatial discretizations that are of higher order,
-due to the low order of the time discretizations we consider, the total discretization is also of low order.}}\\
-
+\subsection{Structure of the paper}
+In Section \ref{sectiondiscFourier} we study positivity of the $\theta$ method in
+time combined with second-order centered differences in space, using discrete Fourier
+analysis.  In Section \ref{section3}, we study this discretization in more detail. 
+We derive an explicit formula for the matrix entries in Section \ref{explsect}
+and use that formula to provide precise results on its positivity in Section \ref{nonnegsect}.
+In Section \ref{otherdisc}, we discuss some observations and simple results regarding
+higher-order spatial discretizations, including high-order centered differences
+(in Section \ref{highercentered}) and spectral collocation methods (in Section \ref{spectrcoll}).
 
 The computations in this work have been carried out by using Wolfram \textit{Mathematica} version 11.
 
@@ -208,39 +207,6 @@ The computations in this work have been carried out by using Wolfram \textit{Mat
 \subsection{Notation}
 Throughout the paper, the set of positive integers is denoted by $\nplus$, the complex imaginary unit is $\imath$, the identity matrix is $I\in\rr^{m\times m}$, and to emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
 The symbol $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$ of the matrix $M\in\mathbb{R}^{m\times m}$. Finally, as is customary in the context of space-time discretizations of partial differential equations, superscripts of $u$, e.g.~in \eqref{firsttheta}, are not exponents but denote time discretization steps.  
-
-
-
-
-
-%$M\not\ge 0$ means there is at least one negative entry $M_{i,j}<0$.\\
-
-
-\subsection{\boxed{\text{Some useful sentences to reuse, then remove this subsection}}}
-SENTENCES FROM \cite{posconv}---------------------------------------
-In this work we do not deal with the influence of boundary conditions, so for simplicity
-we consider periodic boundaries.\\
-SENTENCES FROM \cite{posconv}---------------------------------------
-We focus on the application of this technique to the initial-boundary-value problem given
-by the hyperbolic conservation law below, together with positive initial and boundary data.
-A common approach to solving hyperbolic conservation laws numerically is to discretize in
-space with a slope or flux limiter, and in time with an explicit Runge--Kutta (explicit RK,
-or ERK) method. It is natural to ask whether the positivity property is retained under this
-discretization. This question is usually analyzed by using Harten's theorem
-to show positivity under explicit Euler integration, and then applying a higher-order strong
-stability preserving (SSP) method in time .... This can be thought of as a method-of-lines
-positivity analysis, in which the spatial and temporal discretizations are analyzed separately.
-In the present work, we perform a direct positivity analysis of fully discretized schemes,
-obtaining stronger results than what can be achieved by considering only Harten's theorem
-and SSP methods. These results provide a theoretical basis for some empirical observations in
-..., wherein various Runge--Kutta integrators preserved strong stability properties under
-step sizes much larger than those suggested by the existing theory.
-
-
-
-
-
-
 
 
 \section{Discrete Fourier analysis}\label{sectiondiscFourier}
@@ -806,7 +772,7 @@ where the subscript $R$ stands for \textit{rightmost}.
 \begin{remark}
 As a by-product, we have obtained the following set of identities by comparing the trigonometric and algebraic representations presented so far. They are also interesting from a structural point of view: although the number of terms in the trigonometric sums increases as $k$ gets larger, the polynomials in $y$ are sparse polynomials (also known as lacunary polynomials or fewnomials)---the number of terms does not increase as the polynomial degree increases.
 \end{remark}
-\begin{corollary}
+\begin{corollary} \label{corollary1}
 With $M$ defined in \eqref{Mdef}, $\te>0$, $\nu>0$, $k\in\nplus$, $y=\frac{\sqrt{1+\te^2\nu^2}-1}{\te\nu}$, and $\xi_\ell  = \frac{2\pi(\ell-1)}{2k+1}$, we have that
 \[
  \frac{1}{2k+1} \sum_{\ell=1}^{2k+1} \frac{1+\imath(1-\theta)\nu \sin(\xi_\ell)}{1-\imath\theta\nu  \sin(\xi_\ell)}=
@@ -1319,23 +1285,49 @@ This time we find a behavior similar to that observed in Sections \ref{sectionce
 
 \section{Conclusions}\label{conclusions}
 
-... various spatial discretizations have been coupled with the simplest family of time discretizations, and the sign patterns of the resulting full-discretization matrices are analyzed.
+In this work we have studied the positivity of certain fundamental
+discretizations of the advection equation.  We have employed a direct
+algebraic approach, first based on discrete Fourier analysis and then
+on a polynomial representation.  We emphasize that our
+goal is not to directly provide efficient discretizations but rather
+to understand the behavior of these simple building blocks, as a means
+of gaining insight and understanding the positivity of more complicated
+discretizations that may not be amenable to a thorough analysis.
 
-For the spatial discretizations, we considered the $2^\text{nd}$-, $4^\text{th}$-, and $6^\text{th}$-order centered difference schemes (having wider and wider stencils), and the Fourier spectral collocation method (whose stencil includes the whole spatial grid).
+For all discretizations studied, we have found similar behavior.
+If the number of grid points $m$ is even, no method is positivity
+preserving, while if $m$ is odd some methods may be positivity
+preserving.  Positivity is generally enhanced by taking larger values
+of the CFL number $\nu$, larger values of $\theta$, and smaller
+values of $m$.  These tendencies, and more specific results, are described
+in Theorem \ref{thm2} and can be seen
+in Figures \ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
+and \ref{fig_spectral}.
 
-For the time discretization, we have chosen the $\theta$-method as time discretization (in fact, a one-parameter family of methods, where $\theta\in[0,1]$ is fixed---the explicit and implicit Euler methods are recovered when $\theta=0$ and $\theta=1$, respectively; the $\theta$-method has order 2 for $\theta=1/2$, and order 1 otherwise).
+Our detailed analysis in Sections \ref{sectiondiscFourier}-\ref{section3}
+was devoted to the $\theta$ method in time and second-order centered
+differences in space.  The characterization of the full discretization
+matrix for this case, along with the related trigonometric identities
+presented in Corollary \ref{corollary1}, may be of independent interest.
 
---------------------------------------------------------------------------------\\
+There are several possible future directions for research building on this
+work.  Other finite difference spatial discretizations could be studied
+using similar techniques, and higher-order one-step time discretizations could
+easily be incorporated via \eqref{Mdualdef}.  Similarly, finite difference
+discretizations of other linear PDEs could be analyzed with the same techniques.
+Further areas for extension might incorporate other boundary conditions or
+multidimensional problems.
 
-We carry out a detailed analysis for the $2^\text{nd}$-order centered difference + $\theta$-method case, and make some observations for the other spatial discretizations.  ...
 
-We found similar bahavior. EVEN/ODD. WHAT IS $m$? THE number of grid points including both endpoints?
+%... various spatial discretizations have been coupled with the simplest family of time discretizations, and the sign patterns of the resulting full-discretization matrices are analyzed.
 
-Surprisingly, we have found similar behavior for these spatial discretizations and ...
+%For the spatial discretizations, we considered the $2^\text{nd}$-, $4^\text{th}$-, and $6^\text{th}$-order centered difference schemes (having wider and wider stencils), and the Fourier spectral collocation method (whose stencil includes the whole spatial grid).
 
-Possible future directions: investigate also higher-order time discretizations.
+%For the time discretization, we have chosen the $\theta$-method as time discretization (in fact, a one-parameter family of methods, where $\theta\in[0,1]$ is fixed---the explicit and implicit Euler methods are recovered when $\theta=0$ and $\theta=1$, respectively; the $\theta$-method has order 2 for $\theta=1/2$, and order 1 otherwise).
 
---------------------------------------------------------------------------------\\
+%We carry out a detailed analysis for the $2^\text{nd}$-order centered difference + $\theta$-method case, and make some observations for the other spatial discretizations.  ...
+
+%Surprisingly, we have found similar behavior for these spatial discretizations and ...
 
 
 \begin{thebibliography}{99}
