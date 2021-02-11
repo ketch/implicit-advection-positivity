@@ -354,6 +354,10 @@ So for $1\le j\le m$ we get
   \cos((j-1)\xi_\ell) + \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}.
 \]
 %\end{align}
+We will also make use of the identities
+\begin{align} \label{angle-identities}
+    \cos((m-1)\xi_\ell) & = \cos(\xi_\ell), & \sin((m-1)\xi_\ell) & = -\sin(\xi_\ell).
+\end{align}
 This leads to the following expressions for the first, second and last entries of the first
 row of $M$:
 \begin{align*}
@@ -1247,7 +1251,7 @@ matrices $M$.\\
 
 \begin{description}[style=unboxed,leftmargin=0cm]
 \item [{Case 1:} $m$ is {even}.]
-From \eqref{eq51} we have that
+From \eqref{eq51} we have (using \eqref{angle-identities} that
 \begin{align*}
   M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
