@@ -124,7 +124,7 @@ Finite difference semi-discretization of \eqref{advection} yields a system of OD
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
-where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $\dx>0$ denotes the spatial discretization step size.  
+where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $\dx = 1/m$ denotes the spatial discretization step size.
 If one uses an upwind spatial discretization
 
 \boxed{\text{Shall we use a format similar to \eqref{Ldef}}?}
@@ -1188,9 +1188,16 @@ Here, we examine the first few cases.
 \item When the stencil width is 5 (implying  $m\ge 5$ and $4^\text{th}$-order), the entries on the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$ (with the middle 0s on the main diagonal).
 \item When the stencil width is 7 (implying $m\ge 7$ and $6^\text{th}$-order), the entries on the central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.
 \end{itemize}
+We can obtain an eigendecomposition \eqref{eigen} with eigenvectros given by \eqref{eigenvectrors} and
+eigenvalues
+\begin{align*}
+	\lambda_\ell = 2\imath \sum_{k=1} C_k \sin(k\xi_\ell),
+\end{align*}
+where $\xi_\ell$ is defined in \eqref{xildef} and $C$ is a vector containing the last $(N-1)/2$ coefficients of the central diagonals of $L$, with $N$ denoting the stencil width.
+For instance, the vector $C$ is equal to $(1/2)$, $(2/3,-1/12)$, and $(3/4,-3/20,1/60)$ for stencil width
+$3$, $5$, and $7$, respectively.
 
 After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time discretization, and the full-discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}). 
-
 Our computations suggest that the non-negativity properties of the matrix family $M(m,\theta,\nu)$ again depend on the parity of $m$. 
 
 \begin{description}[style=unboxed,leftmargin=0cm]
@@ -1225,8 +1232,7 @@ Figures \ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
 Here, we consider the spectral method that results from extending the
 finite difference stencil to include the whole spatial grid.  The resulting spatial 
 semi-discretization can again be written in the form \eqref{semi-discrete}
-where the matrix $L$ takes the form \boxed{\text{REFERENCE?}}
-
+where the matrix $L$ takes the form \cite{trefethen,peyret}
 \begin{align*}
 	L_{i,j} = \begin{cases}
 						0 & \text{if } i = j, \\[10pt]
@@ -1246,27 +1252,12 @@ As in Section \ref{sectiondiscFourier}, the spectral collocation matrices have a
 \begin{align}
     \imath\lambda_\ell & =
     \begin{cases}
-        \imath\xi_\ell & 1 \le \ell \le \frac{m}{2}+1, \\
-        0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
-        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 \le \ell \le m,
-    \end{cases}
-\end{align}
-where $\xi_\ell$ has been defined in \eqref{xildef}.
-
-
-\boxed{\text{QUESTION, LL.}}
-------------------------------------------------------------
-Should this be
-\begin{align}
-    \imath\lambda_\ell & =
-    \begin{cases}
         \imath\xi_\ell & 1 \le \ell < \frac{m}{2}+1, \\
         0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
         \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 < \ell \le m.
     \end{cases}
 \end{align}
-to properly describe the even case?\\
-------------------------------------------------------------\\
+where $\xi_\ell$ has been defined in \eqref{xildef}.
 
 When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full-discretization matrix $M$ is obtained. 
 \begin{remark} 
@@ -1290,7 +1281,7 @@ matrices $M$.\\
 
 \begin{description}[style=unboxed,leftmargin=0cm]
 \item [{Case 1:} $m$ is {even}.]
-From \eqref{eq51} we have that \boxed{\text{I DON'T SEE THIS, LL.}}
+From \eqref{eq51} we have that
 \begin{align*}
   M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
@@ -1362,14 +1353,19 @@ and Differential-Algebraic Problems. Springer, Berlin (2002)
 \bibitem{nonnegmatr}
  A.~Berman, R.~J.~Plemmons, Nonnegative Matrices in the Mathematical Sciences. SIAM (1994)
  
- \bibitem{rojosoto}
+\bibitem{rojosoto}
 O.~Rojo, R.~L.~Soto, Existence and construction of nonnegative matrices with complex spectrum, 
 Lin.~Alg.~Appl., Vol.~368, 53--69 (2003), \href{https://doi.org/10.1016/S0024-3795(02)00650-X}{https://doi.org/10.1016/S0024-3795(02)00650-X}
 
- \bibitem{bengt}
+\bibitem{bengt}
 F.~Bengt, Generation of Finite Difference Formulas on Arbitrarily Spaces Grids, Math.~Comp., Vol.~51, 699--706 (1988)
 
+\bibitem{trefethen}
+L.~N.~Trefethen, Spectral methods in MATLAB. SIAM (2000)
 
+\bibitem{peyret}
+R.~Peyret, Spectral methods for incompressible viscous flow. Springer Science \& Business Media, Vol.~148,
+(2013)
 
 \end{thebibliography}
 
