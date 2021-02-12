@@ -53,7 +53,7 @@
 
 
 \title{Positivity of implicit discretizations of the advection equation}
-\author{Yiannis Hadjimichael\thanks{\texttt{@} }\and David I. Ketcheson\thanks{\texttt{david.ketcheson@kaust.edu.sa}}\and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. Project no.~ED\_18-1-2019-0030 (Application-specific highly reliable IT solutions) has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme funding scheme.}}
+\author{Yiannis Hadjimichael\thanks{\texttt{hadjimichael@wias-berlin.de} }\and David I. Ketcheson\thanks{\texttt{david.ketcheson@kaust.edu.sa}}\and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. The Application-domain Specific Highly Reliable IT Solutions project  has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme) funding scheme.}}
 
 \begin{document}
 \maketitle
@@ -110,14 +110,9 @@ Herein the term {\emph{positivity}} is always meant in the weak sense;
 i.e.~it means {\emph{non-negativity}}. 
 \end{remark}
 
-\boxed{\text{LL: The intro should be rewritten to take into account the results of the last sections as well.}}\\
-\boxed{\text{LL: Mention somewhere: the matrices $L$ stand for spatial discretization, $M$ for the full discretization matrices (terminology???)}}\\
-\boxed{\text{LL: I've modified the section title in Section 3 to emphasize 2nd-order centered spat. discr. + $\theta$-method}}\\
-\boxed{\text{LL: terminology? central differences, centered difference, centered discretizations?}}\\
-\boxed{\text{LL: terminology? $L$ spatial discretization matrix, or matrix corresponding to the spat. discr.?}}\\
-\boxed{\text{LL: terminology? $M$ full-discretization matrix, or matrix corresponding to the full discr.?}}\\
-\boxed{\text{1st page MISSING EMAIL for Yiannis}}
-\boxed{\text{Notation to mention: $L$, $M$, $m$}}
+
+
+
 
 
 
@@ -129,7 +124,6 @@ with mesh spacing $\dx$ yields a system of ODEs
 where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $m = 1/\dx$ is the number of grid points.
 If one uses an upwind spatial discretization
 
-\boxed{\text{Shall we use a format similar to \eqref{Ldef}}?}
 \begin{subequations}
 \label{upwind1}
 \begin{align} 
@@ -145,7 +139,6 @@ method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.
 
 The upwind discretization \eqref{upwind1} is only of order one.
 A second-order scheme is obtained with the centered difference discretization
-\boxed{\text{Shall we use a format similar to \eqref{Ldef}}?}
 
 \begin{subequations}
 \label{centered-difference}
@@ -170,7 +163,8 @@ of the forward and backward Euler methods, we will study the $\theta$-method \ci
     u^{n+1} = u^n + \frac{a\dt}{\dx}((1-\theta)Lu^n + \theta Lu^{n+1}).
 \end{align}
 For $\te\in[0,1]$, this family of time integrators includes both Euler methods as limiting cases: the forward Euler method for $\te=0$, the backward 
- Euler method for $\te=1$, and the only second-order $\te$-method for $\te=1/2$. 
+ Euler method for $\te=1$, and the only second-order $\te$-method for $\te=1/2$; 
+ any $\theta$-method with $\theta\in(0,1]$ is implicit.
 
 The motivation for this work is not to develop new positivity preserving
 methods, but to study the positivity of some of fundamental discretizations
@@ -207,6 +201,41 @@ The computations in this work have been carried out by using Wolfram \textit{Mat
 \subsection{Notation}
 Throughout the paper, the set of positive integers is denoted by $\nplus$, the complex imaginary unit is $\imath$, the identity matrix is $I\in\rr^{m\times m}$, and to emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
 The symbol $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$ of the matrix $M\in\mathbb{R}^{m\times m}$. Finally, as is customary in the context of space-time discretizations of partial differential equations, superscripts of $u$, e.g.~in \eqref{firsttheta}, are not exponents but denote time discretization steps.  
+
+\boxed{\text{NOTATION L, M, m. spatial discr. matrix, full discretization matrix}}\\
+\boxed{\text{ABSTRACT}}\\
+\boxed{\text{the two matrices in visual form}}
+\boxed{\text{LL: terminology? $L$ spatial discretization matrix, or matrix corresponding to the spat. discr.?}}\\
+\boxed{\text{LL: terminology? $M$ full discretization matrix, or matrix corresponding to the full discr.?}}\\
+\boxed{\text{Notation to mention: $L$, $M$, $m$}}\\
+
+\boxed{\text{This was put after Theorem 1, delete?}}
+
+\noindent\rule{10cm}{0.4pt}\\
+This result is rather unusual, since in numerical analysis one typically makes
+statements about small enough mesh parameters, and parity is rarely important.
+We see that the full discretization can be positivity preserving only if $m$ is
+odd.  Furthermore, we see that from the point of view of positivity preservation,
+it is better to use larger values of both $\dt$ and $\dx$.
+
+%\textbf{Y.H.: In my opinion we could avoid any discussion about $\dt$ or $\dx$ and say that for large
+%enough CFL numbers in theorem 1, the matrix $M$ is non-negative.
+%In general for hyperbolic problems $\dt$ is proportional to  $\dx$.}
+%\textbf{D.K.: Since we reference $m$ we are discussing $\dx$ anyway, and with $m$ fixed then
+%$\nu$ and $\dt$ vary proportionally to one another.  I prefer using $\dt$ since then both
+%ODE and PDE readers will have a good idea of what we mean.}
+
+WE CAN emphasize the following again: positivity preservation of the fully discrete numerical solution  
+$\Longleftrightarrow  M\ge 0$
+
+MAYBE WE CAN REUSE THESE SENTENCES:
+The exact solution of the resulting semi-discrete
+system \eqref{semi-discrete} is not positive invariant, so (given an appropriate
+positive initial condition) any consistent time discretization will yield
+negative values for small enough time steps.  Here we investigate whether
+it is possible to ensure positive invariance for large time steps.\\
+\noindent\rule{10cm}{0.4pt}\\
+
 
 
 \section{Discrete Fourier analysis}\label{sectiondiscFourier}
@@ -446,7 +475,7 @@ Summarizing the above, we have proved the following for any $m\ge 3$, $\te\in[0,
 $\nu>0$.
 \end{description}
 \begin{theorem}\label{thm1}
-Consider the advection equation with periodic boundary condition discretized using centered
+Consider the advection equation with periodic boundary condition discretized using $2^{\text{nd}}$-order centered
 differences in space and the $\theta$-method in time with $m$ spatial grid points.  
 The discretization takes the form \eqref{M},
 where\\
@@ -455,32 +484,7 @@ where\\
 entries of $M$ are non-negative.
 \end{theorem}
 
-\noindent\rule{10cm}{0.4pt}\\
-\noindent\rule{10cm}{0.4pt}\\
-This result is rather unusual, since in numerical analysis one typically makes
-statements about small enough mesh parameters, and parity is rarely important.
-We see that the full discretization can be positivity preserving only if $m$ is
-odd.  Furthermore, we see that from the point of view of positivity preservation,
-it is better to use larger values of both $\dt$ and $\dx$.
 
-%\textbf{Y.H.: In my opinion we could avoid any discussion about $\dt$ or $\dx$ and say that for large
-%enough CFL numbers in theorem 1, the matrix $M$ is non-negative.
-%In general for hyperbolic problems $\dt$ is proportional to  $\dx$.}
-%\textbf{D.K.: Since we reference $m$ we are discussing $\dx$ anyway, and with $m$ fixed then
-%$\nu$ and $\dt$ vary proportionally to one another.  I prefer using $\dt$ since then both
-%ODE and PDE readers will have a good idea of what we mean.}
-
-WE CAN emphasize the following again: positivity preservation of the fully discrete numerical solution  
-$\Longleftrightarrow  M\ge 0$
-
-MAYBE WE CAN REUSE THESE SENTENCES:
-The exact solution of the resulting semi-discrete
-system \eqref{semi-discrete} is not positive invariant, so (given an appropriate
-positive initial condition) any consistent time discretization will yield
-negative values for small enough time steps.  Here we investigate whether
-it is possible to ensure positive invariance for large time steps.\\
-\noindent\rule{10cm}{0.4pt}\\
-\noindent\rule{10cm}{0.4pt}
 
 A refinement of Theorem \ref{thm1} for odd values of $m$ will be given at the end of Section \ref{section3}, see Theorem \ref{thm2}.
 As for the interval $\theta\in\left[\frac{m-1}{m},1\right]$ appearing in Theorem \ref{thm1}, see also 
@@ -571,7 +575,7 @@ It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ 
 
 
 
-\section{Algebraic characterization of the entries of the full discretization matrix: $2^\text{nd}$-order centered discretization in space and $\theta$-method in time}\label{section3}
+\section{Second-order centered discretization in space and $\theta$-method in time---algebraic characterization of the entries of the full discretization matrix}\label{section3}
 
 The results of Section \ref{sectiondiscFourier} are based on the eigendecomposition of the full discretization matrix $M=\cF R(\nu \Lambda) \cF^*$. In this section, instead of using trigonometric functions, we give an algebraic description of the matrix entires by exploiting the relation $M=R(\nu L)$ in \eqref{Mdualdef} with $L$ defined in \eqref{Ldef}.
 Explicitly, this means 
@@ -1092,7 +1096,7 @@ $\te\in\left(0,\frac{1}{2}\right)$, we have $\nur>\nul$.
 The following theorem summarizes the results of Section \ref{section3}.
 % in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. 
 In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
-\begin{theorem}\label{thm2}
+\begin{theorem}[About the full discretiation matrix corresponding to $2^{\text{nd}}$-order centered discretization in space and $\theta$-method in time]\label{thm2}
 \begin{itemize}\ 
 \item[$\bullet$] Fix $0\le\te<1/2$ arbitrarily. Then  $M(2k+1,\te,\nu)\ge 0$ can never hold, i.e.~for any $k\in\nplus$ and $\nu>0$ there is at least one strictly negative entry of the matrix $M$.
 \item[$\bullet$] Let $\te=1/2$. Then
@@ -1151,7 +1155,7 @@ M\left(3,\frac{1}{2},4\right)=\left(
 
 \subsection{Higher-order centered discretizations in space, $\theta$-method in time}\label{highercentered}
 
-The coefficients of the central differences can be found, e.g., in \cite{bengt}, from which the corresponding circulant matrices $L$ describing the spatial discretization can be constructed.
+The coefficients of the centred differences can be found, e.g., in \cite{bengt}, from which the corresponding circulant matrices $L$ describing the spatial discretization can be constructed.
 Here, we examine the first few cases.
 \begin{itemize}
 \item When the stencil width is 3 (implying  $m\ge 3$ and $2^\text{nd}$-order accuracy), the entries on the central diagonals are $(-1/2, 0, 1/2)$ (with the middle 0s on the main diagonal). This is matrix $L$ in \eqref{Ldef} that has been considered in Sections \ref{sectioncentered}--\ref{section3}.
@@ -1167,7 +1171,7 @@ where $\xi_\ell$ is defined in \eqref{xildef} and $C$ is a vector containing the
 For instance, the vector $C$ is equal to $(1/2)$, $(2/3,-1/12)$, and $(3/4,-3/20,1/60)$ for stencil width
 $3$, $5$, and $7$, respectively.
 
-After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time discretization, and the full-discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}). 
+After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time discretization, and the full discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}). 
 Our computations suggest that the non-negativity properties of the matrix family $M(m,\theta,\nu)$ again depend on the parity of $m$. 
 
 \begin{description}[style=unboxed,leftmargin=0cm]
@@ -1186,14 +1190,14 @@ Figures \ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_5stencilm579.pdf}
-\caption{Non-negativity of the matrix family generated by the $4^\text{th}$-order centered discretization in space and the $\theta$-method in time, see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{5, 7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=5$, $m=7$, and $m=9$, the lower left ``corner'' point of the region has $\theta\approx 0.726106$, $\theta\approx 0.809401$, and $\theta\approx 0.853562$, respectively.}\label{fig_5stencilm579}
+\caption{Non-negativity of the matrix family generated by the $4^\text{th}$-order centered discretization in space and the $\theta$-method in time, see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{5, 7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=5$, $m=7$, and $m=9$, the ``lower left corner'' point of the region has $\theta\approx 0.726106$, $\theta\approx 0.809401$, and $\theta\approx 0.853562$, respectively.}\label{fig_5stencilm579}
 \end{center}
 \end{figure}
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_7stencilm79.pdf}
-\caption{Non-negativity of the matrix family generated by the $6^\text{th}$-order centered discretization in space and the $\theta$-method in time, see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=7$ and $m=9$, the lower left ``corner'' point of the region has $\theta\approx 0.807042$ and $\theta\approx 0.851437$, respectively.}\label{fig_7stencilm79}
+\caption{Non-negativity of the matrix family generated by the $6^\text{th}$-order centered discretization in space and the $\theta$-method in time, see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=7$ and $m=9$, the ``lower left corner'' point of the region has $\theta\approx 0.807042$ and $\theta\approx 0.851437$, respectively.}\label{fig_7stencilm79}
 \end{center}
 \end{figure}
 
@@ -1224,12 +1228,12 @@ As in Section \ref{sectiondiscFourier}, the spectral collocation matrices have a
     \begin{cases}
         \imath\xi_\ell & 1 \le \ell < \frac{m}{2}+1, \\
         0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
-        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 < \ell \le m.
+        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 < \ell \le m,
     \end{cases}
 \end{align}
 where $\xi_\ell$ has been defined in \eqref{xildef}.
 
-When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full-discretization matrix $M$ is obtained. 
+When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full discretization matrix $M$ is obtained. 
 \begin{remark} 
 In \eqref{Mdualdef}, the matrix $R(\nu L)$ is computationally more difficult to evaluate due to the presence of the inverse of a non-sparse matrix, whereas the matrix $R(\nu \Lambda)$ is easier to deal with (since one needs to take the inverse of a diagonal matrix only).
 \end{remark} 
