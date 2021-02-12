@@ -116,21 +116,33 @@ i.e.~it means {\emph{non-negativity}}.
 
 
 
-Finite difference semi-discretization of \eqref{advection} on a uniform grid
-with mesh spacing $\dx$ yields a system of ODEs
+Finite difference semi-discretization of \eqref{advection} on a uniform grid $\{\dx,2\dx,\ldots, m\dx\}\subset [0,1]$ 
+with mesh spacing $\dx>0$ and $m\dx=1$ yields a system of ODEs
 \begin{align} \label{semi-discrete}
     u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
-where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $m = 1/\dx$ is the number of grid points.
+where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $m \in\mathbb{N}^+$ is the number of grid points (due to the periodic boundary condition, the grid points $0$ and $1$ are identified).
 If one uses an upwind spatial discretization
 
-\begin{subequations}
-\label{upwind1}
-\begin{align} 
-    L_{i,i}  & \coloneqq -1,\quad\quad L_{i,i+1} \coloneqq  1 \ \ \ \ 1\le i < m \\
-    L_{m,1} & \coloneqq 1
-\end{align}
-\end{subequations}
+%\begin{subequations}
+%\label{upwind1}
+%\begin{align} 
+%    L_{i,i}  & \coloneqq -1,\quad\quad L_{i,i+1} \coloneqq  1 \ \ \ \ 1\le i < m \\
+%    L_{m,1} & \coloneqq 1
+%\end{align}
+%\end{subequations}
+\begin{equation}\label{upwind1}
+L=\left(
+\begin{array}{cccccc}
+ -1 & 1 & 0  & \cdots & 0 & 0 \\
+ 0 & -1 & 1 &  \cdots & 0 & 0 \\
+ 0 & 0 & -1 &  \ddots & 0 & 0\\
+ \vdots  & \vdots  & \ddots  & \ddots & \ddots & \vdots \\
+  0 & 0 & \cdots  & 0 & -1 & 1 \\
+ 1 & 0 & \cdots & 0 & 0 & -1 \\
+\end{array}
+\right)
+\end{equation}
 then the exact solution of \eqref{semi-discrete} is also positivity
 preserving. Moreover, a corresponding full discretization will be positivity preserving too,
 under an appropriate time step size restriction $0<\dt\le\dt_0$
@@ -140,13 +152,19 @@ method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.
 The upwind discretization \eqref{upwind1} is only of order one.
 A second-order scheme is obtained with the centered difference discretization
 
-\begin{subequations}
-\label{centered-difference}
-\begin{align}
-    L_{i,i-1} & \coloneqq -\frac{1}{2},\quad\quad L_{i,i+1} \coloneqq  \frac{1}{2} \\
-    L_{1,m} & \coloneqq -\frac{1}{2}, \quad \quad L_{m,1} \coloneqq \frac{1}{2}.
-\end{align}
-\end{subequations}
+
+\begin{equation}\label{centered-difference}
+L=\left(
+\begin{array}{cccccc}
+ 0 & \frac{1}{2} & 0  & \cdots & 0 & -\frac{1}{2} \\
+ -\frac{1}{2} & 0 & \frac{1}{2} &  \cdots & 0 & 0 \\
+ 0 & -\frac{1}{2} & 0 &  \ddots & 0 & 0\\
+ \vdots  & \vdots  & \ddots  & \ddots & \ddots & \vdots \\
+  0 & 0 & \cdots  & -\frac{1}{2} & 0 & \frac{1}{2} \\
+ \frac{1}{2} & 0 & \cdots & 0 & -\frac{1}{2} & 0 \\
+\end{array}
+\right).
+\end{equation}
 However, this semi-discretization is not positivity preserving, since the
 matrix $L$ has at least one negative off-diagonal entry \cite[Chapter I,
 Theorem 7.2]{hundsdorferverwer}.
@@ -200,14 +218,12 @@ The computations in this work have been carried out by using Wolfram \textit{Mat
 
 \subsection{Notation}
 Throughout the paper, the set of positive integers is denoted by $\nplus$, the complex imaginary unit is $\imath$, the identity matrix is $I\in\rr^{m\times m}$, and to emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
-The symbol $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$ of the matrix $M\in\mathbb{R}^{m\times m}$. Finally, as is customary in the context of space-time discretizations of partial differential equations, superscripts of $u$, e.g.~in \eqref{firsttheta}, are not exponents but denote time discretization steps.  
+The symbol $M\ge 0$ means that  $M_{i,j}\ge 0$ for every entry $1\le i, j\le m$ of the matrix $M\in\mathbb{R}^{m\times m}$. The positive integer $m$ is the number of spatial grid points within the interval $[0,1]$, and the matrices $L$ and $M$ are the matrices corresponding to the spatial and the full discretizations, respectively. 
+Finally, as is customary in the context of space-time discretizations of partial differential equations, superscripts of $u$, e.g.~in \eqref{firsttheta}, are not exponents but denote time discretization steps.  
 
-\boxed{\text{NOTATION L, M, m. spatial discr. matrix, full discretization matrix}}\\
 \boxed{\text{ABSTRACT}}\\
-\boxed{\text{the two matrices in visual form}}
-\boxed{\text{LL: terminology? $L$ spatial discretization matrix, or matrix corresponding to the spat. discr.?}}\\
-\boxed{\text{LL: terminology? $M$ full discretization matrix, or matrix corresponding to the full discr.?}}\\
-\boxed{\text{Notation to mention: $L$, $M$, $m$}}\\
+
+\boxed{\text{periodic boundary condition VS periodic boundary conditions?}}\\
 
 \boxed{\text{This was put after Theorem 1, delete?}}
 
@@ -302,8 +318,16 @@ L:=\left(
   0 & 0 & \cdots  & -\frac{1}{2} & 0 & \frac{1}{2} \\
  \frac{1}{2} & 0 & \cdots & 0 & -\frac{1}{2} & 0 \\
 \end{array}
-\right).
+\right),
 \end{equation}
+that is,
+\begin{subequations}
+%\label{centered-difference}
+\begin{align}
+    L_{i,i-1} & \coloneqq -\frac{1}{2},\quad\quad L_{i,i+1} \coloneqq  \frac{1}{2} \\
+    L_{1,m} & \coloneqq -\frac{1}{2}, \quad \quad L_{m,1} \coloneqq \frac{1}{2}.
+\end{align}
+\end{subequations}
 It is known that the eigenvalues of $L$ are 
 \begin{equation}\label{Leigenvalues}
 \lambda_\ell=\imath \sin(\xi_\ell)\quad (1\le\ell\le m).
