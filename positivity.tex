@@ -53,7 +53,9 @@
 
 
 \title{Positivity of implicit discretizations of the advection equation}
-\author{Yiannis Hadjimichael\thanks{\texttt{hadjimichael@wias-berlin.de} }\and David I. Ketcheson\thanks{\texttt{david.ketcheson@kaust.edu.sa}}\and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. The Application-domain Specific Highly Reliable IT Solutions project  has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme) funding scheme.}}
+\author{Yiannis Hadjimichael\thanks{\texttt{hadjimichael@wias-berlin.de} }\and David I. Ketcheson\thanks{{\texttt{david.ketcheson@kaust.edu.sa}}, King Abdullah University of Science and Technology (KAUST),
+Computer Electrical and Mathematical Science and Engineering Division (CEMSE),
+Thuwal, 23955-6900, Saudi Arabia.} \and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. The Application-domain Specific Highly Reliable IT Solutions project  has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme) funding scheme.}}
 
 \begin{document}
 \maketitle
@@ -80,7 +82,7 @@ provided that $\te\ge 1/2$ and $\nu$ is chosen suitably \emph{large}.
 %upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and
 %$\nu$ governing non-negativity of the matrix $M$ is explicitly described in
 %terms of roots of certain sparse polynomials. 
-These results are rather remarkable, since it is known that the underlying systems of ordinary differential equations obtained via any of the above-mentioned spatial semi-discretizations are \emph{not} positivity preserving. 
+These results are interesting since the systems of ordinary differential equations obtained via the spatial semi-discretizations studied are \emph{not} positivity preserving. 
 %Finally, some connections with 
 %non-negative inverse eigenvalue problems are pointed out.
 \end{abstract}
@@ -112,10 +114,6 @@ concentration or density that cannot be negative.
 Herein the term {\emph{positivity}} is always meant in the weak sense;
 i.e.~it means {\emph{non-negativity}}. 
 \end{remark}
-
-
-
-
 
 
 
@@ -152,10 +150,11 @@ under an appropriate time step size restriction $0<\dt\le\dt_0$
 if, for example, the forward (explicit) Euler method or any strong stability preserving
 method \cite{SSPbook} is used in time, see, e.g.~\cite{posconv}.  
 
-The upwind discretization \eqref{upwind1} is only of order one.
+Positivity-preserving methods for transport equations are typically based
+on low-order upwind-biased spatial discretizations like that above, or involve
+nonlinear limiters (or both).
+Here we instead consider the positivity of linear higher-order centered discretizations.
 A second-order scheme is obtained with the centered difference discretization
-
-
 \begin{equation}\label{centered-difference}
 L=\left(
 \begin{array}{cccccc}
@@ -1305,12 +1304,13 @@ From \eqref{eq51} we have (also using \eqref{angle-identities}) that
 \end{align*}
 Observe that for $\nu \to 0$ we have
 $$
-    M_{1,m} = \frac{1}{m}\sum_{\ell=1}^m -\nu \lambda_\ell \sin(\xi_\ell) + {\mathcal O}(\nu^2),
+    M_{1,m} = \frac{1}{m}\sum_{\ell=1}^m\left( \cos(\xi_\ell)-\nu \lambda_\ell \sin(\xi_\ell)\right) + {\mathcal O}(\nu^2) = \frac{1}{m}\sum_{\ell=1}^m -\nu \lambda_\ell \sin(\xi_\ell)+ {\mathcal O}(\nu^2)
 $$
 which is negative for small enough $\nu$ since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$.
 Meanwhile, for $\nu \to \infty$ we have
 \begin{align*}
-    M_{1,m} & = \frac{1}{m} \sum_{\ell=1}^m \left(\frac{1-\theta}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) + {\mathcal O}(1/\nu^2) =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(1/\nu^2),
+    M_{1,m} & = \frac{1}{m}(\cos(\xi_0)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{1-\theta}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) + {\mathcal O}(1/\nu^2) \\
+              & =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(1/\nu^2),
 \end{align*}
 which is negative for large enough $\nu$.  We conjecture that $M_{1,m}<0$ for all values of $\nu, \theta$
 and even $m$.  We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
@@ -1342,7 +1342,7 @@ discretizations of the advection equation with periodic boundary condition \eqre
 Our detailed investigations in Sections \ref{sectiondiscFourier}--\ref{section3}
 were devoted to the  full discretization obtained by coupling the second-order centered
 differences in space with the $\theta$-method in time.  
- Without using SSP theory \cite{SSPbook}, 
+ Rather than using SSP theory \cite{SSPbook}, 
 we have employed a direct
 %algebraic 
 approach, first based on discrete Fourier analysis and then
@@ -1363,7 +1363,7 @@ values of the spatial grid points $m\in\mathbb{N}^+$.  These tendencies, and mor
 in Theorem \ref{thm2}, and can be seen
 in Figures \ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
 and \ref{fig_spectral}.
-Our positive results about the full discretizations are quite unexpected, since neither of the underlying spatial semi-discretizations preserves positivity: the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section \ref{highercentered}, and also for the ones in Section \ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
+Our positive results about the full discretizations are perhaps unexpected, since neither of the underlying spatial semi-discretizations preserves positivity: the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section \ref{highercentered}, and also for the ones in Section \ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
 
 Although some of the spatial discretizations considered above have high order, the $\theta$-method as time discretization typically has order only 1 (order 2 occurs only for $\theta=1/2$). Therefore, we emphasize that our goal in this work is not to directly provide efficient discretizations but rather
 to understand the behavior of these simple building blocks, as a means
