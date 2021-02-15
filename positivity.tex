@@ -52,7 +52,7 @@
 
 
 
-\title{Positivity of implicit discretizations of the advection equation}
+\title{Positivity preservation of implicit discretizations of the advection equation}
 \author{Yiannis Hadjimichael\thanks{\texttt{hadjimichael@wias-berlin.de} }\and David I. Ketcheson\thanks{{\texttt{david.ketcheson@kaust.edu.sa}}, King Abdullah University of Science and Technology (KAUST),
 Computer Electrical and Mathematical Science and Engineering Division (CEMSE),
 Thuwal, 23955-6900, Saudi Arabia.} \and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os Lor\'and University, and Department of Differential Equations, Budapest University of Technology and Economics, Hungary. The Application-domain Specific Highly Reliable IT Solutions project  has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme) funding scheme.}}
@@ -1248,7 +1248,7 @@ Figures \ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
 
 \subsection{Fourier spectral collocation in space, $\theta$-method in time}\label{spectrcoll}
 Here, we consider the spectral method that results from extending the
-finite difference stencil to include the whole spatial grid.  The resulting spatial 
+finite difference stencil to include the whole spatial grid.  In this section, we assume $m\ge 4$. The resulting spatial 
 semi-discretization can again be written in the form \eqref{semi-discrete}
 where the matrix $L$ takes the form \cite{trefethen,peyret}
 \begin{align*}
@@ -1271,7 +1271,7 @@ As in Section \ref{sectiondiscFourier}, the spectral collocation matrices have a
     \imath\lambda_\ell & =
     \begin{cases}
         \imath\xi_\ell & 1 \le \ell < \frac{m}{2}+1, \\
-        0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\
+        0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\ \nonumber
         \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 < \ell \le m,
     \end{cases}
 \end{align}
@@ -1304,18 +1304,25 @@ From \eqref{eq51} we have (also using \eqref{angle-identities}) that
   M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
 \end{align*}
-Observe that for $\nu \to 0$ we have
-$$
-    M_{1,m} = \frac{1}{m}\sum_{\ell=1}^m\left( \cos(\xi_\ell)-\nu \lambda_\ell \sin(\xi_\ell)\right) + {\mathcal O}(\nu^2) = \frac{1}{m}\sum_{\ell=1}^m -\nu \lambda_\ell \sin(\xi_\ell)+ {\mathcal O}(\nu^2),
-$$
-which is negative for small enough $\nu$ since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$.
-Meanwhile, for $\nu \to \infty$ we have
+Observe that we have
+%\[
+%    M_{1,m} = \frac{1}{m}\sum_{\ell=1}^m\left( \cos(\xi_\ell)-\nu \lambda_\ell \sin(\xi_\ell)\right) + {\mathcal O}(\nu^2) = \frac{1}{m}\sum_{\ell=1}^m -\nu \lambda_\ell \sin(\xi_\ell)+ {\mathcal O}(\nu^2),
+%\]
+%which is negative for small enough $\nu$ since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$.
+\[
+ M_{1,m} = \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell)=
+\]
+\[
+\frac{1}{m} \sum_{\ell=1}^{m} \frac{-\theta\nu^2\lambda_\ell^2 \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2},
+\]
+which is negative for $\nu>0$ sufficiently small and $\theta\in[0,1]$ arbitrary, since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$. Meanwhile, for $\nu \to \infty$ we have
 \begin{align*}
-    M_{1,m} & = \frac{1}{m}(\cos(\xi_0)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{1-\theta}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) + {\mathcal O}(1/\nu^2) \\
+    M_{1,m} & = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{1-\theta}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) + {\mathcal O}(1/\nu^2) \\
               & =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(1/\nu^2),
 \end{align*}
-which is negative for large enough $\nu$.  We conjecture that $M_{1,m}<0$ for all values of $\nu, \theta$
-and even $m$.  We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
+which is negative again for large enough $\nu$ and $\theta\in[0,1]$ arbitrary.  We conjecture that $M_{1,m}<0$ for all values of $\nu>0, \theta\in[0,1]$
+and even $4\le m\in\mathbb{N}^+$.  We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
 The expression $M_{1,m}$ is a rational function in $\nu$ and $\theta$, whose
 denominator is positive. By introducing a new variable $y:=\pi\theta\nu\ge 0$
 and dividing by $\nu>0$, we can write the numerator as a univariate polynomial 
