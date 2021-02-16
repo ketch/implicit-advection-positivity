@@ -1277,7 +1277,8 @@ As in Section \ref{sectiondiscFourier}, the spectral collocation matrices have a
 \end{align}
 where $\xi_\ell$ has been defined in \eqref{xildef}.
 
-When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full discretization matrix $M$ is obtained. 
+When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full discretization matrix $M$ is obtained.  It is well known and easily shown that, as with the discretizations considered above,
+this method is not positivity preserving (and not A-stable) when $\theta=0$.
 \begin{remark} 
 In \eqref{Mdualdef}, the matrix $R(\nu L)$ is computationally more difficult to evaluate due to the presence of the inverse of a non-sparse matrix, whereas the matrix $R(\nu \Lambda)$ is easier to deal with (since one needs to take the inverse of a diagonal matrix only).
 \end{remark} 
@@ -1309,20 +1310,22 @@ Observe that we have
 %    M_{1,m} = \frac{1}{m}\sum_{\ell=1}^m\left( \cos(\xi_\ell)-\nu \lambda_\ell \sin(\xi_\ell)\right) + {\mathcal O}(\nu^2) = \frac{1}{m}\sum_{\ell=1}^m -\nu \lambda_\ell \sin(\xi_\ell)+ {\mathcal O}(\nu^2),
 %\]
 %which is negative for small enough $\nu$ since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$.
-\[
- M_{1,m} = \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell)=
-\]
-\[
-\frac{1}{m} \sum_{\ell=1}^{m} \frac{-\theta\nu^2\lambda_\ell^2 \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2},
-\]
-which is negative for $\nu>0$ sufficiently small and $\theta\in[0,1]$ arbitrary, since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$. Meanwhile, for $\nu \to \infty$ we have
+\begin{align}
+ M_{1,m} & = \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \\
+& = \frac{1}{m} \sum_{\ell=1}^{m} \frac{-\theta\nu^2\lambda_\ell^2 \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2},  \label{newM1}
+\end{align}
+which is negative for $\nu>0$ sufficiently small and $\theta\in(0,1]$ arbitrary, since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$. Meanwhile, for $\nu \to \infty$, since
+$$
+(1+\theta^2 \nu^2 \lambda_\ell^2)^{-1} = (\theta^2 \nu^2 \lambda_\ell^2)^{-1}(1+{\mathcal O}(\nu^{-2})),
+$$
+we have
 \begin{align*}
-    M_{1,m} & = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{1-\theta}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) + {\mathcal O}(1/\nu^2) \\
-              & =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(1/\nu^2),
+    M_{1,m} & = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1+{\mathcal O}(\nu^{-2})}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{-1}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) \\
+              & =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(\nu^{-3}),
 \end{align*}
-which is negative again for large enough $\nu$ and $\theta\in[0,1]$ arbitrary.  We conjecture that $M_{1,m}<0$ for all values of $\nu>0, \theta\in[0,1]$
-and even $4\le m\in\mathbb{N}^+$.  We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
+which is negative again for large enough $\nu$ and $\theta\in(0,1]$ arbitrary.  We conjecture that $M_{1,m}<0$ for all values of $\nu>0, \theta\in(0,1]$.
+We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
 The expression $M_{1,m}$ is a rational function in $\nu$ and $\theta$, whose
 denominator is positive. By introducing a new variable $y:=\pi\theta\nu\ge 0$
 and dividing by $\nu>0$, we can write the numerator as a univariate polynomial 
