@@ -77,7 +77,7 @@ step sizes. The entrywise non-negativity of the matrix $M$---which is
 equivalent to the positivity preservation of the fully discrete
 scheme---is investigated via discrete Fourier analysis and also by solving some low-order parametric 
 linear recursions. We find that positivity preservation of the fully discrete system is impossible if the number  of spatial grid points $m$ is even. However, it turns out that positivity preservation of the fully discrete system is recovered for \emph{odd} values of $m$
-provided that $\te\ge 1/2$ is chosen suitably and $\nu$ is chosen suitably \emph{large}. 
+provided that $\te\ge 1/2$ and $\nu$ are chosen suitably. % \emph{large}. 
 %bounded by two positive constants (the
 %upper bound can sometimes be $+\infty$). The interplay between $m$, $\te$ and
 %$\nu$ governing non-negativity of the matrix $M$ is explicitly described in
@@ -1305,7 +1305,8 @@ From \eqref{eq51} we have (also using \eqref{angle-identities}) that
   M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
 \end{align*}
-Observe that we have
+
+On the one hand, observe that we have
 %\[
 %    M_{1,m} = \frac{1}{m}\sum_{\ell=1}^m\left( \cos(\xi_\ell)-\nu \lambda_\ell \sin(\xi_\ell)\right) + {\mathcal O}(\nu^2) = \frac{1}{m}\sum_{\ell=1}^m -\nu \lambda_\ell \sin(\xi_\ell)+ {\mathcal O}(\nu^2),
 %\]
@@ -1313,9 +1314,11 @@ Observe that we have
 \begin{align}
  M_{1,m} & = \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
   \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \\
-& = \frac{1}{m} \sum_{\ell=1}^{m} \frac{-\theta\nu^2\lambda_\ell^2 \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2},  \label{newM1}
+& = \frac{\nu}{m} \sum_{\ell=1}^{m} \frac{- \lambda_\ell\sin(\xi_\ell)-\theta\nu\lambda_\ell^2 \cos(\xi_\ell) }{1+\theta^2\nu^2\lambda_\ell^2},  \label{newM1}
 \end{align}
-which is negative for $\nu>0$ sufficiently small and $\theta\in(0,1]$ arbitrary, since $\lambda_\ell \sin(\xi_\ell)\ge 0$ for all $\ell$. Meanwhile, for $\nu \to \infty$, since
+which is negative for $\nu>0$ sufficiently \emph{small} and $\theta\in(0,1]$ arbitrary, since $\lambda_1=\lambda_{m/2+1}=0$, and $\lambda_\ell \sin(\xi_\ell)>0$ for the remaining indices $\ell$. 
+
+ Meanwhile, for $\nu \to \infty$, since
 $$
 (1+\theta^2 \nu^2 \lambda_\ell^2)^{-1} = (\theta^2 \nu^2 \lambda_\ell^2)^{-1}(1+{\mathcal O}(\nu^{-2})),
 $$
@@ -1324,7 +1327,24 @@ we have
     M_{1,m} & = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1+{\mathcal O}(\nu^{-2})}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{-1}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) \\
               & =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(\nu^{-3}),
 \end{align*}
-which is negative again for large enough $\nu$ and $\theta\in(0,1]$ arbitrary.  We conjecture that $M_{1,m}<0$ for all values of $\nu>0, \theta\in(0,1]$.
+which is negative again for large enough $\nu$ and $\theta\in(0,1]$ arbitrary. \\ 
+------------------------------------------------\\
+On the other hand, by suitably regrouping the terms, we also have the identity
+\[
+    M_{1,m}  = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(\frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right) 
+\]
+\[ =  0+\left[
+ \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m  \frac{\theta-1}{m\theta}\cos(\xi_\ell)\right]+
+ \]
+\[ \frac{1}{m\nu\theta^2}
+ \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(-\frac{\sin(\xi_\ell)}{\lambda_\ell}+\left\{\frac{\cos(\xi_\ell)}{\nu\lambda_\ell^2}+ \left(\theta(1-\theta) \cos(\xi_\ell)- \frac{ \cos(\xi_\ell)}{ \nu^2 \lambda_\ell^2}+\frac{\sin(\xi_\ell)}{\nu \lambda_\ell}\right)\frac{\nu}{1+\theta^2 \nu^2 \lambda_\ell^2}\right\}\right).
+\]
+Let us fix $\theta\in(0,1]$ arbitrary and consider this last expression. Then it is clear that (i) the first sum in $[\ldots]$ is 0; (ii) ${\sin(\xi_\ell)}/{\lambda_\ell}>0$ for each $\ell$ appearing in the second sum; and (iii) the expression in $\{\ldots\}$  for each $\ell$ can be made arbitrarily small in modulus by choosing $\nu>0$ suitably large. This means that for any $\theta\in(0,1]$, $M_{1,m}<0$ for \emph{large} enough $\nu>0$. \\
+------------------------------------------------
+
+
+We conjecture that $M_{1,m}<0$ for \emph{all} values of $\nu>0, \theta\in(0,1]$.
 We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
 The expression $M_{1,m}$ is a rational function in $\nu$ and $\theta$, whose
 denominator is positive. By introducing a new variable $y:=\pi\theta\nu\ge 0$
