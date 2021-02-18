@@ -1192,6 +1192,11 @@ M\left(3,\frac{1}{2},4\right)=\left(
 
 \section{Other spatial discretizations}\label{otherdisc}
 
+The spatial semi-discretization considered in Sections \ref{sectioncentered}--\ref{section3} is not positivity preserving. The same will hold true for each spatial semi-discretization to be investigated in Sections \ref{highercentered}--\ref{spectrcoll} below: it is well-known \cite[Chapter I,
+Theorem 7.2]{hundsdorferverwer} that a linear constant-coefficient system of ordinary differential equations 
+\eqref{semi-discrete} is positivity preserving if and only if the
+matrix $\frac{a}{\dx}L$ has no negative off-diagonal entries. The violation of this last condition is clear for the matrix 
+$L$ in \eqref{Ldef}, for all matrices $L$ in Section \ref{highercentered}, and also for the ones in Section \ref{spectrcoll} (due to $L_{1,2}=-L_{2,1}\ne 0$).
 
 
 
@@ -1277,11 +1282,12 @@ As in Section \ref{sectiondiscFourier}, the spectral collocation matrices have a
 \end{align}
 where $\xi_\ell$ has been defined in \eqref{xildef}.
 
-When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full discretization matrix $M$ is obtained.  It is well known and easily shown that, as with the discretizations considered above,
-this method is not positivity preserving (and not A-stable) when $\theta=0$.
-\begin{remark} 
-In \eqref{Mdualdef}, the matrix $R(\nu L)$ is computationally more difficult to evaluate due to the presence of the inverse of a non-sparse matrix, whereas the matrix $R(\nu \Lambda)$ is easier to deal with (since one needs to take the inverse of a diagonal matrix only).
-\end{remark} 
+When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full discretization matrix $M$ in \eqref{Mdualdef} is obtained.  
+
+For $\theta=0$ (that is, when the explicit Euler time discretization is applied), we have $M=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$ due to the negative off-diagonal entries of $L$ (see at the beginning of Section \ref{otherdisc}). Hence, in what follows, we can assume $\theta\in(0,1]$.
+%It is well known and easily shown that, as with the discretizations considered above,
+%this method is not positivity preserving (and not A-stable) when $\theta=0$.
+
 
 The entries of the first row of the circulant matrix $M$ are again given by \eqref{M-entries}, and now %for the $\theta$-method 
 they take the form
@@ -1318,17 +1324,17 @@ On the one hand, observe that we have
 \end{align}
 which is negative for $\nu>0$ sufficiently \emph{small} and $\theta\in(0,1]$ arbitrary, since $\lambda_1=\lambda_{m/2+1}=0$, and $\lambda_\ell \sin(\xi_\ell)>0$ for the remaining indices $\ell$. 
 
- Meanwhile, for $\nu \to \infty$, since
-$$
-(1+\theta^2 \nu^2 \lambda_\ell^2)^{-1} = (\theta^2 \nu^2 \lambda_\ell^2)^{-1}(1+{\mathcal O}(\nu^{-2})),
-$$
-we have
-\begin{align*}
-    M_{1,m} & = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1+{\mathcal O}(\nu^{-2})}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{-1}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) \\
-              & =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(\nu^{-3}),
-\end{align*}
-which is negative again for large enough $\nu$ and $\theta\in(0,1]$ arbitrary. \\ 
-------------------------------------------------\\
+% Meanwhile, for $\nu \to \infty$, since
+%$$
+%(1+\theta^2 \nu^2 \lambda_\ell^2)^{-1} = (\theta^2 \nu^2 \lambda_\ell^2)^{-1}(1+{\mathcal O}(\nu^{-2})),
+%$$
+%we have
+%\begin{align*}
+ %   M_{1,m} & = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1+{\mathcal O}(\nu^{-2})}{m} \sum_{\ell=2, \ell\ne m/2+1}^m \left(\frac{-1}{\theta}\cos(\xi_\ell) - \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}\right) \\
+ %             & =  -\frac{1}{m} \sum_{\ell=1}^m  \frac{\sin(\xi_\ell)}{\nu\theta^2\lambda_\ell}+ {\mathcal O}(\nu^{-3}),
+%\end{align*}
+%which is negative again for large enough $\nu$ and $\theta\in(0,1]$ arbitrary. \\ 
+%------------------------------------------------\\
 On the other hand, by suitably regrouping the terms, we also have the identity
 \[
     M_{1,m}  = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(\frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
@@ -1340,8 +1346,8 @@ On the other hand, by suitably regrouping the terms, we also have the identity
 \[ \frac{1}{m\nu\theta^2}
  \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(-\frac{\sin(\xi_\ell)}{\lambda_\ell}+\left\{\frac{\cos(\xi_\ell)}{\nu\lambda_\ell^2}+ \left(\theta(1-\theta) \cos(\xi_\ell)- \frac{ \cos(\xi_\ell)}{ \nu^2 \lambda_\ell^2}+\frac{\sin(\xi_\ell)}{\nu \lambda_\ell}\right)\frac{\nu}{1+\theta^2 \nu^2 \lambda_\ell^2}\right\}\right).
 \]
-Let us fix $\theta\in(0,1]$ arbitrary and consider this last expression. Then it is clear that (i) the first sum in $[\ldots]$ is 0; (ii) ${\sin(\xi_\ell)}/{\lambda_\ell}>0$ for each $\ell$ appearing in the second sum; and (iii) the expression in $\{\ldots\}$  for each $\ell$ can be made arbitrarily small in modulus by choosing $\nu>0$ suitably large. This means that for any $\theta\in(0,1]$, $M_{1,m}<0$ for \emph{large} enough $\nu>0$. \\
-------------------------------------------------
+Let us fix $\theta\in(0,1]$ arbitrary and consider this last expression. Then it is clear that (i) the first sum in the $[\ldots]$ bracket is 0; (ii) ${\sin(\xi_\ell)}/{\lambda_\ell}>0$ for each $\ell$ appearing in the second sum; and (iii) the expression in $\{\ldots\}$  for each $\ell$ can be made arbitrarily small in modulus by choosing $\nu>0$ suitably large. This means that for any $\theta\in(0,1]$, $M_{1,m}<0$ for \emph{large} enough $\nu>0$. 
+%------------------------------------------------
 
 
 We conjecture that $M_{1,m}<0$ for \emph{all} values of $\nu>0, \theta\in(0,1]$.
@@ -1353,6 +1359,9 @@ $p_m(y)$.  For example,
 $$p_8(y) = -3 \left(8+3 \sqrt{2}\right) y^4+64 y^3-32 \left(7+5 \sqrt{2}\right) y^2+256 y-256 \left(2+\sqrt{2}\right).$$
 We have confirmed with symbolic calculations that $p_m(y)<0$
 for all $y\ge 0$ in the cases $m\in\{4,6,8,10\}$. 
+\begin{remark} 
+When generating the matrix $M$ for the symbolic calculations for larger values of $m$ for the actual full discretization, it is of course computationally more efficient to use the formula $\cF R(\nu \Lambda) \cF^*$ in \eqref{Mdualdef} instead of $R(\nu L)$ (because in the latter form one would need to evaluate the inverse of a non-sparse matrix).
+\end{remark} 
 
 \item [{Case 2:} $m$ is {odd}.]
 This time we find a behavior similar to that observed in Sections \ref{sectioncentered} or \ref{highercentered}, see Figure \ref{fig_spectral}.
@@ -1395,7 +1404,8 @@ values of the spatial grid points $m\in\mathbb{N}^+$.  These tendencies, and mor
 in Theorem \ref{thm2}, and can be seen
 in Figures \ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
 and \ref{fig_spectral}.
-Our positive results about the full discretizations are perhaps unexpected, since neither of the underlying spatial semi-discretizations preserves positivity: the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section \ref{highercentered}, and also for the ones in Section \ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
+Our positive results about the full discretizations are perhaps unexpected, since neither of the underlying spatial semi-discretizations preserves positivity.
+%the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section \ref{highercentered}, and also for the ones in Section \ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
 
 Although some of the spatial discretizations considered above have high order, the $\theta$-method as time discretization typically has order only 1 (order 2 occurs only for $\theta=1/2$). Therefore, we emphasize that our goal in this work is not to directly provide efficient discretizations but rather
 to understand the behavior of these simple building blocks, as a means
