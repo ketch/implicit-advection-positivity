@@ -1225,23 +1225,24 @@ the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$.
 \item When the stencil width is 7 (implying $m\ge 7$ and $6^\text{th}$-order accuracy), the entries on the
 central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.
 \end{itemize}
-In all above central diagonals the middle $0$ corresponds to the main diagonal.
+In all above central diagonals, the middle $0$ corresponds to the main diagonal.
 We can obtain an eigendecomposition \eqref{eigen} for matrix $L$, with eigenvectors given by
 \eqref{eigenvectrors} and eigenvalues $\lambda_\ell = \imath \psi(\xi_\ell)$, where
 \begin{align}\label{psi}
-	\psi(\xi_\ell) = 2 \sum_{k=1}^{(N-1)/2} C_k \sin(k\xi_\ell).
+	\psi(\xi_\ell) := 2 \sum_{k=1}^{(N-1)/2} C_k \sin(k\xi_\ell).
 \end{align}
 As before, $\xi_\ell$ is defined in \eqref{xildef}, and $C$ is a vector consisting of the last $(N-1)/2$
 coefficients of the central diagonals of $L$, with $N$ denoting the stencil width.
 For instance, the vector $C$ is equal to $(1/2)$, $(2/3,-1/12)$, and $(3/4,-3/20,1/60)$ for stencil widths
 $3$, $5$, and $7$, respectively.
-An important property of function \eqref{psi} is that by construction each consecutive term in the sum is smaller in absolute value, namely $|C_k \sin(k\xi_\ell)| \ge |C_{k+1} \sin((k+1)\xi_\ell)|$, for $1 \le k \le (N-3)/2$.
+An important property of function \eqref{psi} is that, by construction, each consecutive term in the sum is %smaller 
+non-increasing in absolute value, namely $|C_k \sin(k\xi_\ell)| \ge |C_{k+1} \sin((k+1)\xi_\ell)|$, for $1 \le k \le (N-3)/2$.
 This property will be useful in the proof of Proposition~\ref{m_even_nonpositivityFE}.
 
 After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time
 discretization, and the full discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}).
 We can extend the results of Section~\ref{sectioncentered} for an arbitrary centered spatial discretization.
-As seen previously, matrix $M$ is a real, circular matrix so it can be characterized by the entries of its first row,
+As seen previously, matrix $M$ is a real, circulant matrix so it can be characterized by the entries of its first row,
 which take the form
 \begin{align}\label{M1j_FD}
 	  M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)\right)
@@ -1275,7 +1276,7 @@ the $\theta$-method as time discretization.
 	Let $j = m$ in \eqref{M1j_FD}, then by using \eqref{angle-identities} we have
 	\begin{align}\label{M1m}
 		M_{1,m} &= \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)
-					\right(\cos(\xi_\ell)-\nu\psi(\xi_\ell)\sin(\xi_\ell)}{1+\theta^2\nu^2\psi^2(\xi_\ell)} \nonumber \\
+					\right)\cos(\xi_\ell)-\nu\psi(\xi_\ell)\sin(\xi_\ell)}{1+\theta^2\nu^2\psi^2(\xi_\ell)} \nonumber \\
 					&= \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)\right)
 					\cos(\xi_\ell) - \nu\psi(\xi_\ell)\sin(\xi_\ell)}{1+\theta^2\nu^2\psi^2(\xi_\ell)}\right) -
 					\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \nonumber \\
@@ -1312,7 +1313,7 @@ the $\theta$-method as time discretization.
 	The function \eqref{psi} is by definition non-negative for all $0 \le \xi_\ell  \le \pi/2$; hence
 	$\psi(\xi_\ell)$, $\psi(\pi-\xi_\ell)$, as well as $\sin(\xi_\ell)$, and $\cos(\xi_\ell)$ are positive for each
 	index $\ell$ in \eqref{M1mnew}.
-	Let us fix $\theta \in [0,1]$ arbitrary.
+	Let us fix $\theta \in [0,1]$ arbitrarily.
 	Then, for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that the expression
 	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
 	Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mnew}.
@@ -1332,7 +1333,7 @@ Taking $\nu \to +\infty$ with $m=2k+1\ge 3$ odd and $\te \in (0,1]$ fixed in \eq
     M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & =  1-\frac{m-1}{m\theta} \\
     M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m\theta} \quad (j \ge 2).
 \end{align*}
-As a result, by following similar arguments as in Section~\ref{sectioncentered} we conclude that
+As a result, by following similar arguments as in Section~\ref{sectioncentered}, we conclude that
 \begin{align*}
 	M_{1,j}^\infty > 0 \text{ for all } 2\le j\le m \text{ and } \te \in (0,1],
 \end{align*}
