@@ -96,7 +96,7 @@ These results are interesting since the systems of ordinary differential equatio
 \end{abstract}
 \blfootnote{The Application-domain Specific Highly Reliable IT Solutions project  has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme) funding scheme.
 This work was supported by the King Abdullah University of Science and Technology (KAUST), 4700
-Thuwal, 23955-6900, Saudi Arabia, and by the Leibniz competition.}
+Thuwal, 23955-6900, Saudi Arabia, and by the Leibniz Competition.}
 
 \section{Background and motivation}
 In this work, we investigate the positivity of some discretizations of the advection equation
@@ -235,7 +235,7 @@ combined with the $\theta$-method in
 time, using discrete Fourier
 analysis. We also point out some connections with structured non-negative inverse eigenvalue problems. In Section \ref{section3}, we study this particular full discretization in more detail. 
 In Section \ref{explsect}, by setting up and solving certain parametric linear recursions, we derive explicit, non-trigonometric formulae for the entries of the full discretization matrix $M$. Then, in Section \ref{nonnegsect}, we use these formulae to provide precise results on the non-negativity of $M$ in terms of roots of some  sparse polynomials.
-In Section \ref{otherdisc}, we discuss some observations and simple results regarding
+In Section \ref{otherdisc}, we discuss some observations and results regarding
 higher-order spatial discretizations, including high-order centered differences
 (in Section \ref{highercentered}) and spectral collocation methods (in Section \ref{spectrcoll}).
 We summarize our findings in Section \ref{conclusions}.\\
@@ -479,7 +479,7 @@ values of $\theta\in[0,1]$ and $\nu>0$.
 
 We can arrive at the same conclusion by observing that
 for any $m=2k\ge 4$ we have $M_{1,2}=-M_{1,m}$, so that one of
-these entries must always be negative.
+these (non-zero) entries must always be negative.
 %\begin{remark}
 %By using similar symmetry arguments, one can prove that for any $m=2k\ge 4$ we have
 %$M_{1,2}=-M_{1,m}$, which also shows that $M\ge 0$ is impossible for $\te\in[0,1]$ and $\nu>0$.
@@ -1267,7 +1267,7 @@ the $\theta$-method as time discretization.
 	Let the matrix $M_{m \times m}$ result from a given centered discretization in space (with $m$ spatial
 	grid points) and the $\theta$-method in time.
 	Let also $\nu$ be the CFL number defined in \eqref{nudef}.
-	If $m \ge 4$ is even, then there exists $\nu_0  \in \rr^+$ such that the matrix $M$ has at least one
+	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  \in \rr^+$ such that the matrix $M$ has at least one
 	negative entry for any $\nu \ge \nu_0$.
 \end{proposition}
 \begin{proof}
@@ -1285,13 +1285,14 @@ the $\theta$-method as time discretization.
 					&= -\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\psi(\xi_\ell)(\sin(\xi_\ell)+\theta\nu\psi(\xi_\ell)
 					\cos(\xi_\ell))}{1+\theta^2\nu^2\psi^2(\xi_\ell)},
 	\end{align}
-	where in the last equality we used that $\psi(\xi_1) = \psi(0) = 0$ and the symmetry of angles
-	$\xi_\ell$, $1 \le \ell \le m$, about the $x$-axis when $m$ is even.
+	where in the last equality we used $\psi(\xi_1) = \psi(0) = 0$,  $\psi(\xi_{m/2+1}) =  0$, and the symmetry of angles
+	$\xi_\ell$ ($1 \le \ell \le m$) about the $x$-axis when $m$ is even (explicitly, the identities
+	$\sin\left(k\frac{2\pi(\ell-1)}{m}\right)=-\sin\left(k\frac{2\pi(m-\ell+2-1)}{m}\right)$ and $\cos\left(\frac{2\pi(\ell-1)}{m}\right)=\cos\left(k\frac{2\pi(m-\ell+2-1)}{m}\right)$ for positive integers $k$, $\ell$ and $m$).
 	Denote the summand in \eqref{M1m} by
 	\begin{align}\label{sumterm}
 		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)}.
 	\end{align}
-	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 \le \xi_\ell  \le \pi/2$,
+	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  \le \pi/2$,
 	yielding
 	\begin{align}\label{M1mnew}
 		M_{1,m} = \begin{cases}
@@ -1299,7 +1300,7 @@ the $\theta$-method as time discretization.
 								f(\pi-\xi_\ell; \theta, \nu) + \dfrac{\psi(\pi/2)}{1+\theta^2\nu^2\psi^2(\pi/2)}\right),
 								&\; \text{if } m \equiv 0 \Mod{4}, \\[20pt]
 							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\; \text{otherwise}.
+								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\; \text{if } m \equiv 2 \Mod{4}.
 						\end{cases}
 	\end{align}
 	By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
@@ -1428,7 +1429,7 @@ and hence we can prove the same result as in Proposition~\ref{m_even_nonpositivi
 	Let the matrix $M_{m \times m}$ result from a given even spactral collocation method in space (with $m$
 	spatial grid points) and the $\theta$-method in time.
 	Let also $\nu$ be the CFL number defined in \eqref{nudef}.
-	If $m \ge 4$ is even, then there exists $\nu_0  \in \rr^+$ such that the matrix $M$ has at least one
+	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  \in \rr^+$ such that the matrix $M$ has at least one
 	negative entry for any $\nu \ge \nu_0$.
 \end{proposition}
 \begin{proof}
