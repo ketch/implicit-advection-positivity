@@ -50,28 +50,19 @@
   \endgroup
 }
 
+\hbadness=99999
 
 
-
-\title{Positivity preservation of implicit discretizations of the advection equation}
-\author{Yiannis Hadjimichael\thanks{{\texttt{hadjimichael@wias-berlin.de}}, MTA-ELTE Numerical
-Analysis and Large Networks Research Group, E\"otv\"os Lor\'and University, P\'azm\'any P\'eter
-s\'et\'any 1/C, H-1117, Budapest, Hungary, and Weierstrass Institute (WIAS), Mohrenstra{\ss}e 39,
-10117, Berlin, Germany.}
-\and David I. Ketcheson\thanks{{\texttt{david.ketcheson@kaust.edu.sa}}, King Abdullah University of
-Science and Technology (KAUST), Computer Electrical and Mathematical Science and Engineering Division
-(CEMSE), Thuwal, 23955-6900, Saudi Arabia.}
-\and Lajos L\'oczi\thanks{{\texttt{LLoczi@inf.elte.hu}}, Department of Numerical Analysis, E\"otv\"os
-Lor\'and University, and Department of Differential Equations, Budapest University of Technology and
-Economics, Hungary.}}
 
 \begin{document}
+
 \maketitle
+
 \begin{abstract}
 We analyze, from the viewpoint of positivity
 preservation, certain discretizations of a fundamental partial differential
 equation, the one-dimensional advection equation with periodic boundary
-condition. The full discretization is obtained by coupling a finite difference spatial semi-discretization 
+condition. The full discretization is obtained by coupling a finite difference spatial semi-discretization
 (the second- and some higher-order centered difference schemes, or the Fourier spectral collocation method)
 with an arbitrary $\te$-method in time
 (including the forward and backward Euler methods, and a second-order method by
@@ -228,16 +219,16 @@ In the later sections of the paper, we combine higher-order methods in space wit
 %independent interest.
 
 \subsection{Structure of the paper and notation}
-In Section \ref{sectiondiscFourier}, we first characterize 
+In Section~\ref{sectiondiscFourier}, we first characterize
 positivity preservation of full discretizations of \eqref{advection} resulting from 
-finite difference spatial and one-step time discretizations. Then, in Section \ref{sectioncentered}, we study positivity of the second-order centered differences in space 
+finite difference spatial and one-step time discretizations. Then, in Section~\ref{sectioncentered}, we study positivity of the second-order centered differences in space
 combined with the $\theta$-method in
 time, using discrete Fourier
-analysis. We also point out some connections with structured non-negative inverse eigenvalue problems. In Section \ref{section3}, we study this particular full discretization in more detail. 
+analysis. We also point out some connections with structured non-negative inverse eigenvalue problems. In Section~\ref{section3}, we study this particular full discretization in more detail.
 In Section \ref{explsect}, by setting up and solving certain parametric linear recursions, we derive explicit, non-trigonometric formulae for the entries of the full discretization matrix $M$. Then, in Section \ref{nonnegsect}, we use these formulae to provide precise results on the non-negativity of $M$ in terms of roots of some  sparse polynomials.
 In Section \ref{otherdisc}, we discuss some observations and results regarding
 higher-order spatial discretizations, including high-order centered differences
-(in Section \ref{highercentered}) and spectral collocation methods (in Section \ref{spectrcoll}).
+(in Section~\ref{highercentered}) and spectral collocation methods (in Section~\ref{spectrcoll}).
 We summarize our findings in Section \ref{conclusions}.\\
 
 
@@ -325,7 +316,7 @@ are given by
     M_{1,j} & = \frac{1}{m} \sum_{\ell=1}^m R(\nu\lambda_\ell) \exp(-\imath(j-1)\xi_\ell) \quad\quad (1\le j\le m).
 \end{align}
 
-\subsection{Second-order centered discretization in space, $\theta$-method in time}\label{sectioncentered}
+\subsection{Second-order centered discretization in space, \texorpdfstring{$\theta$}{}-method in time}\label{sectioncentered}
 In what follows we assume $3\le m\in\nplus$. Consider the case of a 3-point centered difference approximation in space (having order 2):
 %\begin{align}
 \[
@@ -476,7 +467,6 @@ Considering  the above expression for $j = m$ we have
 %\end{align*}
 Thus the discretization using second-order centered differences in space and the $\theta$-method in time cannot preserve positivity when $m$ is even, regardless of the
 values of $\theta\in[0,1]$ and $\nu>0$.
-
 We can arrive at the same conclusion by observing that
 for any $m=2k\ge 4$ we have $M_{1,2}=-M_{1,m}$, so that one of
 these (non-zero) entries must always be negative.
@@ -487,19 +477,36 @@ these (non-zero) entries must always be negative.
 \item [{Case 2:} $m$ is {odd}.]
 \item \noindent Let us now consider the case of {odd} $m=2k+1\ge 3$. Then $\sin(\xi_\ell)\ne0$ for
 $2\le\ell\le m$.
- Writing
-\begin{align*} 
+Writing
+\ifjournal
+\begin{align*}
 	M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
 		{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
 	M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))
 		\cos((j-1)\xi_\ell) + \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}
 		\right) \quad (j\ge 2),
 \end{align*}
-and taking $\nu \to +\infty$ with $m$ and $\te\in(0,1]$ fixed, we find that
-\begin{align*} 
-    M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  1-\frac{m-1}{m\theta}\\
-    M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta} \quad\quad (j\ge 2).
+\else
+\begin{align*}
+	M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}
+		{1+\theta^2\nu^2\sin^2(\xi_\ell)}\right) \\
+	M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell))
+		\cos((j-1)\xi_\ell) + \nu \sin(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \sin^2(\xi_\ell)}
+		\right) \\ && \hspace*{-30pt} (j \ge 2).
 \end{align*}
+\fi
+and taking $\nu \to +\infty$ with $m$ and $\te\in(0,1]$ fixed, we find that
+\ifjournal
+\begin{align*}
+    M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  1-\frac{m-1}{m\theta} \\
+    M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta} \quad (j \ge 2).
+\end{align*}
+\else
+\begin{align*}
+    M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\right) =  1-\frac{m-1}{m\theta} \\
+    M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m} \left(1 - \sum_{\ell=2}^m \frac{1-\theta}{\theta}\cos((j-1)\xi_\ell)\right) = \frac{1}{m} \left(1+\frac{1-\theta}{\theta}\right) = \frac{1}{m\theta} \\ && \hspace*{-20pt} (j \ge 2).
+\end{align*}
+\fi
 We see that
 \[M_{1,j}^\infty>0 \text{ for all } 2\le j\le m \text{ and } \te\in(0,1],
 \]
@@ -513,21 +520,28 @@ We now show that $M\ge 0$ also holds for $\theta=\frac{m-1}{m}$ with $m$ fixed a
 Clearly, we only need to verify the non-negativity of entry $M_{1,1}$ for $\nu>0$ large enough. 
 In fact, for $\theta=\frac{m-1}{m}$ and for \emph{any} $\nu>0$ we have $M_{1,1}> 0$. To see this, consider a summand with $2\le\ell\le m$ in $M_{1,1}$: 
 \[
- \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\Big|_{\theta=\frac{m-1}{m}}=
+ \frac{1-\theta(1-\theta)\nu^2\sin^2(\xi_\ell)}{1+\theta^2\nu^2\sin^2(\xi_\ell)}\Bigg|_{\theta=\frac{m-1}{m}}=
  \frac{m^2-(m-1) \nu ^2 \sin ^2\left(\xi _\ell\right)}{m^2+(m-1)^2 \nu ^2 \sin ^2\left(\xi _\ell\right)}=:\varphi(\nu,\ell).
 \]
 Its partial derivative with respect to $\nu$ is
 \[
 \partial_\nu\varphi(\nu,\ell)=-\frac{2 (m-1) m^3 \nu  \sin ^2\left(\xi _\ell\right)}{\left(m^2+(m-1)^2 \nu ^2 \sin ^2\left(\xi _\ell\right)\right)^2}<0,
 \]
-and $\varphi(0,\ell)=1$, hence the function $\nu\mapsto M_{1,1}=\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)$ is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is $M_{1,1}^\infty=0$, completing the proof of the claim.\\
+and $\varphi(0,\ell)=1$, hence the function
+\begin{align*}
+	\nu\mapsto M_{1,1}\Big|_{\theta=\frac{m-1}{m}} =
+		\frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \varphi(\nu,\ell)\right)
+\end{align*}
+is positive at $\nu=0$, strictly decreases, and its limit when $\nu\to +\infty$ is
+$M_{1,1}^\infty\big|_{\theta=\frac{m-1}{m}}=0$, completing the proof of the claim.\\
 
 Summarizing the above, we have proved the following for any $m\ge 3$, $\te\in[0,1]$ and
 $\nu>0$.
 \end{description}
 \begin{theorem}\label{thm1}
-Consider the advection equation with periodic boundary condition discretized using $2^{\text{nd}}$-order centered
-differences in space and the $\theta$-method in time with $m$ spatial grid points.  
+Consider the advection equation \eqref{advection} with periodic boundary condition discretized using
+$2^{\text{nd}}$-order centered differences in space and the $\theta$-method in time with $m$ spatial grid
+points.
 The full discretization takes the form \eqref{M},
 where\\
 (i) if $m$ is even, then $M$ has at least one negative entry;\\
@@ -537,13 +551,14 @@ entries of $M$ are non-negative.
 
 
 
-A refinement of Theorem \ref{thm1} for odd values of $m$ will be given at the end of Section \ref{section3}, see Theorem \ref{thm2}.
-As for the interval $\theta\in\left[\frac{m-1}{m},1\right]$ appearing in Theorem \ref{thm1}, see also 
-Figures \ref{fig_variousk}--\ref{fig_boundary}.
+A refinement of Theorem~\ref{thm1} for odd values of $m$ will be given at the end of
+Section~\ref{section3}, see Theorem~\ref{thm2}.
+As for the interval $\theta\in\left[\frac{m-1}{m},1\right]$ appearing in Theorem~\ref{thm1}, see also
+Figures~\ref{fig_variousk}--\ref{fig_boundary}.
 
 
 \begin{remark} 
-In the formulae leading to Theorem \ref{thm1} we used a trigonometric representation of the matrix 
+In the formulae leading to Theorem~\ref{thm1} we used a trigonometric representation of the matrix
 \emph{entries} $M_{1,j}$. Here we highlight a related approach to studying the non-negativity of $M$ by
 relying only on the \emph{eigenvalues} $\sigma_\ell$ ($1\le \ell\le m$) of $M$. According to
 \eqref{Mdualdef}, \eqref{Leigenvalues} and \eqref{R}, we have
@@ -584,7 +599,7 @@ implies that there are positive \emph{lower} bounds on $\nu$, although these bou
 %\begin{equation}\label{48converted}
 %\left(\mathrm{trace}(M^p)\right)^q\le m^{q-1} \mathrm{trace}(M^{p q}),
 %\end{equation}
-%see Figure \ref{fig_eigen1}. The resulting high-degree inequalities in $\nu$ have then been solved: for $p=9$ and $q=3$, for example, the rational functions in $\nu$ on both sides of \eqref{48converted} have numerator and denominator degrees 108.
+%see Figure~\ref{fig_eigen1}. The resulting high-degree inequalities in $\nu$ have then been solved: for $p=9$ and $q=3$, for example, the rational functions in $\nu$ on both sides of \eqref{48converted} have numerator and denominator degrees 108.
 %\end{remark}
 %\begin{remark}
 %In the definition of $\nu_R(2,1)$ in \eqref{nurdef}, the constant $y_R(2)$ can be simplified to a degree 6 algebraic number, and $\nu_R(2,1)$ itself is a degree 3 algebraic number.
@@ -610,14 +625,14 @@ the spectra of non-negative circulant matrices have been characterized (with a n
 %that the Perron--Frobenius root (that is, the non-negative eigenvalue equal to the spectral radius of $M$, which exists due to the classical Perron--Frobenius theorem \cite{nonnegmatr})
 %that  $\sigma_1\ge $ cannot be
 %Interestingly, for $m=4$ and $\te=1$, the application of \cite[Theorem 10]{rojosoto} already shows that $M(4,1,\nu)\ge 0$ cannot hold for any $\nu>0$.
-As we will see, the precise lower bound for this matrix---according to our Theorem \ref{thm2} with $k=2$ and $\te=1$---is
+As we will see, the precise lower bound for this matrix---according to our Theorem~\ref{thm2} with $k=2$ and $\te=1$---is
 \[
 \nu\ge \nu_R(2,1)\approx 4.4111.
 \]
 \end{remark}
 
 \begin{remark}
-It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ instead, then the results of Theorems \ref{thm1} and \ref{thm2} would remain valid (together with Figures \ref{fig_variousk}--\ref{fig_boundary}, for example), with all the arguments in their proofs being essentially the same.  For example, as we will see in Section \ref{section3}, the non-negativity of (the first row of) matrix $M$ is governed by the elements $M_{1,1}$ and $M_{1,m}$ for $a>0$ and $m$ odd---this would change to elements $M_{1,1}$ and $M_{1,2}$ for $a<0$ and $m$ odd.
+It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ instead, then the results of Theorems~\ref{thm1} and \ref{thm2} would remain valid (together with Figures~\ref{fig_variousk}--\ref{fig_boundary}, for example), with all the arguments in their proofs being essentially the same.  For example, as we will see in Section~\ref{section3}, the non-negativity of (the first row of) matrix $M$ is governed by the elements $M_{1,1}$ and $M_{1,m}$ for $a>0$ and $m$ odd---this would change to elements $M_{1,1}$ and $M_{1,2}$ for $a<0$ and $m$ odd.
 \end{remark}
 
 %\subsection{Structured non-negative inverse eigenvalue problems}
@@ -626,22 +641,22 @@ It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ 
 
 
 
-\section{Second-order centered discretization in space and $\theta$-method in time---algebraic characterization of the entries of the full discretization matrix}\label{section3}
+\section{Second-order centered discretization in space and \texorpdfstring{$\theta$}{}-method in time---algebraic characterization of the entries of the full discretization matrix}\label{section3}
 
-The results of Section \ref{sectiondiscFourier} are based on the eigendecomposition of the full discretization matrix $M=\cF R(\nu \Lambda) \cF^*$. In this section, instead of using trigonometric functions, we give an algebraic description of the matrix entires by exploiting the relation $M=R(\nu L)$ in \eqref{Mdualdef} with $L$ defined in \eqref{Ldef}.
+The results of Section~\ref{sectiondiscFourier} are based on the eigendecomposition of the full discretization matrix $M=\cF R(\nu \Lambda) \cF^*$. In this section, instead of using trigonometric functions, we give an algebraic description of the matrix entires by exploiting the relation $M=R(\nu L)$ in \eqref{Mdualdef} with $L$ defined in \eqref{Ldef}.
 Explicitly, this means 
 \begin{equation}\label{Mdef}
 M(m,\te,\nu)=(I-\te\nu L)^{-1}(I+(1-\te)\nu L)\in\mathbb{R}^{m\times m},
 \end{equation}
 but the dependence of $M$ on its parameters will often be suppressed. 
 
-It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. The case $m=2k$ has been discussed in Section \ref{sectioncentered}. Thus, throughout the rest of this section, we can assume that 
+It is trivial that for $\te=0$ we have $M(m,0,\nu)=I+\nu L$, hence $M\ge 0$ cannot hold for any $\nu>0$. The case $m=2k$ has been discussed in Section~\ref{sectioncentered}. Thus, throughout the rest of this section, we can assume that
 \begin{equation}\label{genassump}
 \boxed{ 
 m=2k+1\quad (k\in\nplus), \ \ \ \nu>0 \text{\ \  and\ \  } 0<\te\le 1.}
 \end{equation}
 
-\subsection{Explicit description of the matrix entries for odd values of $m$}\label{explsect}
+\subsection{Explicit description of the matrix entries for odd values of \texorpdfstring{$m$}{}}\label{explsect}
 
 % When $m\ge 3$ is odd, it is not apparent how to use the trigonometric representation \eqref{firstrow-theta} to reveal information on the signs of the matrix entries $M_{1,j}$. Therefore, in this section, we first rewrite the  entries in a certain algebraic form by invoking some low-order linear recursions. Then, in Section \ref{nonnegsect}, we will give conditions for $M_{1,j}\ge 0$ in terms of the parameters $\te$ and $\nu$.
 %\begin{remark}
@@ -685,7 +700,7 @@ The subscripts of $\cP_{j,k}$ thus refer to the position of the polynomial withi
 \end{remark}
 
 
-The key to describing $M$ algebraically is the observation that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. As already indicated by Section \ref{sectioncentered}, the leftmost entry ($j=1$) behaves differently than the rest ($2\le j\le 2k+1$).
+The key to describing $M$ algebraically is the observation that the polynomials $\cP_{j,k}$ and $\cD_{k}$ satisfy certain low-order linear recursions with constant coefficients. As already indicated by Section~\ref{sectioncentered}, the leftmost entry ($j=1$) behaves differently than the rest ($2\le j\le 2k+1$).
 
 
 \begin{remark}
@@ -864,7 +879,7 @@ In particular,
 
 \end{corollary}
 
-\subsection{Non-negativity of the matrix entries for odd values of $m$}\label{nonnegsect}
+\subsection{Non-negativity of the matrix entries for odd values of \texorpdfstring{$m$}{}}\label{nonnegsect}
 
 In this section we present a detailed description of the non-negativity properties of the matrix $M$, thanks to the explicit forms for the entries $M_{1,j}$ obtained in Section \ref{explsect}. Throughout this section we still assume \eqref{genassump}.
 
@@ -884,7 +899,8 @@ M_{1,j}(2k+1,\te,\nu)\ge 0 \quad \Longleftrightarrow \quad P_{j,k}(y)\ge 0\quad\
 \caption{The typical behavior of the polynomials $P_{j,k}$ appearing in Corollary \ref{cor2} for $2\le j\le 2k+1$ and $k$ fixed: curves in shades of gray (or black) correspond to even $j$, while curves in shades of red (or orange) correspond to odd $j$ indices. Based on this figure, one can make the following observations. On the one hand, for each fixed and even $j$, $P_{j,k}$ is strictly increasing in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is in general not monotone in its even index $j$. On the other hand, for each fixed and odd $j$, $P_{j,k}$ is in general not monotone in $y$; however, for any fixed $y\in(0,1)$, $P_{j,k}$ is strictly decreasing in its odd index $j$.}\label{fig_excepttopleft}
 \end{center}
 \end{figure}
-The following lemma proves some of the observations about the polynomials $P_{j,k}$ suggested by Figure \ref{fig_excepttopleft} for even and odd indices $2\le j\le 2k+1$.
+The following lemma proves some of the observations about the polynomials $P_{j,k}$ suggested by
+Figure~\ref{fig_excepttopleft} for even and odd indices $2\le j\le 2k+1$.
 \begin{lemma}\label{lem2} Let us fix $y\in(0,1)$ arbitrarily. Then\\
 \indent $\bullet$ for any $1\le\ell\le k$, $P_{2\ell,k}(y)>0$;\\
 \indent $\bullet$ for any $2\le\ell\le k$, $P_{2\ell+1,k}(y)<P_{2\ell-1,k}(y)$. 
@@ -908,7 +924,7 @@ M_{1,j}(2k+1,\te,\nu)\ge 0 \text{  for each } 2\le j\le 2k+1 \quad \Longleftrigh
 \Por\ge 0\quad\text{(see }\eqref{pordef}\text{)}.
 \]
 \end{corollary}
-The non-negativity of $M(2k+1,\te,\nu)$ has therefore been reduced to studying the simultaneous non-negativity of two parametric polynomials, $P_{L,k,\te}$ and $P_{R,k}$, over the $y$-interval $(0,1)$. The content of Lemmas \ref{lem3} and \ref{lem4} is illustrated by Figure \ref{fig_someplpr}.
+The non-negativity of $M(2k+1,\te,\nu)$ has therefore been reduced to studying the simultaneous non-negativity of two parametric polynomials, $P_{L,k,\te}$ and $P_{R,k}$, over the $y$-interval $(0,1)$. The content of Lemmas \ref{lem3} and \ref{lem4} is illustrated by Figure~\ref{fig_someplpr}.
 \begin{lemma}[about the sign of $\Por$]\label{lem3}
 Let us fix $k$ arbitrarily, and recall that by definition $\Por=y^{4 k}+y^{2 k+1}+y^{2 k-1}-1$. Then there is a unique $y\in(0,1)$ such that $\Por=0$.\\ 
 Let 
@@ -1048,7 +1064,7 @@ $\Pol\ge 0$ is equivalent to $\nu\le\nul$. In particular, due to the definition 
 \end{proof}
 Some growth rates, monotonicity and limit properties of $\nur$ and $\nul$---defined in 
 \eqref{nurdef}--\eqref{nuldef}---are collected below; 
-see also Figures \ref{fig_variousk} and \ref{fig_boundary}.
+see also Figures~\ref{fig_variousk} and \ref{fig_boundary}.
 \begin{corollary}\label{cor5} (i) For any $k\in\nplus$ and $\te\in(0,1]$, we have $\nur<\nu_R(k+1,\theta)$, and
 \begin{equation}\label{cor5lowerupper}
 \frac{2 \left(\sqrt{2}+1\right)^{\frac{1}{2 k-1}}}{\left(\sqrt{2}+1\right)^{\frac{2}{2
@@ -1104,14 +1120,14 @@ and the right-hand side here tends to $+\infty$ as $\te\to 0+0$.
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.48\textwidth]{fig_boundary.pdf}
-\caption{A typical shaded region in Figure \ref{fig_variousk} for which $M(2k+1,\te,\nu)\ge 0$; in this particular case, for $k=1$. The gray region is described by the inequalities $\nur\le\nu\le\nul$. The black dotted curve represents the function $\te\mapsto\nur$, while the red dashed curve is the function 
+\caption{A typical shaded region in Figure~\ref{fig_variousk} for which $M(2k+1,\te,\nu)\ge 0$; in this particular case, for $k=1$. The gray region is described by the inequalities $\nur\le\nu\le\nul$. The black dotted curve represents the function $\te\mapsto\nur$, while the red dashed curve is the function
 $\te\mapsto\nul$, having a vertical asymptote at $\te=2k/(2k+1)$.}\label{fig_boundary}
 \end{center}
 \end{figure}
 
 
 
-The following result explains why the ``left half'' of Figure \ref{fig_variousk} is ``empty'' (cf.~Corollary \ref{cor4})---the result is non-trivial, since for fixed $k$, $\lim_{\te\to 0+0} \nul=+\infty=\lim_{\te\to 0+0} \nur$ (cf.~Figure \ref{fig_boundary}).
+The following result explains why the ``left half'' of Figure~\ref{fig_variousk} is ``empty'' (cf.~Corollary \ref{cor4})---the result is non-trivial, since for fixed $k$, $\lim_{\te\to 0+0} \nul=+\infty=\lim_{\te\to 0+0} \nur$ (cf.~Figure~\ref{fig_boundary}).
 \begin{lemma}\label{lem5} For any $k\in\nplus$ there is a unique $\te_k\in\left[\frac{1}{2},\frac{2k}{2k+1}\right)$  such that 
 \[
 \nur = \nul\ \ \  (\text{for } \te\in(0,1])\quad \Longleftrightarrow \quad \te= \te_k.
@@ -1144,7 +1160,7 @@ $\te_k\in\left(\frac{1}{2},\frac{2k}{2k+1}\right)$ for $k\ge 2$, also implying t
 $\te\in\left(0,\frac{1}{2}\right)$, we have $\nur>\nul$.
 \end{proof}
 
-The following theorem summarizes the results of Section \ref{section3}.
+The following theorem summarizes the results of Section~\ref{section3}.
 % in a way which is tailored to the applications. It describes the entrywise non-negativity of the discretization matrices for fixed values of $\te$---first determining the actual time-integration method, then choosing the number of spatial grid points $m=2k+1$ and the CFL number $\nu$. 
 In the theorem, we assume $k\in\nplus$, $\te\in[0,1]$ and $\nu\in(0,+\infty)$.
 \begin{theorem}[About the full discretization matrix corresponding to the $2^{\text{nd}}$-order centered discretization in space and $\theta$-method in time]\label{thm2}
@@ -1162,7 +1178,7 @@ M(2k+1,1,\nu)\ge 0\quad\Longleftrightarrow\quad \nu\ge\nu_R(k,1).
 In addition, $\nu_R(k,1)<\nu_R(k+1,1)$ for any $k$, $\lim_{k\to+\infty} \nu_R(k,1)=+\infty$, and the two-sided estimates in \eqref{cor5lowerupper} with $\te=1$ hold.
 \end{itemize}
 \end{theorem}
-\begin{proof} The case $\te=0$ has already been discussed at the beginning of Section \ref{section3}.
+\begin{proof} The case $\te=0$ has already been discussed at the beginning of Section~\ref{section3}.
 In general, for $\te\in\left(0,1\right]$, we know from Corollary \ref{cor4} that, for any $k$, the set of $\nu$ values for which $M(2k+1,\te,\nu)\ge 0$ holds has the form $\nur\le\nu\le\nul$. 
 
 The range $\te\in\left(0,\frac{1}{2}\right)$ is covered by Lemma \ref{lem5}. 
@@ -1181,7 +1197,7 @@ Finally, for $\te=1$, $\nu_L(k,1)=+\infty$ and we can use Corollary \ref{cor5} (
 \end{proof}
 
 \begin{remark}
-The ``lower left corner point'' of each shaded region in Figure \ref{fig_variousk} corresponds to a pair 
+The ``lower left corner point'' of each shaded region in Figure~\ref{fig_variousk} corresponds to a pair 
 $(\te,\nu)$  for which $\nu=\nur=\nul$. This means that here the leftmost and the rightmost entries of the first row of $M(2k+1,\te,\nu)$ simultaneously vanish (and the other entries are non-negative). For $k=1$, this happens for $\te=\te_1=1/2$ and $\nu=4$; the corresponding matrix is
 \begin{equation}\label{rem10thetahalfmatrix}
 M\left(3,\frac{1}{2},4\right)=\left(
@@ -1193,10 +1209,6 @@ M\left(3,\frac{1}{2},4\right)=\left(
 \right).
 \end{equation}
 \end{remark}
-
-
-
-
 
 
 \section{Other spatial discretizations}\label{otherdisc}
@@ -1313,9 +1325,9 @@ A similar result can be shown for the $6^\text{th}$-order scheme as well.
 		M_{1,m} = \begin{cases}
 							-\dfrac{2\nu}{m} \left(\displaystyle{\sum\limits_{\ell=2}^{m/4}} f(\xi_\ell; \theta, \nu) +
 								f(\pi-\xi_\ell; \theta, \nu) + \dfrac{\psi(\pi/2)}{1+\theta^2\nu^2\psi^2(\pi/2)}\right),
-								&\; \text{if } m \equiv 0 \Mod{4}, \\[20pt]
+								&\, \text{if } m \equiv 0 \Mod{4}, \\[20pt]
 							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\; \text{if } m \equiv 2 \Mod{4}.
+								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\, \text{if } m \equiv 2 \Mod{4}.
 						\end{cases}
 	\end{align}
 	By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
@@ -1489,18 +1501,27 @@ The following Proposition proves that \eqref{M1mSpectral} is negative for suffic
 		M_{1,m} = \begin{cases}
 							-\dfrac{2\nu}{m} \left(\displaystyle{\sum\limits_{\ell=2}^{m/4}} f(\xi_\ell; \theta, \nu) +
 								f(\pi-\xi_\ell; \theta, \nu) + \dfrac{2\pi}{4+\theta^2\nu^2\pi^2}\right),
-								&\; \text{if } m \equiv 0 \Mod{4}, \\[20pt]
+								&\, \text{if } m \equiv 0 \Mod{4}, \\[20pt]
 							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\; \text{if } m \equiv 2 \Mod{4}.
+								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\, \text{if } m \equiv 2 \Mod{4}.
 						\end{cases}
 	\end{align}
 	By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
-	\begin{align}\label{functionf}
-		&f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
-			&\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
-			\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
-				{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
-	\end{align}
+	\ifjournal
+		\begin{align}\label{functionf}
+			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
+				\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+					{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+		\end{align}
+	\else
+		\begin{align}\label{functionf}
+			f(\xi_\ell; \theta, \nu) &+ f(\pi-\xi_\ell; \theta, \nu) = \\
+				&\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+					{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+		\end{align}
+	\fi
 	Let us fix $\theta \in (0,1]$ arbitrarily.
 	Then, for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that the expression
 	$\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
@@ -1594,7 +1615,7 @@ and therefore the same asymptotic results hold as in the case of finite differen
 In this work, we have studied the positivity preservation of certain fundamental
 discretizations of the advection equation with periodic boundary condition \eqref{advection}. 
 %The full discretization has been obtained by combining a finite difference spatial semi-discretization with the $\theta$-method as time discretization. 
-Our detailed investigations in Sections \ref{sectiondiscFourier}--\ref{section3}
+Our detailed investigations in Sections~\ref{sectiondiscFourier}--\ref{section3}
 were devoted to the  full discretization obtained by coupling the second-order centered
 differences in space with the $\theta$-method in time.  
  Rather than using SSP theory \cite{SSPbook}, 
@@ -1615,11 +1636,11 @@ preserving, while if $m$ is odd, some methods may be positivity
 preserving.  Positivity is generally enhanced by taking larger values
 of the CFL number $\nu>0$, larger values of the time-discretization parameter $\theta\in [0,1]$, or smaller
 values of the spatial grid points $m\in\mathbb{N}^+$.  These tendencies, and more specific results, are described
-in Theorem \ref{thm2}, and can be seen
-in Figures \ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
+in Theorem~\ref{thm2}, and can be seen
+in Figures~\ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
 and \ref{fig_spectral}.
 Our positive results about the full discretizations are perhaps unexpected, since neither of the underlying spatial semi-discretizations preserves positivity.
-%the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section \ref{highercentered}, and also for the ones in Section \ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
+%the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section~\ref{highercentered}, and also for the ones in Section~\ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
 
 Although some of the spatial discretizations considered above have high order, the $\theta$-method as time discretization typically has order only 1 (order 2 occurs only for $\theta=1/2$). Therefore, we emphasize that our goal in this work is not to directly provide efficient discretizations but rather
 to understand the behavior of these simple building blocks, as a means
