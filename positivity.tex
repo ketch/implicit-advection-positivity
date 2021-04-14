@@ -1460,12 +1460,13 @@ A similar result can be shown for the $6^\text{th}$-order scheme as well.
 	$\cos\left(\frac{2\pi(\ell-1)}{m}\right)=\cos\left(k\frac{2\pi(m-\ell+2-1)}{m}\right)$ for positive integers
 	$k$, $\ell$ and $m$).
 	Define the function {\color{red}{\boxed{\text{*** we need to explain what } \psi(x) \text{ means ***}}}}
-
 	\begin{align*}
-		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)}.
+		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)},
 	\end{align*}
+	where $\psi(\cdot)$ is given by \eqref{psi}.
 	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  \le \pi/2$,
 	yielding {\color{red}{\boxed{\text{*** misplaced () ***}}}}
+	\todo{The parenthesis in (56) are correctly placed since the $-2\nu/m$ multiplies both the sum and the last term. Same holds for (61).}
 	\begin{align}\label{M1mnew}
 		M_{1,m} = \begin{cases}
 							-\dfrac{2\nu}{m} \left(\displaystyle{\sum\limits_{\ell=2}^{m/4}} f(\xi_\ell; \theta, \nu) +
@@ -1509,7 +1510,7 @@ set of $\theta\in(0,1]$ and $\nu>0$ values, see  Figures~\ref{fig_5stencilm579} 
 
 Also, we can extend the asymptotic results of Section~\ref{sectioncentered} for an arbitrary high-order centered
 discretization.
-Taking $\nu \to +\infty$ with $m=2k+1\ge 3$ odd and $\te \in (0,1]$ fixed {\color{red}{\boxed{\text{*** wrong reference ***}}}} in \eqref{M1m}, we find that
+Taking $\nu \to +\infty$ with $m=2k+1\ge 3$ odd and $\te \in (0,1]$ fixed {\color{red}{\boxed{\text{*** wrong reference ***}}}}\todo{fixed} in \eqref{M1j_FD}, we find that
 {\color{red}{\boxed{\text{*** I think below here we should also assume for each $\ell$ that } \psi(\xi_\ell)\ne 0 \text{ ***}}}}
 
 \begin{align*}
