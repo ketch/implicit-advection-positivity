@@ -1207,17 +1207,19 @@ Theorem 7.2]{hundsdorferverwer} that a linear constant-coefficient system of ord
 matrix $\frac{a}{\dx}L$ has no negative off-diagonal entries. The violation of this last condition is clear for the matrix 
 $L$ in \eqref{Ldef}, for all matrices $L$ in Section~\ref{highercentered}, and also for the ones in Section~\ref{spectrcoll} (due to $L_{1,2}=-L_{2,1}\ne 0$).
 
-However, it is possible to obtain a positivity-preserving full discretization scheme when the spatial
-discretizations covered in this section are combined with the $\theta$-method.
+However, as we will see, it is again possible to obtain a positivity-preserving full discretization scheme when the spatial
+discretizations covered in this section (higher-order centered
+spatial discretizations and Fourier spectral collocation methods) are suitably combined  with the $\theta$-method.
+\begin{remark}
 For $\theta=0$ (that is, when the explicit Euler time discretization is applied), the matrix $M$ in
 \eqref{Mdualdef} becomes $M = I + \nu L$, hence $M \ge 0$ cannot hold for any $\nu > 0$ due to the
 negative off-diagonal entries of $L$.
 %It is well known and easily shown that, as with the discretizations considered above,
 %this method is not positivity preserving (and not A-stable) when $\theta=0$.
-Hence, in what follows, we can assume $\theta \in (0,1]$.
+Therefore, in what follows, we can assume $\theta \in (0,1]$.
+\end{remark}
 
-As we will see, similar results described in Section~\ref{sectioncentered} hold true for higher-order centered
-spatial discretizations and Fourier spectral collocation methods.
+%, similar results described in Section~\ref{sectioncentered} hold true for .
 
 \subsection{Higher-order centered discretizations in space, \texorpdfstring{$\theta$}{}-method in time}\label{highercentered}
 The coefficients of the centered differences can be found, e.g., in \cite{bengt}, from which the
@@ -1233,7 +1235,7 @@ the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$.
 central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.
 \end{itemize}
 In all above central diagonals, the middle $0$ corresponds to the main diagonal.
-We can obtain an eigendecomposition \eqref{eigen} for matrix $L$, with eigenvectors given by
+We can obtain an eigendecomposition \eqref{eigen} for the matrix $L$, with eigenvectors given by
 \eqref{eigenvectrors} and eigenvalues $\lambda_\ell = \imath \psi(\xi_\ell)$, where
 \begin{align}\label{psi}
 	\psi(\xi_\ell) := 2 \sum_{k=1}^{(N-1)/2} C_k \sin(k\xi_\ell).
@@ -1248,12 +1250,12 @@ $3$, $5$, and $7$, respectively.
 
 After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time
 discretization, and the full discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}).
-We can extend the results of Section~\ref{sectioncentered} for an arbitrary centered spatial discretization.
-As seen previously, matrix $M$ is a real, circulant matrix so it can be characterized by the entries of its first row,
+%We can extend the results of Section~\ref{sectioncentered} for an arbitrary centered spatial discretization.
+As seen in Section~\ref{sectioncentered}, the matrix $M$ is a real, circulant matrix so it can be characterized by the entries of its first row,
 which take the form
 \begin{align}\label{M1j_FD}
 	  M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)\right)
-  \cos((j-1)\xi_\ell) + \nu \psi(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \psi^2(\xi_\ell)} \quad (1\le\ell\le m).
+  \cos((j-1)\xi_\ell) + \nu \psi(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \psi^2(\xi_\ell)} \quad (1\le j \le m).
 \end{align}
 Our computations suggest that the non-negativity properties of the matrix family $M(m,\theta,\nu)$ again
 depend on the parity of $m$.
@@ -1303,12 +1305,13 @@ A similar result can be shown for the $6^\text{th}$-order scheme as well.
 	$\sin\left(k\frac{2\pi(\ell-1)}{m}\right)=-\sin\left(k\frac{2\pi(m-\ell+2-1)}{m}\right)$ and
 	$\cos\left(\frac{2\pi(\ell-1)}{m}\right)=\cos\left(k\frac{2\pi(m-\ell+2-1)}{m}\right)$ for positive integers
 	$k$, $\ell$ and $m$).
-	Define the function
+	Define the function {\color{red}{\boxed{\text{*** we need to explain what } \psi(x) \text{ means ***}}}}
+
 	\begin{align*}
 		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)}.
 	\end{align*}
 	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  \le \pi/2$,
-	yielding
+	yielding {\color{red}{\boxed{\text{*** misplaced () ***}}}}
 	\begin{align}\label{M1mnew}
 		M_{1,m} = \begin{cases}
 							-\dfrac{2\nu}{m} \left(\displaystyle{\sum\limits_{\ell=2}^{m/4}} f(\xi_\ell; \theta, \nu) +
@@ -1343,16 +1346,18 @@ A similar result can be shown for the $6^\text{th}$-order scheme as well.
 	This means that if $\nu \ge \nu_0$, then $M_{1,m} < 0$ for any $\theta \in (0,1]$.
 \end{proof}
 \begin{remark}
-	We conjecture that a stronger statement than Proposition~\ref{m_even_nonpositivityFE} holds; given an
+	We conjecture that a stronger statement than Proposition~\ref{m_even_nonpositivityFE} holds: given an
 	arbitrary finite difference centered discretization in space, coupled with the $\theta$-method then
 	$M_{1,m} < 0$ for even $m$, and for all values $\nu > 0$ and $\theta \in (0,1]$.
 \end{remark}
 \item [{Case 2:} $m$ is {odd}.] In this case we have found that positivity preservation is possible for a suitable
-set of $\theta\in[0,1]$ and $\nu>0$ values, see  Figures~\ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
+set of $\theta\in(0,1]$ and $\nu>0$ values, see  Figures~\ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
 
 Also, we can extend the asymptotic results of Section~\ref{sectioncentered} for an arbitrary high-order centered
 discretization.
 Taking $\nu \to +\infty$ with $m=2k+1\ge 3$ odd and $\te \in (0,1]$ fixed in \eqref{M1m}, we find that
+{\color{red}{\boxed{\text{*** I think below here we should also assume for each $\ell$ that } \psi(\xi_\ell)\ne 0 \text{ ***}}}}
+
 \begin{align*}
     M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & =  1-\frac{m-1}{m\theta} \\
     M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m\theta} \quad (j \ge 2).
