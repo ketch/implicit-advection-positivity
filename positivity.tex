@@ -1416,7 +1416,7 @@ depend on the parity of $m$.
 
 \begin{description}[style=unboxed,leftmargin=0cm]
 \item [{Case 1:} $m$ is {even}.]
-\item \noindent For the $4^\text{th}$-order scheme, we have found (by using symbolic calculations) that
+\item \noindent By using symbolic calculations,  we have found that, for the $4^\text{th}$-order scheme, 
 $M(m,\theta,\nu)\ge 0$ cannot not hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{6,8,10\}$.
 Similarly, for the $6^\text{th}$-order scheme, we checked (again symbolically) that $M(m,\theta,\nu)\ge 0$
 does not hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{8,10\}$.
@@ -1424,22 +1424,22 @@ Therefore, positivity preservation is impossible in these cases.
 
 %We can extend the above result to any arbitrary finite difference centered discretization in space, coupled with
 %the $\theta$-method as time discretization.
-The above observation can be extended to any arbitrary even number $m$.
-The following proposition proves that for the $4^\text{th}$-order scheme, if the CFL number $\nu$ is
-sufficiently large then $M(m,\theta,\nu) \ge 0$ cannot not hold for any $\theta \in (0,1]$ and any arbitrary even
-number $m \ge 6$.
+The following proposition extends the above observations for the $4^\text{th}$-order scheme for a general even $m$---although only for sufficiently large values of $\nu$.
+%that if the CFL number $\nu$ is
+%sufficiently large then $M(m,\theta,\nu) \ge 0$ cannot not hold for any $\theta \in (0,1]$ and any arbitrary even number $m \ge 6$.
 \begin{proposition}\label{m_even_nonpositivityFE}
 	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
 	boundary condition.
-	Let the matrix $M_{m \times m}$ result from the $4^\text{th}$-order centered discretization in space (with
-	$m$ spatial grid points) and the $\theta$-method in time.
+	Let the matrix $M_{m \times m}$ result from the $4^\text{th}$-order centered discretization in space with
+	$m$ spatial grid points and the $\theta$-method in time.
 	Let also $\nu$ be the CFL number defined in \eqref{nudef}.
-	If $m \ge 6$ is \emph{even}, then there exists $\nu_0  \in \rr^+$ such that the matrix $M$ has at least one
-	negative entry for any $\nu \ge \nu_0$.
+	If $m \ge 6$ is \emph{even}, then there exists $\nu_0  >0$ such that the matrix $M$ has at least one
+	negative entry for any $\nu > \nu_0$.
 \end{proposition}
 \begin{proof}
-	It is sufficient to show that the entry $M_{1,m}$ is negative for all $\theta \in [0,1]$ and $\nu \ge \nu_0$,
-	where $\nu_0 \in \rr^+$ can be chosen accordingly.
+	We show that $M_{1,m}<0$ for any $\theta \in (0,1]$ and $\nu > \nu_0$,
+	where $\nu_0 >0$ is a constant depending on $m$ and $\theta$.
+	
 	Let $j = m$ in \eqref{M1j_FD}, then by using \eqref{angle-identities} and
 	$\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we have
 	\begin{align}\label{M1m}
@@ -1495,7 +1495,7 @@ number $m \ge 6$.
 %	The function \eqref{psi} is by definition non-negative for all $0 \le \xi_\ell  \le \pi/2$; hence
 %	$\psi(\xi_\ell)$, $\psi(\pi-\xi_\ell)$, as well as $\sin(\xi_\ell)$, and $\cos(\xi_\ell)$ are positive for each
 %	index $\ell$ in \eqref{M1mnew}.
-	For the $4^\text{th}$-order centered spatial discretization easy calculations show that
+	For the $4^\text{th}$-order centered spatial discretization, easy calculations show that
 	\begin{align*}
 		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \qquad
 		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
@@ -1509,10 +1509,10 @@ number $m \ge 6$.
 	This means that if $\nu \ge \nu_0$, then $M_{1,m} < 0$ for any $\theta \in (0,1]$.
 \end{proof}
 \begin{remark}
-	A similar result can be shown for the $6^\text{th}$-order scheme as well.
- We conjecture that a stronger statement than Proposition~\ref{m_even_nonpositivityFE} holds: given an
-	arbitrary finite difference centered discretization in space, coupled with the $\theta$-method then
-	$M_{1,m} < 0$ for even $m$, and for all values $\nu > 0$ and $\theta \in (0,1]$.
+	A similar result holds for the $6^\text{th}$-order scheme as well.
+ Based on the observations above Proposition~\ref{m_even_nonpositivityFE}, we conjecture the following: given an
+	arbitrary finite difference centered discretization in space coupled with the $\theta$-method, then
+	$M_{1,m} < 0$ for even $m$, and for all values $\nu > 0$ and $\theta \in (0,1]$---that is, $\nu_0=0$ can be chosen in general.
 \end{remark}
 \item [{Case 2:} $m$ is {odd}.] In this case we have found that positivity preservation is possible for a suitable
 set of $\theta\in(0,1]$ and $\nu>0$ values, see  Figures~\ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
