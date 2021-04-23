@@ -1424,21 +1424,23 @@ Therefore, positivity preservation is impossible in these cases.
 
 %We can extend the above result to any arbitrary finite difference centered discretization in space, coupled with
 %the $\theta$-method as time discretization.
-The following proposition extends the above observations for the $4^\text{th}$-order scheme for a general even $m$---although only for sufficiently large values of $\nu$.
+The following proposition extends the above observations for the $4^\text{th}$-order scheme when $m$ is a
+general even number---although only for sufficiently large values of $\nu$.
 %that if the CFL number $\nu$ is
-%sufficiently large then $M(m,\theta,\nu) \ge 0$ cannot not hold for any $\theta \in (0,1]$ and any arbitrary even number $m \ge 6$.
+%sufficiently large then $M(m,\theta,\nu) \ge 0$ cannot not hold for any $\theta \in (0,1]$ and any arbitrary
+%even number $m \ge 6$.
 \begin{proposition}\label{m_even_nonpositivityFE}
 	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
 	boundary condition.
 	Let the matrix $M_{m \times m}$ result from the $4^\text{th}$-order centered discretization in space with
 	$m$ spatial grid points and the $\theta$-method in time.
 	Let also $\nu$ be the CFL number defined in \eqref{nudef}.
-	If $m \ge 6$ is \emph{even}, then there exists $\nu_0  >0$ such that the matrix $M$ has at least one
+	If $m \ge 6$ is \emph{even}, then there exists $\nu_0  > 0$ such that the matrix $M$ has at least one
 	negative entry for any $\nu > \nu_0$.
 \end{proposition}
 \begin{proof}
-	We show that $M_{1,m}<0$ for any $\theta \in (0,1]$ and $\nu > \nu_0$,
-	where $\nu_0 >0$ is a constant depending on $m$ and $\theta$.
+	We show that $M_{1,m} < 0$ for any $\theta \in (0,1]$ and $\nu > \nu_0$,
+	where $\nu_0 > 0$ is a constant depending on $m$ and $\theta$.
 	
 	Let $j = m$ in \eqref{M1j_FD}, then by using \eqref{angle-identities} and
 	$\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we have
@@ -1455,35 +1457,40 @@ The following proposition extends the above observations for the $4^\text{th}$-o
 	\end{align}
 	where in the last equality we used $\psi(\xi_1) = \psi(0) = 0$,  $\psi(\xi_{m/2+1}) =  0$, and the symmetry
 	of angles $\xi_\ell$ ($1 \le \ell \le m$) about the $x$-axis when $m$ is even (explicitly, the identities
-	$\sin\left(k\frac{2\pi(\ell-1)}{m}\right)=-\sin\left(k\frac{2\pi(m-\ell+2-1)}{m}\right)$ and
-	$\cos\left(\frac{2\pi(\ell-1)}{m}\right)=\cos\left(k\frac{2\pi(m-\ell+2-1)}{m}\right)$ for positive integers
+	$\sin\left(k\frac{2\pi(\ell-1)}{m}\right)=-\sin\left(k\frac{2\pi(m-\ell+1)}{m}\right)$ and
+	$\cos\left(k\frac{2\pi(\ell-1)}{m}\right)=\cos\left(k\frac{2\pi(m-\ell+1)}{m}\right)$ for positive integers
 	$k$, $\ell$ and $m$).
 	Define the function 
 	\begin{align*}
 		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)}.
 	\end{align*}
-	
-	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  \le \pi/2$,
-	yielding 
-	
-\begin{align}\label{M1mnew}
-		M_{1,m} = \begin{cases}
-							-\dfrac{2\nu}{m}\dfrac{\psi(\pi/2)}{1+\theta^2\nu^2\psi^2(\pi/2)} -\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}} \Big(f(\xi_\ell; \theta, \nu) +f(\pi-\xi_\ell; \theta, \nu) \Big),
-								&\; \text{if } m \equiv 0 \Mod{4}, \\[20pt]
-							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-								\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big), &\; \text{if } m \equiv 2 \Mod{4}.
-						\end{cases}
-	\end{align}
-
-%	\begin{align}\label{M1mnew}
-%		M_{1,m} = \begin{cases}
-%							-\dfrac{2\nu}{m} \left(\displaystyle{\sum\limits_{\ell=2}^{m/4}} f(\xi_\ell; \theta, \nu) +
-%								f(\pi-\xi_\ell; \theta, \nu) + \dfrac{\psi(\pi/2)}{1+\theta^2\nu^2\psi^2(\pi/2)}\right),
-%								&\, \text{if } m \equiv 0 \Mod{4}, \\[20pt]
-%							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-%								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\, \text{if } m \equiv 2 \Mod{4}.
-%						\end{cases}
-%	\end{align}
+	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  < \pi/2$,
+	yielding
+	\ifjournal
+		\begin{align}\label{M1mnew}
+			M_{1,m} = \begin{cases}
+								-\dfrac{2\nu\psi(\pi/2)}{m\left(1+\theta^2\nu^2\psi^2(\pi/2)\right)} -
+									\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}}
+									\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) \Big),
+									& \text{if } m \equiv 0 \Mod{4}, \\[20pt]
+								-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
+									\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big),
+									& \text{if } m \equiv 2 \Mod{4}.
+							\end{cases}
+		\end{align}
+	\else
+		\begin{align}\label{M1mnew}
+			M_{1,m} = \begin{cases}
+								\dfrac{-2\nu\psi(\pi/2)}{m\left(1+\theta^2\nu^2\psi^2(\pi/2)\right)} -
+									\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}}
+									\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) \Big),
+									& \text{if } m \equiv 0 \Mod{4}, \\[20pt]
+								-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
+									\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big),
+									& \text{if } m \equiv 2 \Mod{4}.
+							\end{cases}
+		\end{align}
+	\fi
 	By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
 	\begin{align*}
 		&f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) = \\
@@ -1492,48 +1499,41 @@ The following proposition extends the above observations for the $4^\text{th}$-o
 			\theta\nu\psi(\pi-\xi_\ell)\bigl(\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
 				{\bigl(1+\theta^2\nu^2\psi^2(\xi_\ell)\bigr)\bigl(1+\theta^2\nu^2\psi^2(\pi-\xi_\ell)\bigr)}.
 	\end{align*}
-%	The function \eqref{psi} is by definition non-negative for all $0 \le \xi_\ell  \le \pi/2$; hence
-%	$\psi(\xi_\ell)$, $\psi(\pi-\xi_\ell)$, as well as $\sin(\xi_\ell)$, and $\cos(\xi_\ell)$ are positive for each
-%	index $\ell$ in \eqref{M1mnew}.
-	For the $4^\text{th}$-order centered spatial discretization, easy calculations show that
-	\begin{align*}
-		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \qquad
-		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
-	\end{align*}
-	and hence {\color{red} *** please also give details about the pi/2-term***} $\psi(\xi_\ell)$, $\psi(\pi-\xi_\ell)$, as well as $\sin(\xi_\ell)$, and $\cos(\xi_\ell)$ are positive for
-	each index $\ell$ in \eqref{M1mnew}.
-	Let us fix $\theta \in (0,1]$ arbitrarily.
-	Then, for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that the expression
+	First, observe that $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$ in
+	\eqref{M1mnew}.
+	Let us now fix $\theta \in (0,1]$ arbitrarily.
+	Notice that for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that
 	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
 	Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mnew}.
-	This means that if $\nu \ge \nu_0$, then $M_{1,m} < 0$ for any $\theta \in (0,1]$.
+	Therefore, if $\psi(x)$ is non-negative for $0< x <\pi$ and $\nu > \nu_0$, then $M_{1,m} < 0$ for any
+	$\theta \in (0,1]$.
+
+	For the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$
+	and
+	\begin{align*}
+		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad
+		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
+	\end{align*}
+	are positive for each index $\ell$ that appears in \eqref{M1mnew}.
+	Also, for a fixed $\theta \in (0,1]$ and for each $2 \le \ell \le (m+2)/4$ the expression
+	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ is non-negative if $\nu \ge \nu_0$, where $\nu_0$
+	depends on $m$.
+	For instance, it can be shown that
+	$\theta\nu_0 \in \left\{4/7, 6/31(1 + 4 \sqrt{2}), 6/55(9 + 5 \sqrt{5})\right\}$ for $m \in \{6,8,10\}$,
+	respectively.
+	As a result, $M_{1,m} < 0$ for $\nu > \nu_0(m)$ and any $\theta \in (0,1]$.
 \end{proof}
 \begin{remark}
 	A similar result holds for the $6^\text{th}$-order scheme as well.
- Based on the observations above Proposition~\ref{m_even_nonpositivityFE}, we conjecture the following: given an
-	arbitrary finite difference centered discretization in space coupled with the $\theta$-method, then
+	Based on the observations above Proposition~\ref{m_even_nonpositivityFE}, we conjecture the following:
+	given an arbitrary finite difference centered discretization in space coupled with the $\theta$-method, then
 	$M_{1,m} < 0$ for even $m$, and for all values $\nu > 0$ and $\theta \in (0,1]$---that is, $\nu_0=0$ can be chosen in general.
 \end{remark}
 \item [{Case 2:} $m$ is {odd}.] In this case we have found that positivity preservation is possible for a suitable
 set of $\theta\in(0,1]$ and $\nu>0$ values, see  Figures~\ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
 
-Also, we can extend the asymptotic results of Section~\ref{sectioncentered} for an arbitrary high-order centered
-discretization.
-Taking $\nu \to +\infty$ with $m=2k+1\ge 3$ odd and $\te \in (0,1]$ fixed  in \eqref{M1j_FD}, we find that
-{\color{red}{\boxed{\text{*** I think below here we should also assume for each $\ell$ that } \psi(\xi_\ell)\ne 0 \text{ ***}}}}
-
-\begin{align*}
-    M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & =  1-\frac{m-1}{m\theta} \\
-    M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m\theta} \quad (j \ge 2).
-\end{align*}
-As a result, by following similar arguments as in Section~\ref{sectioncentered}, we conclude that
-\begin{align*}
-	M_{1,j}^\infty > 0 \text{ for all } 2\le j\le m \text{ and } \te \in (0,1],
-\end{align*}
-while
-\begin{align*}
-	M_{1,1}^\infty \ge 0 \quad\Longleftrightarrow \quad \theta \ge \frac{m-1}{m}.
-\end{align*}
+Also, if we assume that $\psi(\xi_\ell) \ne 0$ for each $\ell$, then we can extend the asymptotic results of
+Section~\ref{sectioncentered} for an arbitrary high-order centered discretization.
 \end{description}
 
 \begin{figure}
@@ -1656,11 +1656,13 @@ The following Proposition proves that \eqref{M1mSpectral} is negative for suffic
 	$0 < \xi_\ell  \le \pi/2$, yielding
 	\begin{align}\label{M1mSpectral_c}
 		M_{1,m} = \begin{cases}
-							-\dfrac{2\nu}{m} \left(\displaystyle{\sum\limits_{\ell=2}^{m/4}} f(\xi_\ell; \theta, \nu) +
-								f(\pi-\xi_\ell; \theta, \nu) + \dfrac{2\pi}{4+\theta^2\nu^2\pi^2}\right),
-								&\, \text{if } m \equiv 0 \Mod{4}, \\[20pt]
+							-\dfrac{4\pi\nu}{m(4+\theta^2\nu^2\pi^2)} -
+								\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}}
+								\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) \Big),
+								& \text{if } m \equiv 0 \Mod{4}, \\[20pt]
 							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-								f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu), &\, \text{if } m \equiv 2 \Mod{4}.
+								\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big),
+								& \text{if } m \equiv 2 \Mod{4}.
 						\end{cases}
 	\end{align}
 	By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
@@ -1746,17 +1748,33 @@ When generating the matrix $M$ for the symbolic calculations for larger values o
 \end{remark} 
 
 \item [{Case 2:} $m$ is {odd}.]
-This time we find a behavior similar to that observed in Sections~\ref{sectioncentered} or
-\ref{highercentered}, see Figure~\ref{fig_spectral}.
+This time we find a behavior similar to that observed in Section~\ref{sectioncentered}, see
+Figure~\ref{fig_spectral}.
 For odd $m = 2k+1 \ge 3$ we have that
+\begin{align}\label{M1,j_m=odd_spectral}
+	\begin{split}
+		M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\lambda^2_\ell}
+			{1+\theta^2\nu^2\lambda^2_\ell}\right) \\
+		M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\lambda^2_\ell)
+			\cos((j-1)\xi_\ell) + \nu \lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda^2_\ell}
+			\right) \quad (j\ge 2).
+	\end{split}
+\end{align}
+Since now $\lambda_\ell\ne 0$ for $2\le\ell\le m$,  the same asymptotic results hold as in the case of the
+$2^\text{nd}$-order finite difference scheme.
+Taking $\nu \to +\infty$ and $\te \in (0,1]$ fixed in \eqref{M1,j_m=odd_spectral}, yields
 \begin{align*}
-	M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\lambda^2_\ell}
-		{1+\theta^2\nu^2\lambda^2_\ell}\right) \\
-	M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\lambda^2_\ell)
-		\cos((j-1)\xi_\ell) + \nu \lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda^2_\ell}
-		\right) \quad (j\ge 2).
+    M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & =  1-\frac{m-1}{m\theta} \\
+    M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m\theta} \quad (j \ge 2).
 \end{align*}
-Since now $\lambda_\ell\ne 0$ for $2\le\ell\le m$, \todo{THINK ABOUT THIS} the same asymptotic results hold as in the case of finite difference methods.
+As a result, by following similar arguments as in Section~\ref{sectioncentered}, we conclude that
+\begin{align*}
+	M_{1,j}^\infty > 0 \text{ for all } 2\le j\le m \text{ and } \te \in (0,1],
+\end{align*}
+while
+\begin{align*}
+	M_{1,1}^\infty \ge 0 \quad\Longleftrightarrow \quad \theta \ge \frac{m-1}{m}.
+\end{align*}
 \end{description}
 
 \begin{figure}
