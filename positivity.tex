@@ -1534,8 +1534,17 @@ general even number---although only for sufficiently large values of $\nu$.
 %	respectively.
 %	As a result, $M_{1,m} < 0$ for $\nu > \nu_0$ and any $\theta \in (0,1]$.
 \end{proof}
+\begin{remark} It is easily seen that the previous proof boils down to the fact that for the $4^\text{th}$-order centered spatial discretization we have $\psi(x)>0$ for $x\in(0,\pi)$, where
+\[
+\psi(x)=2 \left(\frac{2}{3}\sin (x)-\frac{1}{12} \sin (2 x)\right)=\frac{1}{3} \sin (x) (4-\cos (x)).
+\]
+We know from \eqref{psi} that for the $6^\text{th}$-order scheme
+\[
+\psi(x)=2 \left(\frac{3}{4}\sin (x)-\frac{3}{20} \sin (2 x)+\frac{1}{60} \sin (3 x)\right),
+\]
+and one checks again that $\psi(x)>0$ for $x\in(0,\pi)$, therefore the analogue of Proposition \ref{m_even_nonpositivityFE} is true for the $6^\text{th}$-order scheme as well.
+\end{remark}
 \begin{remark}
-	A similar result holds for the $6^\text{th}$-order scheme as well.
 	Based on the observations above Proposition~\ref{m_even_nonpositivityFE}, we conjecture the following:
 	given an arbitrary finite difference centered discretization in space coupled with the $\theta$-method, then
 	$M_{1,m} < 0$ for even $m$, and for all values $\nu > 0$ and $\theta \in (0,1]$---that is, $\nu_0=0$ can be chosen in general.
@@ -1598,9 +1607,9 @@ The entries of the first row of the circulant matrix $M$ are again given by \eqr
 they take the form
 \begin{align}\label{eq51}
 	M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-  \cos((j-1)\xi_\ell) + \nu\lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
+  \cos((j-1)\xi_\ell) + \nu\lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2} \quad (1\le j \le m).
 \end{align}
-Similarly to the Sections~\ref{sectiondiscFourier} and \ref{highercentered}, we can distinguish between even and
+Similarly to the Sections~\ref{sectiondiscFourier} and \ref{highercentered}, we distinguish between even and
 odd sizes of the discretization matrices $M$.
 %Taking $\theta=1$ (backward Euler)
 %and recognizing that the imaginary part vanishes, this leads to
@@ -1615,7 +1624,7 @@ From \eqref{eq51} we have (also using \eqref{angle-identities}) that
 	M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
 	\cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
 \end{align}
-The following Proposition proves that \eqref{M1mSpectral} is negative for sufficiently large CFL number $\nu$.
+The following proposition proves that \eqref{M1mSpectral} is negative for sufficiently large CFL number $\nu$.
 \begin{proposition}\label{m_even_nonpositivitySpectral}
 	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
 	boundary condition.
@@ -1638,15 +1647,14 @@ The following Proposition proves that \eqref{M1mSpectral} is negative for suffic
 %	{1+\theta^2\nu^2\lambda_\ell^2}.
 %	\end{split}
 %	\end{align}
-	The proof is similar to the that of Proposition~\ref{m_even_nonpositivityFE} and it is sufficient to show that
-	the entry $M_{1,m}$ is negative for all $\theta \in [0,1]$ and $\nu \ge \nu_0$, where $\nu_0 \in \rr^+$ can
-	be chosen accordingly.
+	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}. We show that
+	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu > \nu_0$, where $\nu_0 >0$ depends on $m$ and $\theta$.
 	First, observe that by using $\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
 	\begin{align}\label{M1mSpectral_a}
 	M_{1,m} = -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\lambda_\ell\sin(\xi_\ell) +
 		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
 	\end{align}
-	Moreover, $\lambda_1 = \lambda_{m/2+1} = 0$ and by using the symmetry of angles
+	Moreover, $\lambda_1 = \lambda_{m/2+1} = 0$, and by using the symmetry of angles
 	$\xi_\ell$ ($1 \le \ell \le m$) about the $x$-axis when $m$ is even we have that
 	\begin{align*}
 		\sum_{\ell=2}^{m/2} \frac{\lambda_\ell\sin(\xi_\ell) + \theta\nu\lambda_\ell^2 \cos(\xi_\ell)}
@@ -1760,8 +1768,10 @@ When generating the matrix $M$ for the symbolic calculations for larger values o
 
 \item [{Case 2:} $m$ is {odd}.]
 This time we find a behavior similar to that observed in Section~\ref{sectioncentered}, see
-Figure~\ref{fig_spectral}.
-For odd $m = 2k+1 \ge 3$ we have that
+Figure~\ref{fig_spectral}. \\
+Moreover, since this time $\lambda_\ell\ne 0$ for $2\le\ell\le m$, the same asymptotic results hold as in the case of the
+$2^\text{nd}$-order finite difference scheme in Section~\ref{sectioncentered}. Indeed, 
+for odd $m = 2k+1 \ge 5$ we have that
 \begin{align}\label{M1,j_m=odd_spectral}
 	\begin{split}
 		M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\lambda^2_\ell}
@@ -1771,20 +1781,20 @@ For odd $m = 2k+1 \ge 3$ we have that
 			\right) \quad (j\ge 2).
 	\end{split}
 \end{align}
-Since now $\lambda_\ell\ne 0$ for $2\le\ell\le m$,  the same asymptotic results hold as in the case of the
-$2^\text{nd}$-order finite difference scheme.
+
 Taking $\nu \to +\infty$ and $\te \in (0,1]$ fixed in \eqref{M1,j_m=odd_spectral}, yields
 \begin{align*}
     M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & =  1-\frac{m-1}{m\theta} \\
     M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m\theta} \quad (j \ge 2).
 \end{align*}
-As a result, by following similar arguments as in Section~\ref{sectioncentered}, we conclude that
+As a result, %by following similar arguments as in Section~\ref{sectioncentered}, 
+we conclude that
 \begin{align*}
 	M_{1,j}^\infty > 0 \text{ for all } 2\le j\le m \text{ and } \te \in (0,1],
 \end{align*}
 while
 \begin{align*}
-	M_{1,1}^\infty \ge 0 \quad\Longleftrightarrow \quad \theta \ge \frac{m-1}{m}.
+	M_{1,1}^\infty > 0 \quad\Longleftrightarrow \quad \theta > \frac{m-1}{m}.
 \end{align*}
 \end{description}
 
