@@ -1417,7 +1417,7 @@ depend on the parity of $m$.
 \begin{description}[style=unboxed,leftmargin=0cm]
 \item [{Case 1:} $m$ is {even}.]
 \item \noindent By using symbolic calculations,  we have found that, for the $4^\text{th}$-order scheme, 
-$M(m,\theta,\nu)\ge 0$ cannot not hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{6,8,10\}$.
+$M(m,\theta,\nu)\ge 0$ cannot hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{6,8,10\}$.
 Similarly, for the $6^\text{th}$-order scheme, we checked (again symbolically) that $M(m,\theta,\nu)\ge 0$
 does not hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{8,10\}$.
 Therefore, positivity preservation is impossible in these cases.
@@ -1434,7 +1434,7 @@ general even number---although only for sufficiently large values of $\nu$.
 	boundary condition.
 	Let the matrix $M_{m \times m}$ result from the $4^\text{th}$-order centered discretization in space with
 	$m$ spatial grid points and the $\theta$-method in time.
-	Let also $\nu$ be the CFL number defined in \eqref{nudef}.
+	Also, let $\nu$ be the CFL number defined in \eqref{nudef}.
 	If $m \ge 6$ is \emph{even}, then there exists $\nu_0  > 0$ such that the matrix $M$ has at least one
 	negative entry for any $\nu > \nu_0$.
 \end{proposition}
@@ -1464,7 +1464,7 @@ general even number---although only for sufficiently large values of $\nu$.
 	\begin{align*}
 		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)}.
 	\end{align*}
-	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  < \pi/2$,
+	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  < \pi/2$ (and separating the case $\xi_\ell  = \pi/2$ when $m$ is divisible by 4),
 	yielding
 	\ifjournal
 		\begin{align}\label{M1mnew}
@@ -1491,37 +1491,48 @@ general even number---although only for sufficiently large values of $\nu$.
 							\end{cases}
 		\end{align}
 	\fi
-	By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
+	%By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
+	We will also use the identity
 	\begin{align*}
 		&f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) = \\
-			&\frac{\Bigl(\psi(\pi-\xi_\ell) + \psi(\xi_\ell)\Bigr)
+			&\frac{\Bigl(\psi(\xi_\ell) + \psi(\pi-\xi_\ell)\Bigr)
 			\Bigl(\sin(\xi_\ell) + \theta\nu\psi(\xi_\ell)\cos(\xi_\ell) +
 			\theta\nu\psi(\pi-\xi_\ell)\bigl(\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
 				{\bigl(1+\theta^2\nu^2\psi^2(\xi_\ell)\bigr)\bigl(1+\theta^2\nu^2\psi^2(\pi-\xi_\ell)\bigr)}.
 	\end{align*}
 	First, observe that $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$ in
-	\eqref{M1mnew}.
-	Let us now fix $\theta \in (0,1]$ arbitrarily.
-	Notice that for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that
-	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
-	Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mnew}.
-	Therefore, if $\psi(x)$ is non-negative for $0< x <\pi$ and $\nu > \nu_0$, then $M_{1,m} < 0$ for any
-	$\theta \in (0,1]$.
-
-	For the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$
-	and
+	\eqref{M1mnew}. Now for the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$,
+	
 	\begin{align*}
-		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad
+		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad \text{and} \quad
 		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
 	\end{align*}
-	are positive for each index $\ell$ that appears in \eqref{M1mnew}.
-	Also, for a fixed $\theta \in (0,1]$ and for each $2 \le \ell \le (m+2)/4$ the expression
-	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ is non-negative if $\nu \ge \nu_0$, where $\nu_0$
-	depends on $m$.
-	For instance, it can be shown that
-	$\theta\nu_0 \in \left\{4/7, 6/31(1 + 4 \sqrt{2}), 6/55(9 + 5 \sqrt{5})\right\}$ for $m \in \{6,8,10\}$,
-	respectively.
-	As a result, $M_{1,m} < 0$ for $\nu > \nu_0$ and any $\theta \in (0,1]$.
+	so they are all positive as well. Let us fix $\theta \in (0,1]$ arbitrarily, and notice that for each $\ell$ we can find $\nu_\ell > 0$ such that
+	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)>0$ for $\nu>\nu_\ell$. Let $\nu_0:=\max \nu_\ell$, then  
+	$f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)>0$ for $\nu>\nu_0$. Therefore, $M_{1,m} < 0$ for any $\theta \in (0,1]$ and $\nu>\nu_0$.
+%	First, observe that $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$ in
+	%\eqref{M1mnew}.
+	%Let us now fix $\theta \in (0,1]$ arbitrarily.
+	%Notice that for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that
+	%$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
+	%Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mnew}.
+	%Therefore, if $\psi(x)$ is non-negative for $0< x <\pi$ and $\nu > \nu_0$, then $M_{1,m} < 0$ for any
+	%$\theta \in (0,1]$.
+
+	%For the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$
+	%and
+	%\begin{align*}
+%		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad
+%		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
+%	\end{align*}
+%	are positive for each index $\ell$ that appears in \eqref{M1mnew}.
+%	Also, for a fixed $\theta \in (0,1]$ and for each $2 \le \ell \le (m+2)/4$ the expression
+%	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ is non-negative if $\nu \ge \nu_0$, where $\nu_0$
+%	depends on $m$.
+%	For instance, it can be shown that
+%	$\theta\nu_0 \in \left\{4/7, 6/31(1 + 4 \sqrt{2}), 6/55(9 + 5 \sqrt{5})\right\}$ for $m \in \{6,8,10\}$,
+%	respectively.
+%	As a result, $M_{1,m} < 0$ for $\nu > \nu_0$ and any $\theta \in (0,1]$.
 \end{proof}
 \begin{remark}
 	A similar result holds for the $6^\text{th}$-order scheme as well.
