@@ -1631,8 +1631,8 @@ The following proposition proves that \eqref{M1mSpectral} is negative for suffic
 	Let the matrix $M_{m \times m}$ result from a given even spactral collocation method in space (with $m$
 	spatial grid points) and the $\theta$-method in time.
 	Let also $\nu$ be the CFL number defined in \eqref{nudef}.
-	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  \in \rr^+$ such that the matrix $M$ has at least one
-	negative entry for any $\nu \ge \nu_0$.
+	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  >0$ such that the matrix $M$ has at least one
+	negative entry for any $\nu > \nu_0$.
 \end{proposition}
 \begin{proof}
 %	It is sufficient to show that the entry $M_{1,m}$ is negative for all $\theta \in [0,1]$ and $\nu \ge \nu_0$,
@@ -1649,7 +1649,7 @@ The following proposition proves that \eqref{M1mSpectral} is negative for suffic
 %	\end{align}
 	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}. We show that
 	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu > \nu_0$, where $\nu_0 >0$ depends on $m$ and $\theta$.
-	First, observe that by using $\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
+	First, observe that by using $\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
 	\begin{align}\label{M1mSpectral_a}
 	M_{1,m} = -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\lambda_\ell\sin(\xi_\ell) +
 		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
@@ -1684,7 +1684,8 @@ The following proposition proves that \eqref{M1mSpectral} is negative for suffic
 								& \text{if } m \equiv 2 \Mod{4}.
 						\end{cases}
 	\end{align}
-	By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
+	(As usual, a sum $\sum\limits_{\ell=2}^{1}(\ldots)$, occurring for $m=4$, is understood to be 0.)
+	By suitably rearranging $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$, we obtain
 	\ifjournal
 		\begin{align}\label{functionf}
 			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
@@ -1700,11 +1701,11 @@ The following proposition proves that \eqref{M1mSpectral} is negative for suffic
 					{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
 		\end{align}
 	\fi
-	Let us fix $\theta \in (0,1]$ arbitrarily.
-	Then, for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that the expression
-	$\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
+	Now let us fix $\theta \in (0,1]$ arbitrarily.
+	Then, for each $\ell$ we can find $ \nu_\ell > 0$ such that 
+	$\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)>0$ for $\nu>\nu_\ell$.
 	Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mSpectral_c}.
-	Since all remaining terms in \eqref{functionf} are positive then this means that $M_{1,m} < 0$ for any
+	Since all remaining terms in \eqref{functionf} are positive, this means that $M_{1,m} < 0$ for any
 	$\theta \in (0,1]$ and $\nu \ge \nu_0$.
 \end{proof}
 
