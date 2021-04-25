@@ -1536,11 +1536,12 @@ general even number---although only for sufficiently large values of $\nu$.
 \end{proof}
 \begin{remark} It is easily seen that the previous proof boils down to the fact that for the $4^\text{th}$-order centered spatial discretization we have $\psi(x)>0$ for $x\in(0,\pi)$, where
 \[
-\psi(x)=2 \left(\frac{2}{3}\sin (x)-\frac{1}{12} \sin (2 x)\right)=\frac{1}{3} \sin (x) (4-\cos (x)).
+\psi(x)=2 \left(\frac{2}{3}\sin (x)-\frac{1}{12} \sin (2 x)\right)=\frac{1}{3} \sin (x) \bigl(4-\cos (x)\bigr).
 \]
 We know from \eqref{psi} that for the $6^\text{th}$-order scheme
 \[
-\psi(x)=2 \left(\frac{3}{4}\sin (x)-\frac{3}{20} \sin (2 x)+\frac{1}{60} \sin (3 x)\right),
+\psi(x) = 2 \left(\frac{3}{4}\sin (x)-\frac{3}{20} \sin (2 x)+\frac{1}{60} \sin (3 x)\right) =
+	\frac{1}{15} \sin (x) \bigl(23-9\cos (x)+\cos (2x)\bigr),
 \]
 and one checks again that $\psi(x)>0$ for $x\in(0,\pi)$, therefore the analogue of Proposition \ref{m_even_nonpositivityFE} is true for the $6^\text{th}$-order scheme as well.
 \end{remark}
