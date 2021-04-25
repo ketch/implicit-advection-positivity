@@ -1543,18 +1543,18 @@ We know from \eqref{psi} that for the $6^\text{th}$-order scheme
 \psi(x) = 2 \left(\frac{3}{4}\sin (x)-\frac{3}{20} \sin (2 x)+\frac{1}{60} \sin (3 x)\right) =
 	\frac{1}{15} \sin (x) \bigl(23-9\cos (x)+\cos (2x)\bigr),
 \]
-and one checks again that $\psi(x)>0$ for $x\in(0,\pi)$, therefore the analogue of Proposition \ref{m_even_nonpositivityFE} is true for the $6^\text{th}$-order scheme as well.
+so we again have $\psi(x)>0$ for $x\in(0,\pi)$. Therefore, the analogue of Proposition \ref{m_even_nonpositivityFE} is true for the $6^\text{th}$-order scheme as well.
 \end{remark}
 \begin{remark}
 	Based on the observations above Proposition~\ref{m_even_nonpositivityFE}, we conjecture the following:
 	given an arbitrary finite difference centered discretization in space coupled with the $\theta$-method, then
-	$M_{1,m} < 0$ for even $m$, and for all values $\nu > 0$ and $\theta \in (0,1]$---that is, $\nu_0=0$ can be chosen in general.
+	$M_{1,m} < 0$ for even $m$, and for \emph{all} values $\nu > 0$ and $\theta \in (0,1]$---that is, $\nu_0=0$ can be chosen in general.
 \end{remark}
 \item [{Case 2:} $m$ is {odd}.] In this case we have found that positivity preservation is possible for a suitable
 set of $\theta\in(0,1]$ and $\nu>0$ values, see  Figures~\ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
 
-Also, if we assume that $\psi(\xi_\ell) \ne 0$ for each $\ell$, then we can extend the asymptotic results of
-Section~\ref{sectioncentered} for an arbitrary high-order centered discretization.
+Also, if we assume $\psi(\xi_\ell) \ne 0$ for each $2\le\ell\le m$, then we can extend the asymptotic results of
+Section~\ref{sectioncentered} for an arbitrary high-order centered discretization (c.f.~the ``odd $m$'' case in Section \ref{spectrcoll}).
 \end{description}
 
 \begin{figure}
