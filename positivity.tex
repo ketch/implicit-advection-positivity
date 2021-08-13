@@ -103,34 +103,35 @@
 	%\pagefootright{Berlin, October 28, 2016/rev. March 9, 2017}
 
 	% Uncomment the following if there is no DOI for this paper (yet).
-	\pagefootleft{WIAS Preprint No. +++preprint number+++}
+	%\pagefootleft{WIAS Preprint No. 2846}
 
 	\setlength{\emergencystretch}{1pt}
 
 	\author[Y. Hadjimichael, D. I. Ketcheson, L. L\'oczi]{%
 	%\nofnmark{}	% no footnote mark; please call before \footnote{}
-	Yiannis Hadjimichael\footnote{Weierstrass Institute, \\ Mohrenstr. 39, \\ 10117 Berlin, \\ Germany \\
+	Yiannis Hadjimichael\footnote{Weierstrass Institute \\ Mohrenstr. 39 \\ 10117 Berlin \\ Germany \\
 	E-Mail: yiannis.hadjimichael@wias-berlin.de},
-	David I. Ketcheson\footnote{ Computer, Electrical and Mathematical Science \\ and Engineering Division
-	(CEMSE), \\ King Abdullah University of Science \\ and Technology (KAUST), \\ Thuwal  23955-6900, \\
+	David I. Ketcheson\footnote{ Computer, Electrical and Mathematical Science \\ and Engineering Division \\
+	King Abdullah University of Science \\ and Technology (KAUST) \\ Thuwal  23955-6900 \\
 	Saudi Arabia \\
 	E-Mail: david.ketcheson@kaust.edu.sa},
 	Lajos L\'oczi\footnote{Department of Numerical Analysis \\ E\"otv\"os Lor\'and University, and \\
-	Department of Differential Equations \\
-	Budapest University of Technology and Economics \\ Hungary \\
+	Department of Differential Equations  \\
+	Budapest University of Technology  and Economics \\ Hungary \\
 	E-Mail: LLoczi@inf.elte.hu}
 	%\addmark{,}{n}				% seperator "," mark relating to already existing mark
 	}
 	\title[Positivity preservation of implicit discretizations of the advection equation]
 	{Positivity preservation of implicit discretizations of the advection equation}
 	% in English: lowercase; start with capital letter after colon or dash; short title for page headings
-	\nopreprint{+++preprint number+++}	% preprint number
+	\nopreprint{2846}	% preprint number
 	\nopreyear{2021}	% preprint year
 	\selectlanguage{english}	% do not change; important for date format
 	%\date{+++Datum+++}	% fix date, e.g. February 22, 2017
-	\subjclass[2020]{65M12, 65L07, 65L06, 35R09, 92D30} % Math. Subject Classif.
+	\subjclass[2020]{65M12, 65L07, 65M06, 35P15, 35B09} % Math. Subject Classif.
 	%\pacs[2008]{}	% Physics Astronomy Classif., if any
-	\keywords{Epidemic models, SIR model, integro-differential equations, strong stability preservation}
+	\keywords{Positivity preservation, implicit time-discretization, finite difference, spectral collocation, linear
+	partial differential equations}
 	\thanks{The Application-domain Specific Highly Reliable IT Solutions project  has been implemented
 	 with the support provided from the National Research, Development and Innovation Fund of Hungary,
 	 financed under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme)
@@ -221,9 +222,14 @@ linear recursions. We find that positivity preservation of the fully discrete sy
 provided that $\te\ge 1/2$ and $\nu$ are chosen suitably. 
 These results are interesting since the systems of ordinary differential equations obtained via the spatial semi-discretizations studied are \emph{not} positivity preserving. 
 \end{abstract}
-\blfootnote{The Application-domain Specific Highly Reliable IT Solutions project  has been implemented with the support provided from the National Research, Development and Innovation Fund of Hungary, financed under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme) funding scheme.
-This work was supported by the King Abdullah University of Science and Technology (KAUST), 4700
-Thuwal, 23955-6900, Saudi Arabia, and by the Leibniz Competition.}
+\ifjournal
+	\blfootnote{The Application-domain Specific Highly Reliable IT Solutions project  has been implemented with
+		the support provided from the National Research, Development and Innovation Fund of Hungary, financed
+		under the Thematic Excellence Programme TKP2020-NKA-06 (National Challenges Subprogramme)
+		funding scheme.
+		This work was supported by the King Abdullah University of Science and Technology (KAUST), 4700
+		Thuwal, 23955-6900, Saudi Arabia, and by the Leibniz Competition.}
+\fi
 
 \section{Background and motivation}
 In this work, we investigate the positivity of some discretizations of the advection equation
