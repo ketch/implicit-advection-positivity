@@ -341,8 +341,23 @@ Similarly to \eqref{implies-positivity}, the semi-discrete system \eqref{semi-di
 \end{itemize}
 respectively.
 \end{remark}
+\begin{remark}
+For $\theta\ge1/2$, the combination of the $\theta$-method in time and
+centered differences in space is asymptotically stable.  For $\theta<1/2$,
+this combination is asymptotically unstable (i.e., the solution blows up
+as $t\to\infty$, but it is still Lax-Richtmyer stable and hence convergent
+for fixed final time under an appropriate restriction on the time step size.
+Since stability and convergence of linear PDE discretizations like those
+we study are well understood through classical techniques, we do not discuss
+them further in this work.
+\end{remark}
 
-The motivation for this work is not to develop new positivity preserving
+There exists a large and growing literature focused on the development of novel
+positivity-preserving discretizations for advection and other hyperbolic PDEs,
+for instance through the use of nonlinear limiters 
+%\cite{hundsdorfer1995positive,liu1996,horvath1998,Higueras2010,Horvath2011,zhang2011maximum}.
+\cite{hundsdorfer1995positive,liu1996,horvath1998,Higueras2010}
+The motivation for the present work is \emph{not} to develop new positivity preserving
 methods, but to study the positivity of some fundamental discretizations
 such as the second-order centered difference method \eqref{centered-difference} and the
 $\theta$-method \eqref{firsttheta}.  As we will see, the combination of
@@ -413,7 +428,7 @@ The computations in this work have been carried out by using Wolfram \textit{Mat
 From here on, we consider the problem \eqref{advection} on the domain $x\in[0,1]$
 with periodic boundary condition $U(0,t)=U(1,t)$.  Finite difference discretization
 in space with step size $\dx$ leads to \eqref{semi-discrete} with $u_j\approx u(j\dx)$ for $1\le j\le m$. 
-The circulant matrix $L\in\mathbb{R}^{m\times m}$ has the eigendecomposition
+The circulant matrix $L\in\mathbb{R}^{m\times m}$ has the eigendecomposition \cite[Appendix C]{rjl:fdmbook}
 %\begin{align}
 \begin{align}\label{eigen}
     L  = \cF \Lambda \cF^*,
