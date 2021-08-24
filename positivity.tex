@@ -345,7 +345,7 @@ respectively.
 For $\theta\ge1/2$, the combination of the $\theta$-method in time and
 centered differences in space is asymptotically stable.  For $\theta<1/2$,
 this combination is asymptotically unstable (i.e., the solution blows up
-as $t\to\infty$, but it is still Lax-Richtmyer stable and hence convergent
+as $t\to\infty$), but it is still Lax-Richtmyer stable and hence convergent
 for fixed final time under an appropriate restriction on the time step size.
 Since stability and convergence of linear PDE discretizations like those
 we study are well understood through classical techniques, we do not discuss
@@ -356,7 +356,7 @@ There exists a large and growing literature focused on the development of novel
 positivity-preserving discretizations for advection and other hyperbolic PDEs,
 for instance through the use of nonlinear limiters 
 %\cite{hundsdorfer1995positive,liu1996,horvath1998,Higueras2010,Horvath2011,zhang2011maximum}.
-\cite{hundsdorfer1995positive,liu1996,horvath1998,Higueras2010}
+\cite{hundsdorfer1995positive,liu1996,horvath1998,Higueras2010}.
 The motivation for the present work is \emph{not} to develop new positivity preserving
 methods, but to study the positivity of some fundamental discretizations
 such as the second-order centered difference method \eqref{centered-difference} and the
@@ -378,14 +378,18 @@ In the later sections of the paper, we combine higher-order methods in space wit
 \subsection{Structure of the paper and notation}
 In Section~\ref{sectiondiscFourier}, we first characterize
 positivity preservation of full discretizations of \eqref{advection} resulting from 
-finite difference spatial and one-step time discretizations. Then, in Section~\ref{sectioncentered}, we study positivity of the second-order centered differences in space
+finite difference spatial and one-step time discretizations. 
+
+Then, in Section~\ref{sectioncentered}, we study positivity of the second-order centered differences in space
 combined with the $\theta$-method in
 time, using discrete Fourier
 analysis. We also point out some connections with structured non-negative inverse eigenvalue problems. In Section~\ref{section3}, we study this particular full discretization in more detail.
 In Section \ref{explsect}, by setting up and solving certain parametric linear recursions, we derive explicit, non-trigonometric formulae for the entries of the full discretization matrix $M$. Then, in Section \ref{nonnegsect}, we use these formulae to provide precise results on the non-negativity of $M$ in terms of roots of some  sparse polynomials.
+
 In Section \ref{otherdisc}, we discuss some observations and results regarding
 higher-order spatial discretizations, including high-order centered differences
-(in Section~\ref{highercentered}) and spectral collocation methods (in Section~\ref{spectrcoll}).
+(in Section~\ref{highercentered}) and spectral collocation methods (in Section~\ref{spectrcoll}). Although the analysis we perform in Section~\ref{otherdisc} is not as complete as the one presented in Sections~\ref{sectiondiscFourier}--\ref{section3} (only a few special cases of a more general conjecture are proved symbolically), we find essentially the same patterns. 
+
 We summarize our findings in Section \ref{conclusions}.\\
 
 
