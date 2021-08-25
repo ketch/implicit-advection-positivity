@@ -1552,7 +1552,7 @@ general even number---although only for sufficiently large values of $\nu$.
 %	respectively.
 %	As a result, $M_{1,m} < 0$ for $\nu > \nu_0$ and any $\theta \in (0,1]$.
 \end{proof}
-\begin{remark}\label{remark15} It is easily seen that the previous proof boils down to the fact that for the $4^\text{th}$-order centered spatial discretization we have $\psi(x)>0$ for $x\in(0,\pi)$, where
+\begin{remark}\label{6th_order_scheme} It is easily seen that the previous proof boils down to the fact that for the $4^\text{th}$-order centered spatial discretization we have $\psi(x)>0$ for $x\in(0,\pi)$, where
 \[
 \psi(x)=2 \left(\frac{2}{3}\sin (x)-\frac{1}{12} \sin (2 x)\right)=\frac{1}{3} \sin (x) \bigl(4-\cos (x)\bigr).
 \]
@@ -1648,10 +1648,12 @@ The following proposition proves that \eqref{M1mSpectral} is negative for suffic
 	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
 	boundary condition.
 	Let the matrix $M_{m \times m}$ result from a given even spactral collocation method in space (with $m$
-	spatial grid points) and the $\theta$-method in time.
-	Let also $\nu$ be the CFL number defined in \eqref{nudef}.
-	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  >0$ such that the matrix $M$ has at least one
-	negative entry for any $\nu > \nu_0$.
+	spatial grid points) and the $\theta$-method in time, $\theta \in (0,1]$.
+	Let also $\nu$ be the CFL number defined in \eqref{nudef} and $\xi_\ell$ given by \eqref{xildef}.
+	If $m \ge 4$ is \emph{even}, then the matrix $M$ has at least one negative entry for any
+	$\nu \ge \cot(\xi_2)/(\theta \xi_2)$.
+%	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  >0$ such that the matrix $M$ has at least one
+%	negative entry for any $\nu > \nu_0$.
 \end{proposition}
 \begin{proof}
 %	It is sufficient to show that the entry $M_{1,m}$ is negative for all $\theta \in [0,1]$ and $\nu \ge \nu_0$,
@@ -1667,7 +1669,9 @@ The following proposition proves that \eqref{M1mSpectral} is negative for suffic
 %	\end{split}
 %	\end{align}
 	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}: we show that
-	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu > \nu_0$, where $\nu_0 >0$ depends on $m$ and $\theta$.
+	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu \ge \frac{\cot(\xi_2)}{\theta \xi_2}$.
+%	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}: we show that
+%	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu > \nu_0$, where $\nu_0 >0$ depends on $m$ and $\theta$.
 	
 	First, observe that by using $\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
 	%\begin{align}\label{M1mSpectral_a}
@@ -1712,7 +1716,30 @@ The following proposition proves that \eqref{M1mSpectral} is negative for suffic
 	M_{1,m}  =-\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\psi(\xi_\ell)(\sin(\xi_\ell)+\theta\nu\psi(\xi_\ell)
 					\cos(\xi_\ell))}{1+\theta^2\nu^2\psi^2(\xi_\ell)}
 	\]
-	with $\psi(x):=x$. Since $\psi(x)>0$ for $x\in(0,\pi)$, according to Remark \ref{remark15}, the proof is complete.
+	with $\psi(x):=x$.
+	Following the proof of Proposition~\ref{m_even_nonpositivityFE}, we can express $M_{1,m}$ in the form of
+	\eqref{M1mnew},
+	where
+	\ifjournal
+		\begin{align*}
+			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
+				\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+					{\bigl(1+\theta^2\nu^2\xi^2_\ell\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+		\end{align*}
+	\else
+		\begin{align*}
+			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) &= \\
+				&\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+					{\bigl(1+\theta^2\nu^2\xi^2_\ell\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+		\end{align*}
+	\fi
+	Since $\xi_\ell$, $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$,
+	we only need to ensure that $\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell) \ge 0$.
+	Because $\cot(\xi_\ell)$ is monotonically decreasing in the interval $(0,\frac{\pi}{2})$ it is sufficient to have
+	$\nu \ge \frac{\cot(\xi_2)}{\theta \xi_2}$.
+	%Since $\psi(x)>0$ for $x\in(0,\pi)$, according to Remark \ref{6th_order_scheme}, the proof is complete.
 	%Define the function
 	%\begin{align*}
 	%	f(x; \theta, \nu) \coloneqq \frac{x\sin(x) + \theta\nu x^2\cos(x)}{1 + (\theta\nu x)^2}.
