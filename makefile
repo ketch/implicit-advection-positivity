@@ -39,19 +39,22 @@
 
 ### Below are the only variables that need to be set ###
 # FILE:		the main tex file to compile
+# FIGURES	folder containing all figures
 # TEMPLATES:	the different templates used to produced pdf outputs
 # BIBENGINES:	the corresponding bibliography compiler for each template
 # FLAGS:	the corresponding change of flags in the .tex file to enable switching from one template to another
 
 FILE = positivity
-TEMPLATES = journal wias
-BIBENGINES = biber bibtex
-FLAGS = journalfalse/journaltrue journaltrue/journalfalse
-
+FIGURES = figures
+TEMPLATES = journal wias arxiv
+BIBENGINES = bibtex bibtex biber
+FLAGS1 = journalfalse/journaltrue 	journaltrue/journalfalse 	journaltrue/journalfalse
+FLAGS2 = wiastrue/wiasfalse 		wiasfalse/wiastrue 			wiastrue/wiasfalse
+FLAGS3 = arxivtrue/arxivfalse 		arxivtrue/arxivfalse 		arxivfalse/arxivtrue
 
 
 ### Code part of Makefile ###
-FIGURES = figures
+### No need to edit anything after this line ###
 PDF = $(FIGURES)/*.pdf
 EPS = $(FIGURES)/*.eps
 TEMPLATE_INFO = .latex_template
@@ -78,7 +81,9 @@ endef
 $(foreach template,$(TEMPLATES), \
 	$(eval index = $(call get_index,$(TEMPLATES),$(template)) ) \
 	$(eval $(word $(index),$(TEMPLATES))_BIBENGINE := $(word $(index),$(BIBENGINES))) \
-	$(eval $(word $(index),$(TEMPLATES))_FLAG := $(word $(index),$(FLAGS))) \
+	$(eval $(word $(index),$(TEMPLATES))_FLAG1 := $(word $(index),$(FLAGS1))) \
+	$(eval $(word $(index),$(TEMPLATES))_FLAG2 := $(word $(index),$(FLAGS2))) \
+	$(eval $(word $(index),$(TEMPLATES))_FLAG3 := $(word $(index),$(FLAGS3))) \
 )
 
 
@@ -88,24 +93,30 @@ $(foreach template,$(TEMPLATES), \
 .PHONY: $(TEMPLATES) compile croppdf pdf2eps clean-eps clean
 
 $(TEMPLATES):
-	@$(MAKE) TEMPLATE=$@ BIBENGINE=$($@_BIBENGINE) FLAG=$($@_FLAG) compile
+	@$(MAKE) TEMPLATE=$@ BIBENGINE=$($@_BIBENGINE) FLAG1=$($@_FLAG1) FLAG2=$($@_FLAG2) FLAG3=$($@_FLAG3) compile
 	@echo "$@" > $(TEMPLATE_INFO) # update TEMPLATE_INFO
 
 compile:
 	@if [ "$(PREV_TEMPLATE)" != "$(TEMPLATE)" ]; then \
-		echo "Change template $(FLAG) in $(FILE).tex ...\n" ; \
-		sed -i.bak s/$(FLAG)/ $(FILE).tex ; \
+		echo "Change template $(FLAG1) in $(FILE).tex ...\n" ; \
+		sed -i.bak s/$(FLAG1)/ $(FILE).tex ; \
+		echo "Change template $(FLAG2) in $(FILE).tex ...\n" ; \
+		sed -i.bak s/$(FLAG2)/ $(FILE).tex ; \
+		echo "Change template $(FLAG3) in $(FILE).tex ...\n" ; \
+		sed -i.bak s/$(FLAG3)/ $(FILE).tex ; \
+		$(RM) $(FILE).aux ; \
 	fi
 
 	@echo "LaTex compilation ..."
-	@$(MAKE) $(FILE).out
+	@$(MAKE) $(FILE).aux
 
-$(FILE).out: $(FILE).tex
-	@echo "Removing $(FILE).bbl to enable biber/bibtex compilation ..."
-	@rm -f $(FILE).bbl
-	@rm -f $(FILE).aux
+$(FILE).aux: $(FILE).tex
+	@echo "Removing bib auxiliary files to enable biber/bibtex compilation ..."
+	@$(RM) $(FILE).bbl
+	@$(RM) $(FILE).blg
 	pdflatex $<
 	$(BIBENGINE) $(FILE) || true
+	pdflatex $<
 	pdflatex $<
 	pdflatex $<
 	@echo "\nChecking for errors or warnings ...\n"
@@ -145,6 +156,7 @@ clean:
 	@$(RM)  $(FILE).out
 	@$(RM)  $(FILE).ps
 	@$(RM)  $(FILE).run.xml
+	@$(RM)  $(FILE).spl
 	@$(RM)  $(FILE).synctex.gz
 	@$(RM)  $(FILE).tex.bak
 	@$(RM)  $(FILE).thm
