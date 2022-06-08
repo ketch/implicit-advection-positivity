@@ -1,9 +1,9 @@
 \newif\ifjournal
 \newif\ifwias
 \newif\ifarxiv
-\journaltrue
+\journalfalse
 \wiasfalse
-\arxivfalse
+\arxivtrue
 
 \ifjournal
 
@@ -293,25 +293,39 @@
 \maketitle
 
 \begin{abstract}
-We analyze, from the viewpoint of positivity
-preservation, certain discretizations of a fundamental partial differential
-equation, the one-dimensional advection equation with periodic boundary
-condition. The full discretization is obtained by coupling a finite difference spatial semi-discretization
-(the second- and some higher-order centered difference schemes, or the Fourier spectral collocation method)
-with an arbitrary $\te$-method in time
-(including the forward and backward Euler methods, and a second-order method by
-choosing $\te\in [0,1]$ suitably). 
-The full discretization generates a
-two-parameter family of circulant matrices $M\in\mathbb{R}^{m\times m}$, 
-where each matrix entry is a
-rational function in $\te$ and $\nu$. Here, $\nu$ denotes the CFL number,
-being proportional to the ratio between the temporal and spatial discretization
-step sizes. The entrywise non-negativity of the matrix $M$---which is
-equivalent to the positivity preservation of the fully discrete
-scheme---is investigated via discrete Fourier analysis and also by solving some low-order parametric 
+We study the entrywise positivity of certain rational functions of
+sparse circulant skew-symmetric matrices.  Such matrices arise naturally,
+for instance, in the discretization of first-order linear hyperbolic
+partial differential equations (PDEs).  In this case the skew-symmetric matrix
+corresponds to a discretization
+of the spatial derivative, while the rational function is some approximation
+of the exponential.  The exact exponential of a non-diagonal skew-symmetric
+matrix is not positive, but some rational approximation nevertheless exhibit
+positivity.  In the PDE context, non-negativity of the resulting matrix function
+is equivalent to both positivity preservation and monotonicity preservation
+in the numerical solution.
+We investigate this in detail for a family of approximations
+corresponding to the $\theta$-method,
+%We analyze, from the viewpoint of positivity
+%preservation, certain discretizations of a fundamental partial differential
+%equation, the one-dimensional advection equation with periodic boundary
+%condition. The full discretization is obtained by coupling a finite difference spatial semi-discretization
+%(the second- and some higher-order centered difference schemes, or the Fourier spectral collocation method)
+%with an arbitrary $\te$-method in time
+%(including the forward and backward Euler methods, and a second-order method by
+%choosing $\te\in [0,1]$ suitably). 
+%The full discretization generates a
+%two-parameter family of circulant matrices $M\in\mathbb{R}^{m\times m}$, 
+%where each matrix entry is a
+%rational function in $\te$ and $\nu$. Here, $\nu$ denotes the CFL number,
+%being proportional to the ratio between the temporal and spatial discretization
+%step sizes. The entrywise non-negativity of the matrix $M$---which is
+%equivalent to the positivity preservation of the fully discrete
+%scheme---is investigated 
+via discrete Fourier analysis and also by solving some low-order parametric 
 linear recursions. We find that positivity preservation of the fully discrete system is impossible if the number  of spatial grid points $m$ is even. However, it turns out that positivity preservation of the fully discrete system is recovered for \emph{odd} values of $m$
 provided that $\te\ge 1/2$ and $\nu$ are chosen suitably. 
-These results are interesting since the systems of ordinary differential equations obtained via the spatial semi-discretizations studied are \emph{not} positivity preserving. 
+%These results are interesting since the systems of ordinary differential equations obtained via the spatial semi-discretizations studied are \emph{not} positivity preserving. 
 \end{abstract}
 
 \ifjournal
@@ -331,8 +345,23 @@ These results are interesting since the systems of ordinary differential equatio
 \fi
 
 \section{Background and motivation}
-In this work, we investigate the positivity of some discretizations of the advection equation
-with periodic boundary condition
+In this work, we investigate the entry-wise positivity of families of matrix functions
+\begin{align*}
+   R(\nu L)
+\end{align*}
+where $R$ is a rational function, $\nu$ is a real scalar, and $L$ is a sparse matrix.
+Non-negative matrices play an important role in probability and dynamical systems,
+among other areas of mathematics, and in numerous applications.
+Sufficient conditions for positivity are well known in some special cases; for instance,
+if $R(Z)=Z^{-1}$ then non-negativity of $Z$ is equivalent to the condition that $Z$ be an M-matrix.  
+
+Motivated by the discretization of differential equations,
+we focus on functions $R$ that are approximations of the exponential function.  
+A sufficient condition for non-negativity of $\exp(Z)$ is that $Z$ be a Metzler matrix.
+However, in applications it may be desirable that $R(Z)\ge 0$ with $R(Z)\approx \exp(Z)$
+even though $\exp(Z)$ is not entrywise non-negative.
+
+For example, consider the advection equation with (for simplicity) periodic boundary condition
 \begin{align}\label{advection}
 \begin{split}
 	U_t (x,t) &= a U_x(x,t), \qquad x\in[0,1], t>0, \\
@@ -341,7 +370,7 @@ with periodic boundary condition
 \end{split}
 \end{align}
 where $U:\mathbb{R}\times [0,+\infty)\to\mathbb{R}$ is the unknown function, $U_0:\mathbb{R}\to\mathbb{R}$ is a given differentiable initial function, and $a>0$ is a constant. 
-The exact solution of the Cauchy problem \eqref{advection}, given by $U(x,t) =
+The exact solution of \eqref{advection}, given by $U(x,t) =
 U_0(\{x+a t\})$ (where $\{\cdot\}$ denotes the fractional part), is positivity preserving; i.e.
 \begin{align} \label{implies-positivity}
 %\[
@@ -349,7 +378,10 @@ U_0(\{x+a t\})$ (where $\{\cdot\}$ denotes the fractional part), is positivity p
 %\]
 \end{align}
 Positivity is often important in this context, since $U$ may represent a
-concentration or density that cannot be negative.
+concentration or density that cannot be negative.  The solution of
+\eqref{advection} is also \emph{monotonicity preserving}; i.e., no
+new extrema appear in the solution over time.  Great effort has been
+expended to develop discretizations that mimic these properties.
 
 \begin{remark}
 Herein the term {\emph{positivity}} is always meant in the weak sense;
@@ -364,16 +396,27 @@ with mesh spacing $\dx>0$ and $m\dx=1$ yields a system of ordinary differential 
     u'(t) & = \frac{a}{\dx}Lu(t),
 \end{align}
 where $u:\mathbb{R}\to\mathbb{R}^m$, $L\in\mathbb{R}^{m\times m}$ is a circulant matrix  \cite[Section 5.16]{matmat}, and $m \in\mathbb{N}^+$ is the number of grid points (the points $x=0$ and $x=1$ are identified due to the periodic boundary condition).
-If one uses an upwind spatial discretization
 
-%\begin{subequations}
-%\label{upwind1}
-%\begin{align} 
-%    L_{i,i}  & \coloneqq -1,\quad\quad L_{i,i+1} \coloneqq  1 \ \ \ \ 1\le i < m \\
-%    L_{m,1} & \coloneqq 1
-%\end{align}
-%\end{subequations}
-\begin{align*}%\label{upwind1}
+Applying a one-step time
+discretization with step size $\dt$ and stability function $R:\mathbb{C}\to\mathbb{C}$ to \eqref{semi-discrete} leads to
+the iteration
+\begin{align}\label{M}
+    u^{n+1} & = M u^n,
+\end{align}
+where 
+\begin{equation}\label{Mdualdef}
+M:=R(\nu L)
+\end{equation}
+and 
+\begin{equation}\label{nudef}
+\nu:=a\frac{\dt}{\dx}>0
+\end{equation}
+is the CFL number.  
+The discretization is positivity-preserving (and monotonicity preserving) if
+and only if $M$ is entrywise non-negative.
+
+If one uses an upwind spatial discretization
+\begin{align}\label{upwind1}
 L=\left(
 \begin{array}{cccccc}
  -1 & 1 & 0  & \cdots & 0 & 0 \\
@@ -384,18 +427,19 @@ L=\left(
  1 & 0 & \cdots & 0 & 0 & -1 \\
 \end{array}
 \right),
-\end{align*}
+\end{align}
 then the exact solution of \eqref{semi-discrete} is also positivity
-preserving. Moreover, a corresponding full discretization will be positivity preserving too,
-under an appropriate time step size restriction $0<\dt\le\dt_0$
-if, for example, the forward (explicit) Euler method or any strong stability preserving
-method \cite{SSPbook} is used in time; see, e.g.~\cite{posconv}.  
+preserving (since $L$ is a Metzler matrix). Moreover, in the full discretization
+\eqref{M}, $M\ge0$ will hold if and only if $R(z)$ is absolutely monotonic at $z=-\nu$;
+see \cite{kraaijevanger1991,SSPbook}.
 
-Positivity-preserving methods for transport equations are typically based
-on low-order upwind-biased spatial discretizations like that above, or involve
-nonlinear limiters (or both).
-Here we instead consider the positivity of linear higher-order centered discretizations.
-A second-order scheme is obtained with the centered difference discretization
+The discretization \eqref{upwind1} has some significant drawbacks: it is only first-order
+accurate and it leads to a semi-discrete system \eqref{semi-discrete} in which $\|u\|_2$
+is dissipated rather than conserved.
+Here we instead consider the positivity of linear higher-order centered discretizations,
+which involve skew-symmetric approximations of $\partial_x$ and thus give
+energy-conservative semi-discretizations.
+The simplest of these is the centered difference discretization
 \begin{equation}\label{centered-difference}
 L=\left(
 \begin{array}{cccccc}
@@ -408,18 +452,16 @@ L=\left(
 \end{array}
 \right).
 \end{equation}
-However, this spatial semi-discretization is not positivity preserving, since the
-matrix $L$ has at least one negative off-diagonal entry \cite[Chapter I,
-Theorem 7.2]{hundsdorferverwer}.
+Like any centered semi-discretization of \eqref{advection}, this is
+not positivity preserving, since it is skew-symmetric and thus has
+some negative off-diagonal entries \cite[Chapter I, Theorem 7.2]{hundsdorferverwer}.
 This implies that any consistent full discretization based on \eqref{centered-difference}
 must fail to preserve positivity under sufficiently small step sizes $\dt>0$.
 Indeed, a full discretization based on the scheme \eqref{centered-difference}
 and forward Euler in time is not positivity preserving for any step size $\dt>0$.
 
 On the other hand, interestingly, using \eqref{centered-difference} with backward (implicit) 
-Euler time integration, one 
-%generally 
-observes positivity preservation
+Euler time integration, one observes positivity preservation
 under \emph{large} enough time step sizes provided that the parity of the number of spatial grid points is \emph{odd}.  To investigate the differences between the behavior
 of the forward and backward Euler methods, we will study the $\theta$-method 
 \cite[Chapter IV.3]{hairerwanner} as time discretization applied to \eqref{semi-discrete}
@@ -549,19 +591,12 @@ such that $\exp(\imath\xi_\ell)$ are the $m^\text{th}$ roots of unity.
 %\end{align}
 Applying a one-step time
 discretization with step size $\dt$ and stability function $R:\mathbb{C}\to\mathbb{C}$ to \eqref{semi-discrete} leads to
-the iteration
-\begin{align}\label{M}
-    u^{n+1} & = M u^n,
-\end{align}
+the iteration \eqref{M}
 where 
-\begin{equation}\label{Mdualdef}
+\begin{equation*}
 M:=R(\nu L)=\cF R(\nu \Lambda) \cF^*, 
-\end{equation}
-and 
-\begin{equation}\label{nudef}
-\nu:=a\frac{\dt}{\dx}>0
-\end{equation}
-is the CFL number.  
+\end{equation*}
+and $\nu$ is the CFL number, defined by \eqref{nudef}.
 Then it is easily seen that 
 \[
 \boxed{\text{positivity preservation of the fully discrete numerical solution}\quad \Longleftrightarrow \quad M\ge 0.}
