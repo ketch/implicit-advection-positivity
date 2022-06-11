@@ -525,12 +525,13 @@ Then, in Section~\ref{sectioncentered}, we study positivity of the second-order 
 combined with the $\theta$-method in
 time, using discrete Fourier
 analysis. We also point out some connections with structured non-negative inverse eigenvalue problems. In Section~\ref{section3}, we study this particular full discretization in more detail.
-In Section \ref{explsect}, by setting up and solving certain parametric linear recursions, we derive explicit, non-trigonometric formulae for the entries of the full discretization matrix $M$. Then, in Section \ref{nonnegsect}, we use these formulae to provide precise results on the non-negativity of $M$ in terms of roots of some  sparse polynomials.
 
 In Section \ref{otherdisc}, we discuss some observations and results regarding
 higher-order spatial discretizations, including high-order centered differences
 (in Section~\ref{highercentered}) and spectral collocation methods (in Section~\ref{spectrcoll}). Although the analysis we perform in Section~\ref{otherdisc} is not as complete as the one presented in Sections~\ref{sectiondiscFourier}--\ref{section3} (only a few special cases of a more general conjecture are proved symbolically), we find essentially the same patterns. 
 We summarize our findings in Section \ref{conclusions}.
+
+In Section \ref{explsect}, by setting up and solving certain parametric linear recursions, we derive explicit, non-trigonometric formulae for the entries of the full discretization matrix $M$. Then, in Section \ref{nonnegsect}, we use these formulae to provide precise results on the non-negativity of $M$ in terms of roots of some  sparse polynomials.
 
 %\subsection{Notation}
 Throughout the paper, the set of positive integers is denoted by $\nplus$, the complex imaginary unit is $\imath$, the identity matrix is $I\in\rr^{m\times m}$, and to emphasize the dimensions of a matrix, we will sometimes write, for example, $L_{m\times m}$.
@@ -927,8 +928,500 @@ As we will see, the precise lower bound for this matrix---according to our Theor
 It is not restrictive to assume $a>0$ in \eqref{advection}. If we assumed $a<0$ instead, then the results of Theorems~\ref{thm1} and \ref{thm2} would remain valid (together with Figures~\ref{fig_variousk}--\ref{fig_boundary}, for example), with all the arguments in their proofs being essentially the same.  For example, as we will see in Section~\ref{section3}, the non-negativity of (the first row of) matrix $M$ is governed by the elements $M_{1,1}$ and $M_{1,m}$ for $a>0$ and $m$ odd---this would change to elements $M_{1,1}$ and $M_{1,2}$ for $a<0$ and $m$ odd.
 \end{remark}
 
-%\subsection{Structured non-negative inverse eigenvalue problems}
+%\subsection{Other spatial discretizations}\label{otherdisc}
+%
+%The spatial semi-discretization considered in Sections~\ref{sectioncentered}--\ref{section3} is not positivity preserving. The same will hold true for each spatial semi-discretization to be investigated in Sections~\ref{highercentered}--\ref{spectrcoll} below: it is well-known \cite[Chapter I,
+%Theorem 7.2]{hundsdorferverwer} that a linear constant-coefficient system of ordinary differential equations 
+%\eqref{semi-discrete} is positivity preserving if and only if the
+%matrix $\frac{a}{\dx}L$ has no negative off-diagonal entries. The violation of this last condition is clear for the matrix 
+%$L$ in \eqref{Ldef}, for all matrices $L$ in Section~\ref{highercentered}, and also for the ones in Section~\ref{spectrcoll} (due to $L_{1,2}=-L_{2,1}\ne 0$).
+%
+%However, as we will see, it is again possible to obtain a positivity-preserving full discretization scheme when the spatial
+%discretizations covered in this section (higher-order centered
+%spatial discretizations and Fourier spectral collocation methods) are suitably combined  with the $\theta$-method.
+\begin{remark}
+For $\theta=0$ (that is, when the explicit Euler time discretization is applied), the matrix $M$ in
+\eqref{Mdualdef} becomes $M = I + \nu L$, hence $M \ge 0$ cannot hold for any $\nu > 0$ due to the
+negative off-diagonal entries of $L$.
+%It is well known and easily shown that, as with the discretizations considered above,
+%this method is not positivity preserving (and not A-stable) when $\theta=0$.
+Therefore, in what follows, we can assume $\theta \in (0,1]$.
+\end{remark}
 
+%, similar results described in Section~\ref{sectioncentered} hold true for .
+
+\subsection{Higher-order centered discretizations in space, \texorpdfstring{$\theta$}{}-method in time}\label{highercentered}
+The coefficients of the centered differences can be found, e.g., in \cite{bengt}, from which the
+corresponding circulant matrices $L$ describing the spatial discretization can be constructed.
+Here, we examine the first few cases.
+\begin{itemize}
+\item When the stencil width is 3 (implying  $m\ge 3$ and $2^\text{nd}$-order accuracy), the entries on
+the central diagonals are $(-1/2, 0, 1/2)$. This is matrix $L$ in \eqref{Ldef} that has been considered in
+Sections~\ref{sectioncentered}--\ref{section3}.
+\item When the stencil width is 5 (implying  $m\ge 5$ and $4^\text{th}$-order accuracy), the entries on
+the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$.
+\item When the stencil width is 7 (implying $m\ge 7$ and $6^\text{th}$-order accuracy), the entries on the
+central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.
+\end{itemize}
+In all above central diagonals, the middle $0$ corresponds to the main diagonal.
+We can obtain an eigendecomposition \eqref{eigen} for the matrix $L$, with eigenvectors given by
+\eqref{eigenvectrors} and eigenvalues $\lambda_\ell = \imath \psi(\xi_\ell)$, where
+\begin{align}\label{psi}
+	\psi(x) := 2 \sum_{k=1}^{(N-1)/2} C_k \sin(k x) \quad (x\in\rr).
+\end{align}
+As before, $\xi_\ell$ is defined in \eqref{xildef}, and $C$ is a vector consisting of the last $(N-1)/2$
+coefficients of the central diagonals of $L$, with $N$ denoting the stencil width.
+For instance, the vector $C$ is equal to $(1/2)$, $(2/3,-1/12)$, and $(3/4,-3/20,1/60)$ for stencil widths
+$3$, $5$, and $7$, respectively.
+%An important property of function \eqref{psi} is that, by construction, each consecutive term in the sum is %smaller
+%non-increasing in absolute value, namely $|C_k \sin(k\xi_\ell)| \ge |C_{k+1} \sin((k+1)\xi_\ell)|$, for $1 \le k \le (N-3)/2$.
+%This property will be useful in the proof of Proposition~\ref{m_even_nonpositivityFE}.
+
+After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time
+discretization, and the full discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}).
+%We can extend the results of Section~\ref{sectioncentered} for an arbitrary centered spatial discretization.
+As seen in Section~\ref{sectioncentered}, the matrix $M$ is a real, circulant matrix so it can be characterized by the entries of its first row,
+which take the form
+\begin{align}\label{M1j_FD}
+	  M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)\right)
+  \cos((j-1)\xi_\ell) + \nu \psi(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \psi^2(\xi_\ell)} \quad (1\le j \le m).
+\end{align}
+Our computations suggest that the non-negativity properties of the matrix family $M(m,\theta,\nu)$ again
+depend on the parity of $m$.
+
+\begin{description}[style=unboxed,leftmargin=0cm]
+\item [{Case 1:} $m$ is {even}.]
+\item \noindent By using symbolic calculations,  we have found that, for the $4^\text{th}$-order scheme, 
+$M(m,\theta,\nu)\ge 0$ cannot hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{6,8,10\}$.
+Similarly, for the $6^\text{th}$-order scheme, we checked (again symbolically) that $M(m,\theta,\nu)\ge 0$
+does not hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{8,10\}$.
+Therefore, positivity preservation is impossible in these cases.
+
+%We can extend the above result to any arbitrary finite difference centered discretization in space, coupled with
+%the $\theta$-method as time discretization.
+The following proposition extends the above observations for the $4^\text{th}$-order scheme when $m$ is a
+general even number---although only for sufficiently large values of $\nu$.
+%that if the CFL number $\nu$ is
+%sufficiently large then $M(m,\theta,\nu) \ge 0$ cannot not hold for any $\theta \in (0,1]$ and any arbitrary
+%even number $m \ge 6$.
+\begin{proposition}\label{m_even_nonpositivityFE}
+	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
+	boundary condition.
+	Let the matrix $M_{m \times m}$ result from the $4^\text{th}$-order centered discretization in space with
+	$m$ spatial grid points and the $\theta$-method in time.
+	Also, let $\nu$ be the CFL number defined in \eqref{nudef}.
+	If $m \ge 6$ is \emph{even}, then there exists $\nu_0  > 0$ such that the matrix $M$ has at least one
+	negative entry for any $\nu > \nu_0$.
+\end{proposition}
+\begin{proof}
+	We show that $M_{1,m} < 0$ for any $\theta \in (0,1]$ and $\nu > \nu_0$,
+	where $\nu_0 > 0$ is a constant depending on $m$ and $\theta$.
+	
+	Let $j = m$ in \eqref{M1j_FD}, then by using \eqref{angle-identities} and
+	$\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we have
+	\begin{align}\label{M1m}
+		M_{1,m} &= \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)
+					\right)\cos(\xi_\ell)-\nu\psi(\xi_\ell)\sin(\xi_\ell)}{1+\theta^2\nu^2\psi^2(\xi_\ell)} \nonumber \\
+					&= \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)\right)
+					\cos(\xi_\ell) - \nu\psi(\xi_\ell)\sin(\xi_\ell)}{1+\theta^2\nu^2\psi^2(\xi_\ell)}\right) -
+					\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \nonumber \\
+					&= -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\psi(\xi_\ell)\sin(\xi_\ell)+\theta\nu\psi^2(\xi_\ell)
+					\cos(\xi_\ell) }{1+\theta^2\nu^2\psi^2(\xi_\ell)} \nonumber \\
+					&= -\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\psi(\xi_\ell)(\sin(\xi_\ell)+\theta\nu\psi(\xi_\ell)
+					\cos(\xi_\ell))}{1+\theta^2\nu^2\psi^2(\xi_\ell)},
+	\end{align}
+	where in the last equality we used $\psi(\xi_1) = \psi(0) = 0$,  $\psi(\xi_{m/2+1}) =  0$, and the symmetry
+	of angles $\xi_\ell$ ($1 \le \ell \le m$) about the $x$-axis when $m$ is even (explicitly, the identities
+	$\sin\left(k\frac{2\pi(\ell-1)}{m}\right)=-\sin\left(k\frac{2\pi(m-\ell+1)}{m}\right)$ and
+	$\cos\left(k\frac{2\pi(\ell-1)}{m}\right)=\cos\left(k\frac{2\pi(m-\ell+1)}{m}\right)$ for positive integers
+	$k$, $\ell$ and $m$).
+	Define the function 
+	\begin{align*}
+		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)}.
+	\end{align*}
+	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  < \pi/2$ (and separating the case $\xi_\ell  = \pi/2$ when $m$ is divisible by 4),
+	yielding
+	\begin{align}\label{M1mnew}
+		M_{1,m} = \begin{cases}
+							\dfrac{-2\nu\psi(\pi/2)}{m\left(1+\theta^2\nu^2\psi^2(\pi/2)\right)} -
+								\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}}
+								\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) \Big),
+								& \text{if } m \equiv 0 \Mod{4}, \\[20pt]
+							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
+								\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big),
+								& \text{if } m \equiv 2 \Mod{4}.
+						\end{cases}
+	\end{align}
+	%By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
+	We will also use the identity
+	\begin{align*}
+		&f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) = \\
+			&\frac{\Bigl(\psi(\xi_\ell) + \psi(\pi-\xi_\ell)\Bigr)
+			\Bigl(\sin(\xi_\ell) + \theta\nu\psi(\xi_\ell)\cos(\xi_\ell) +
+			\theta\nu\psi(\pi-\xi_\ell)\bigl(\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+				{\bigl(1+\theta^2\nu^2\psi^2(\xi_\ell)\bigr)\bigl(1+\theta^2\nu^2\psi^2(\pi-\xi_\ell)\bigr)}.
+	\end{align*}
+	First, observe that $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$ in
+	\eqref{M1mnew}. Now for the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$,
+	
+	\begin{align*}
+		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad \text{and} \quad
+		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
+	\end{align*}
+	so they are all positive as well. Let us fix $\theta \in (0,1]$ arbitrarily, and notice that for each $\ell$ we can find $\nu_\ell > 0$ such that
+	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)>0$ for $\nu>\nu_\ell$. Let $\nu_0:=\max \nu_\ell$, then  
+	$f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)>0$ for $\nu>\nu_0$. Therefore, $M_{1,m} < 0$ for any $\theta \in (0,1]$ and $\nu>\nu_0$.
+%	First, observe that $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$ in
+	%\eqref{M1mnew}.
+	%Let us now fix $\theta \in (0,1]$ arbitrarily.
+	%Notice that for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that
+	%$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
+	%Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mnew}.
+	%Therefore, if $\psi(x)$ is non-negative for $0< x <\pi$ and $\nu > \nu_0$, then $M_{1,m} < 0$ for any
+	%$\theta \in (0,1]$.
+
+	%For the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$
+	%and
+	%\begin{align*}
+%		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad
+%		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
+%	\end{align*}
+%	are positive for each index $\ell$ that appears in \eqref{M1mnew}.
+%	Also, for a fixed $\theta \in (0,1]$ and for each $2 \le \ell \le (m+2)/4$ the expression
+%	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ is non-negative if $\nu \ge \nu_0$, where $\nu_0$
+%	depends on $m$.
+%	For instance, it can be shown that
+%	$\theta\nu_0 \in \left\{4/7, 6/31(1 + 4 \sqrt{2}), 6/55(9 + 5 \sqrt{5})\right\}$ for $m \in \{6,8,10\}$,
+%	respectively.
+%	As a result, $M_{1,m} < 0$ for $\nu > \nu_0$ and any $\theta \in (0,1]$.
+\end{proof}
+\begin{remark}%\label{6th_order_scheme}
+It is easily seen that the previous proof boils down to the fact that for the $4^\text{th}$-order centered spatial discretization we have $\psi(x)>0$ for $x\in(0,\pi)$, where
+\[
+\psi(x)=2 \left(\frac{2}{3}\sin (x)-\frac{1}{12} \sin (2 x)\right)=\frac{1}{3} \sin (x) \bigl(4-\cos (x)\bigr).
+\]
+We know from \eqref{psi} that for the $6^\text{th}$-order scheme
+\[
+\psi(x) = 2 \left(\frac{3}{4}\sin (x)-\frac{3}{20} \sin (2 x)+\frac{1}{60} \sin (3 x)\right) =
+	\frac{1}{15} \sin (x) \bigl(23-9\cos (x)+\cos (2x)\bigr),
+\]
+so we again have $\psi(x)>0$ for $x\in(0,\pi)$. Therefore, the analogue of Proposition \ref{m_even_nonpositivityFE} is true for the $6^\text{th}$-order scheme as well (c.f.~the proof of Proposition \ref{m_even_nonpositivitySpectral}).
+\end{remark}
+\begin{remark}
+	Based on the observations above Proposition~\ref{m_even_nonpositivityFE}, we conjecture the following:
+	given an arbitrary finite difference centered discretization in space coupled with the $\theta$-method, then
+	$M_{1,m} < 0$ for even $m$, and for \emph{all} values $\nu > 0$ and $\theta \in (0,1]$---that is, $\nu_0=0$ can be chosen in general.
+\end{remark}
+\item [{Case 2:} $m$ is {odd}.] In this case we have found that positivity preservation is possible for a suitable
+set of $\theta\in(0,1]$ and $\nu>0$ values; see  Figures~\ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
+
+Also, if we assume $\psi(\xi_\ell) \ne 0$ for each $2\le\ell\le m$, then we can extend the asymptotic results of
+Section~\ref{sectioncentered} for an arbitrary high-order centered discretization (c.f.~the ``odd $m$'' case in Section \ref{spectrcoll}).
+\end{description}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{fig_5stencilm579.pdf}
+\caption{Non-negativity of the matrix family generated by the $4^\text{th}$-order centered discretization in space and the $\theta$-method in time; see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{5, 7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=5$, $m=7$, and $m=9$, the ``lower left corner'' point of the region has $\theta\approx 0.726106$, $\theta\approx 0.809401$, and $\theta\approx 0.853562$, respectively.}\label{fig_5stencilm579}
+\end{center}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{fig_7stencilm79.pdf}
+\caption{Non-negativity of the matrix family generated by the $6^\text{th}$-order centered discretization in space and the $\theta$-method in time; see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=7$ and $m=9$, the ``lower left corner'' point of the region has $\theta\approx 0.807042$ and $\theta\approx 0.851437$, respectively.}\label{fig_7stencilm79}
+\end{center}
+\end{figure}
+
+\subsection{Fourier spectral collocation in space, \texorpdfstring{$\theta$}{}-method in time}\label{spectrcoll}
+Here, we consider the spectral method that results from extending the
+finite difference stencil to include the whole spatial grid.  In this section, we assume $m\ge 4$. The resulting spatial 
+semi-discretization can again be written in the form \eqref{semi-discrete}
+where the matrix $L$ takes the form \cite{trefethen,peyret}
+\begin{align*}
+	L_{i,j} = \begin{cases}
+						0 & \text{if } i = j, \\[10pt]
+						\dfrac{\pi}{m}(-1)^{i+j}\cot{\!\left(\frac{(i-j)\pi}{m}\right)} & \text{if } i \neq j,
+					\end{cases}
+\end{align*}
+for even $m$, and
+\begin{align*}
+	L_{i,j} = \begin{cases}
+						0 & \text{if } i = j, \\[10pt]
+						\dfrac{\pi}{m}(-1)^{i+j}\csc{\!\left(\frac{(i-j)\pi}{m}\right)} & \text{if } i \neq j,
+					\end{cases}
+\end{align*}
+for odd $m$.
+As in Section~\ref{sectiondiscFourier}, the spectral collocation matrices have an eigendecomposition given by
+\eqref{eigen}, with eigenvectors \eqref{eigenvectrors}, but now the entries of the diagonal matrix $\Lambda$ are
+\begin{align}\label{lambdaSCdef}
+    \imath\lambda_\ell & =
+    \begin{cases}
+        \imath\xi_\ell & 1 \le \ell < \frac{m}{2}+1, \\
+        0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\ %\nonumber
+        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 < \ell \le m,
+    \end{cases}
+\end{align}
+where $\xi_\ell$ has been defined in \eqref{xildef}.
+
+When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full discretization
+matrix $M$ in \eqref{Mdualdef} is obtained.
+The entries of the first row of the circulant matrix $M$ are again given by \eqref{M-entries}, and now
+they take the form
+\begin{align}\label{eq51}
+	M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+  \cos((j-1)\xi_\ell) + \nu\lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2} \quad (1\le j \le m).
+\end{align}
+Similarly to the Sections~\ref{sectiondiscFourier} and \ref{highercentered}, we distinguish between even and
+odd sizes of the discretization matrices $M$.
+%Taking $\theta=1$ (backward Euler)
+%and recognizing that the imaginary part vanishes, this leads to
+%\begin{align}
+%    M_{1,j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos((j-1)\xi_\ell) + \nu \lambda_\ell \sin((j-1)\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
+%           & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
+%\end{align}
+\begin{description}[style=unboxed,leftmargin=0cm]
+\item [{Case 1:} $m$ is {even}.]
+From \eqref{eq51} we have (also using \eqref{angle-identities}) that
+\begin{align}\label{M1mSpectral}
+	M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+	\cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
+\end{align}
+The following proposition proves that \eqref{M1mSpectral} is negative for sufficiently large CFL number $\nu$.
+\begin{proposition}\label{m_even_nonpositivitySpectral}
+	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
+	boundary condition.
+	Let the matrix $M_{m \times m}$ result from a given even spactral collocation method in space (with $m$
+	spatial grid points) and the $\theta$-method in time, $\theta \in (0,1]$.
+	Let also $\nu$ be the CFL number defined in \eqref{nudef} and $\xi_\ell$ given by \eqref{xildef}.
+	If $m \ge 4$ is \emph{even}, then the matrix $M$ has at least one negative entry for any
+	$\nu \ge \cot(\xi_2)/(\theta \xi_2)$.
+%	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  >0$ such that the matrix $M$ has at least one
+%	negative entry for any $\nu > \nu_0$.
+\end{proposition}
+\begin{proof}
+%	It is sufficient to show that the entry $M_{1,m}$ is negative for all $\theta \in [0,1]$ and $\nu \ge \nu_0$,
+%	where $\nu_0 \in \rr^+$ can be chosen accordingly.
+%	Observe that by using $\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
+%	\begin{align}\label{M1mSpectral_a}
+%	\begin{split}
+%	M_{1,m} &= \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+%	\cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right) -
+%	\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \\
+%	&= -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\lambda_\ell\sin(\xi_\ell) + \theta\nu\lambda_\ell^2 \cos(\xi_\ell)}
+%	{1+\theta^2\nu^2\lambda_\ell^2}.
+%	\end{split}
+%	\end{align}
+	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}: we show that
+	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu \ge \frac{\cot(\xi_2)}{\theta \xi_2}$.
+%	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}: we show that
+%	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu > \nu_0$, where $\nu_0 >0$ depends on $m$ and $\theta$.
+	
+	First, observe that by using $\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
+	%\begin{align}\label{M1mSpectral_a}
+	\[
+	M_{1,m} = -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\lambda_\ell\sin(\xi_\ell) +
+		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
+	\]
+	%\end{align}
+	Now, since $\lambda_1 = \lambda_{m/2+1} = 0$, we have
+	\[
+	M_{1,m} = -\frac{\nu}{m} \sum_{\ell=2}^{m/2} \left(\frac{\lambda_\ell\sin(\xi_\ell) +
+		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{\nu}{m} \sum_{\ell=m/2+2}^{m} \left(\frac{\lambda_\ell\sin(\xi_\ell) +
+		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right).
+	\]
+	One easily checks from \eqref{lambdaSCdef} and \eqref{xildef} that for any $\frac{m}{2}+2\le\ell\le m$ 
+	\[
+	\lambda _\ell=\xi _\ell-2 \pi =-\xi _{m+2-\ell}=-\lambda _{m+2-\ell}.
+	\]
+	This implies that 
+	%and by using the symmetry of angles
+	%$\xi_\ell$ ($1 \le \ell \le m$) about the $x$-axis when $m$ is even we have that
+	\begin{align*}
+		\sum_{\ell=2}^{m/2} \frac{\lambda_\ell\sin(\xi_\ell) + \theta\nu\lambda_\ell^2 \cos(\xi_\ell)}
+			{1+\theta^2\nu^2\lambda_\ell^2}
+		= \sum_{\ell=m/2+2}^{m} \frac{\lambda_\ell\sin(\xi_\ell) + \theta\nu\lambda_\ell^2 \cos(\xi_\ell)}
+			{1+\theta^2\nu^2\lambda_\ell^2},
+	\end{align*}
+	so %\eqref{M1mSpectral_a} can be written as
+	%\begin{align}\label{M1mSpectral_b}
+	\[
+		M_{1,m}  = -\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\lambda_\ell\sin(\xi_\ell) +
+			\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
+	\]
+	%\end{align}
+	Now notice (due to $\lambda_\ell=\xi_\ell$ for $2\le\ell\le \frac{m}{2}$) that we also have 
+	\[
+	M_{1,m}  = -\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\xi_\ell\sin(\xi_\ell) +
+			\theta\nu\xi_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\xi_\ell^2},
+	\]
+	thus
+	\[
+	M_{1,m}  =-\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\psi(\xi_\ell)(\sin(\xi_\ell)+\theta\nu\psi(\xi_\ell)
+					\cos(\xi_\ell))}{1+\theta^2\nu^2\psi^2(\xi_\ell)}
+	\]
+	with $\psi(x):=x$.
+	Following the proof of Proposition~\ref{m_even_nonpositivityFE}, we can express $M_{1,m}$ in the form of
+	\eqref{M1mnew},
+	where
+	\ifarxiv
+		\begin{align*}
+			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
+				\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+					{\bigl(1+\theta^2\nu^2\xi^2_\ell\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+		\end{align*}
+	\else
+		\begin{align*}
+			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) &= \\
+				&\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+					{\bigl(1+\theta^2\nu^2\xi^2_\ell\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+		\end{align*}
+	\fi
+	Since $\xi_\ell$, $\sin(\xi_\ell)$, $\cos(\xi_\ell)$ and $\pi-\xi_\ell$ are positive for each index $2 \le \ell \le (m+2)/4$,
+	it is enough to ensure $\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell) \ge 0$.
+	Because the function $x\mapsto\cot(x)/x$ is monotonically decreasing in the interval $(0,\frac{\pi}{2})$, 
+	$\nu \ge \frac{\cot(\xi_2)}{\theta \xi_2}$ implies $M_{1,m}<0$.
+	%Since $\psi(x)>0$ for $x\in(0,\pi)$, according to Remark \ref{6th_order_scheme}, the proof is complete.
+	%Define the function
+	%\begin{align*}
+	%	f(x; \theta, \nu) \coloneqq \frac{x\sin(x) + \theta\nu x^2\cos(x)}{1 + (\theta\nu x)^2}.
+	%\end{align*}
+	%Then, we can express \eqref{M1mSpectral_b} by summing only over indices $\ell$ for which
+	%$0 < \xi_\ell  \le \pi/2$, yielding
+	%\begin{align}\label{M1mSpectral_c}
+	%	M_{1,m} = \begin{cases}
+	%						-\dfrac{4\pi\nu}{m(4+\theta^2\nu^2\pi^2)} -
+	%							\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}}
+	%							\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) \Big),
+	%							& \text{if } m \equiv 0 \Mod{4}, \\[20pt]
+	%						-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
+	%							\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big),
+	%							& \text{if } m \equiv 2 \Mod{4}.
+	%					\end{cases}
+	%\end{align}
+	%(As usual, a sum $\sum\limits_{\ell=2}^{1}(\ldots)$, occurring for $m=4$, is understood to be 0.)
+	%By suitably rearranging $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$, we obtain
+	%\ifarxiv
+	%	\begin{align}\label{functionf}
+	%		f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
+	%			\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+	%			\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+	%				{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+	%	\end{align}
+	%\else
+	%	\begin{align}\label{functionf}
+	%		f(\xi_\ell; \theta, \nu) &+ f(\pi-\xi_\ell; \theta, \nu) = \\
+	%			&\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
+	%			\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
+	%				{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
+	%	\end{align}
+	%\fi
+	%Now let us fix $\theta \in (0,1]$ arbitrarily.
+	%Then, for each $\ell$ we can find $ \nu_\ell > 0$ such that 
+	%$\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)>0$ for $\nu>\nu_\ell$.
+	%Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mSpectral_c}.
+	%Since all remaining terms in \eqref{functionf} are positive, this means that $M_{1,m} < 0$ for any
+	%$\theta \in (0,1]$ and $\nu \ge \nu_0$.
+\end{proof}
+
+%----------------------------------
+%On the one hand, observe that we have
+%\begin{align*}
+% M_{1,m} & = \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+%  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \\
+%& = \frac{\nu}{m} \sum_{\ell=1}^{m} \frac{- \lambda_\ell\sin(\xi_\ell)-\theta\nu\lambda_\ell^2 \cos(\xi_\ell) }{1+\theta^2\nu^2\lambda_\ell^2},  %\label{newM1}
+%\end{align*}
+%which is negative for $\nu>0$ sufficiently \emph{small} and $\theta\in(0,1]$ arbitrary, since $\lambda_1=\lambda_{m/2+1}=0$, and $\lambda_\ell \sin(\xi_\ell)>0$ for the remaining indices $\ell$.
+%%----------------------------------
+%%The first term in this sum (proportional to $\sin(\xi_\ell)$ is negative, since $\lambda_1=\lambda_{m/2+1}=0$, and $\lambda_\ell \sin(\xi_\ell)>0$ for the remaining indices $\ell$.
+%%We now show that the remaining sum
+%%\begin{align}
+%%S := \frac{-\theta \nu^2}{m} \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \frac{\lambda^2_\ell \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}
+%%\end{align}
+%%is also negative.  Since, for $2\le \ell \le m/2$,
+%%\begin{align}
+% %   \cos(\xi_{\ell+m/2}) & = -\cos(x_\ell) & \lambda_{\ell+m/2} & = \xi_\ell - \pi,
+%%\end{align}
+%%we can write
+%%\begin{align}
+% %   S & = \frac{-\theta \nu^2}{m} \left(\sum_{\ell=2}^{m/2} \frac{\lambda^2_\ell \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2} + \sum_{\ell=m/2 + 2}^{m} \frac{\lambda^2_\ell \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2} \right) \\
+%  %    & = \frac{-\theta \nu^2}{m} \sum_{\ell=2}^{m/2} \left( \frac{\lambda^2_\ell }{1+\theta^2\nu^2\lambda_\ell^2}-\frac{\lambda^2_{\ell+m/2}}{1+\theta^2\nu^2\lambda_{\ell+m/2}^2}\right) \cos(\xi_\ell) \\
+%     % & = \frac{-\pi\theta \nu^2}{m} \sum_{\ell=2}^{m/2} \frac{(2\xi_\ell-\pi)\cos(\xi_\ell)}{(1+\theta^2\nu^2\lambda_\ell^2)(1+\theta^2\nu^2(\xi_\ell-\pi)^2)}.
+%%\end{align}
+%%Since the factors $\cos(\xi_\ell)$ and $2\xi_\ell - \pi$ are both positive
+%%for $2 \le \ell < m/4+1$ and both negative for $m/4+1 < \ell \le m/2$,
+%%the last expression is term-by-term negative.
+%
+%%Thus $M_{1,m}<0$ for all $\nu>0$ and $\theta\in[0,1]$.}
+%%----------------------------------
+%
+%On the other hand, by suitably regrouping the terms, we also have the identity
+%\[
+%    M_{1,m}  = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(\frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
+%  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)
+%\]
+%\[ =  0+\left[
+% \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m  \frac{\theta-1}{m\theta}\cos(\xi_\ell)\right]+
+% \]
+%\[ \frac{1}{m\nu\theta^2}
+% \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(-\frac{\sin(\xi_\ell)}{\lambda_\ell}+\left\{\frac{\cos(\xi_\ell)}{\nu\lambda_\ell^2}+ \left(\theta(1-\theta) \cos(\xi_\ell)- \frac{ \cos(\xi_\ell)}{ \nu^2 \lambda_\ell^2}+\frac{\sin(\xi_\ell)}{\nu \lambda_\ell}\right)\frac{\nu}{1+\theta^2 \nu^2 \lambda_\ell^2}\right\}\right).
+%\]
+%Let us fix $\theta\in(0,1]$ arbitrary and consider this last expression. Then it is clear that (i) the first sum in the $[\ldots]$ bracket is 0; (ii) ${\sin(\xi_\ell)}/{\lambda_\ell}>0$ for each $\ell$ appearing in the second sum; and (iii) the expression in $\{\ldots\}$  for each $\ell$ can be made arbitrarily small in modulus by choosing $\nu>0$ suitably large. This means that for any $\theta\in(0,1]$, $M_{1,m}<0$ for \emph{large} enough $\nu>0$.
+%%----------------------------------
+
+As previously, we conjecture that $M_{1,m}<0$ for \emph{all} values of $\nu>0$ and $\theta\in(0,1]$.
+We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
+The expression $M_{1,m}$ is a rational function in $\nu$ and $\theta$, whose
+denominator is positive. By introducing a new variable $y:=\pi\theta\nu\ge 0$
+and dividing by $\nu>0$, we can write the numerator as a univariate polynomial 
+$p_m(y)$.  For example,
+$$p_8(y) = -3 \left(8+3 \sqrt{2}\right) y^4+64 y^3-32 \left(7+5 \sqrt{2}\right) y^2+256 y-256 \left(2+\sqrt{2}\right).$$
+We have confirmed with symbolic calculations that $p_m(y)<0$
+for all $y\ge 0$ in the cases $m\in\{4,6,8,10\}$. 
+\begin{remark} 
+When generating the matrix $M$ for the symbolic calculations for larger values of $m$ for the actual full discretization, it is of course computationally more efficient to use the formula $\cF R(\nu \Lambda) \cF^*$ in \eqref{Mdualdef} instead of $R(\nu L)$ (because in the latter form one would need to evaluate the inverse of a non-sparse matrix).
+\end{remark} 
+
+\item [{Case 2:} $m$ is {odd}.]
+This time we find a behavior similar to that observed in Section~\ref{sectioncentered}; see
+Figure~\ref{fig_spectral}. \\
+Moreover, since this time $\lambda_\ell\ne 0$ for $2\le\ell\le m$, the same asymptotic results hold as in the case of the
+$2^\text{nd}$-order finite difference scheme in Section~\ref{sectioncentered}. Indeed, 
+for odd $m = 2k+1 \ge 5$ we have that
+\begin{align}\label{M1,j_m=odd_spectral}
+	\begin{split}
+		M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\lambda^2_\ell}
+			{1+\theta^2\nu^2\lambda^2_\ell}\right) \\
+		M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\lambda^2_\ell)
+			\cos((j-1)\xi_\ell) + \nu \lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda^2_\ell}
+			\right) \quad (j\ge 2).
+	\end{split}
+\end{align}
+
+Taking $\nu \to +\infty$ and $\te \in (0,1]$ fixed in \eqref{M1,j_m=odd_spectral}, yields
+\begin{align*}
+    M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & =  1-\frac{m-1}{m\theta} \\
+    M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m\theta} \quad (j \ge 2).
+\end{align*}
+As a result, %by following similar arguments as in Section~\ref{sectioncentered}, 
+we conclude that
+\begin{align*}
+	M_{1,j}^\infty > 0 \text{ for all } 2\le j\le m \text{ and } \te \in (0,1],
+\end{align*}
+while
+\begin{align*}
+	M_{1,1}^\infty > 0 \quad\Longleftrightarrow \quad \theta > \frac{m-1}{m}.
+\end{align*}
+\end{description}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.48\textwidth]{fig_spectral.pdf}
+\caption{Non-negativity of the matrix family generated by the Fourier spectral collocation method in space and the $\theta$-method in time; see Section~\ref{spectrcoll}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{5, 7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger).}\label{fig_spectral}
+\end{center}
+\end{figure}
 
 
 
@@ -1502,501 +1995,6 @@ M\left(3,\frac{1}{2},4\right)=\left(
 \end{equation}
 \end{remark}
 
-
-\section{Other spatial discretizations}\label{otherdisc}
-
-The spatial semi-discretization considered in Sections~\ref{sectioncentered}--\ref{section3} is not positivity preserving. The same will hold true for each spatial semi-discretization to be investigated in Sections~\ref{highercentered}--\ref{spectrcoll} below: it is well-known \cite[Chapter I,
-Theorem 7.2]{hundsdorferverwer} that a linear constant-coefficient system of ordinary differential equations 
-\eqref{semi-discrete} is positivity preserving if and only if the
-matrix $\frac{a}{\dx}L$ has no negative off-diagonal entries. The violation of this last condition is clear for the matrix 
-$L$ in \eqref{Ldef}, for all matrices $L$ in Section~\ref{highercentered}, and also for the ones in Section~\ref{spectrcoll} (due to $L_{1,2}=-L_{2,1}\ne 0$).
-
-However, as we will see, it is again possible to obtain a positivity-preserving full discretization scheme when the spatial
-discretizations covered in this section (higher-order centered
-spatial discretizations and Fourier spectral collocation methods) are suitably combined  with the $\theta$-method.
-\begin{remark}
-For $\theta=0$ (that is, when the explicit Euler time discretization is applied), the matrix $M$ in
-\eqref{Mdualdef} becomes $M = I + \nu L$, hence $M \ge 0$ cannot hold for any $\nu > 0$ due to the
-negative off-diagonal entries of $L$.
-%It is well known and easily shown that, as with the discretizations considered above,
-%this method is not positivity preserving (and not A-stable) when $\theta=0$.
-Therefore, in what follows, we can assume $\theta \in (0,1]$.
-\end{remark}
-
-%, similar results described in Section~\ref{sectioncentered} hold true for .
-
-\subsection{Higher-order centered discretizations in space, \texorpdfstring{$\theta$}{}-method in time}\label{highercentered}
-The coefficients of the centered differences can be found, e.g., in \cite{bengt}, from which the
-corresponding circulant matrices $L$ describing the spatial discretization can be constructed.
-Here, we examine the first few cases.
-\begin{itemize}
-\item When the stencil width is 3 (implying  $m\ge 3$ and $2^\text{nd}$-order accuracy), the entries on
-the central diagonals are $(-1/2, 0, 1/2)$. This is matrix $L$ in \eqref{Ldef} that has been considered in
-Sections~\ref{sectioncentered}--\ref{section3}.
-\item When the stencil width is 5 (implying  $m\ge 5$ and $4^\text{th}$-order accuracy), the entries on
-the central diagonals are $(1/12, -2/3, 0, 2/3, -1/12)$.
-\item When the stencil width is 7 (implying $m\ge 7$ and $6^\text{th}$-order accuracy), the entries on the
-central diagonals are $(-1/60, 3/20, -3/4, 0, 3/4, -3/20, 1/60)$.
-\end{itemize}
-In all above central diagonals, the middle $0$ corresponds to the main diagonal.
-We can obtain an eigendecomposition \eqref{eigen} for the matrix $L$, with eigenvectors given by
-\eqref{eigenvectrors} and eigenvalues $\lambda_\ell = \imath \psi(\xi_\ell)$, where
-\begin{align}\label{psi}
-	\psi(x) := 2 \sum_{k=1}^{(N-1)/2} C_k \sin(k x) \quad (x\in\rr).
-\end{align}
-As before, $\xi_\ell$ is defined in \eqref{xildef}, and $C$ is a vector consisting of the last $(N-1)/2$
-coefficients of the central diagonals of $L$, with $N$ denoting the stencil width.
-For instance, the vector $C$ is equal to $(1/2)$, $(2/3,-1/12)$, and $(3/4,-3/20,1/60)$ for stencil widths
-$3$, $5$, and $7$, respectively.
-%An important property of function \eqref{psi} is that, by construction, each consecutive term in the sum is %smaller
-%non-increasing in absolute value, namely $|C_k \sin(k\xi_\ell)| \ge |C_{k+1} \sin((k+1)\xi_\ell)|$, for $1 \le k \le (N-3)/2$.
-%This property will be useful in the proof of Proposition~\ref{m_even_nonpositivityFE}.
-
-After the matrix $L$ has been chosen, we couple this spatial discretization with the $\theta$-method as time
-discretization, and the full discretization matrix $M$ is obtained (see \eqref{Mdualdef} and \eqref{R}).
-%We can extend the results of Section~\ref{sectioncentered} for an arbitrary centered spatial discretization.
-As seen in Section~\ref{sectioncentered}, the matrix $M$ is a real, circulant matrix so it can be characterized by the entries of its first row,
-which take the form
-\begin{align}\label{M1j_FD}
-	  M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)\right)
-  \cos((j-1)\xi_\ell) + \nu \psi(\xi_\ell)\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2 \psi^2(\xi_\ell)} \quad (1\le j \le m).
-\end{align}
-Our computations suggest that the non-negativity properties of the matrix family $M(m,\theta,\nu)$ again
-depend on the parity of $m$.
-
-\begin{description}[style=unboxed,leftmargin=0cm]
-\item [{Case 1:} $m$ is {even}.]
-\item \noindent By using symbolic calculations,  we have found that, for the $4^\text{th}$-order scheme, 
-$M(m,\theta,\nu)\ge 0$ cannot hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{6,8,10\}$.
-Similarly, for the $6^\text{th}$-order scheme, we checked (again symbolically) that $M(m,\theta,\nu)\ge 0$
-does not hold for any $\theta\in(0,1]$ and $\nu>0$ when $m\in\{8,10\}$.
-Therefore, positivity preservation is impossible in these cases.
-
-%We can extend the above result to any arbitrary finite difference centered discretization in space, coupled with
-%the $\theta$-method as time discretization.
-The following proposition extends the above observations for the $4^\text{th}$-order scheme when $m$ is a
-general even number---although only for sufficiently large values of $\nu$.
-%that if the CFL number $\nu$ is
-%sufficiently large then $M(m,\theta,\nu) \ge 0$ cannot not hold for any $\theta \in (0,1]$ and any arbitrary
-%even number $m \ge 6$.
-\begin{proposition}\label{m_even_nonpositivityFE}
-	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
-	boundary condition.
-	Let the matrix $M_{m \times m}$ result from the $4^\text{th}$-order centered discretization in space with
-	$m$ spatial grid points and the $\theta$-method in time.
-	Also, let $\nu$ be the CFL number defined in \eqref{nudef}.
-	If $m \ge 6$ is \emph{even}, then there exists $\nu_0  > 0$ such that the matrix $M$ has at least one
-	negative entry for any $\nu > \nu_0$.
-\end{proposition}
-\begin{proof}
-	We show that $M_{1,m} < 0$ for any $\theta \in (0,1]$ and $\nu > \nu_0$,
-	where $\nu_0 > 0$ is a constant depending on $m$ and $\theta$.
-	
-	Let $j = m$ in \eqref{M1j_FD}, then by using \eqref{angle-identities} and
-	$\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we have
-	\begin{align}\label{M1m}
-		M_{1,m} &= \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)
-					\right)\cos(\xi_\ell)-\nu\psi(\xi_\ell)\sin(\xi_\ell)}{1+\theta^2\nu^2\psi^2(\xi_\ell)} \nonumber \\
-					&= \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\psi^2(\xi_\ell)\right)
-					\cos(\xi_\ell) - \nu\psi(\xi_\ell)\sin(\xi_\ell)}{1+\theta^2\nu^2\psi^2(\xi_\ell)}\right) -
-					\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \nonumber \\
-					&= -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\psi(\xi_\ell)\sin(\xi_\ell)+\theta\nu\psi^2(\xi_\ell)
-					\cos(\xi_\ell) }{1+\theta^2\nu^2\psi^2(\xi_\ell)} \nonumber \\
-					&= -\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\psi(\xi_\ell)(\sin(\xi_\ell)+\theta\nu\psi(\xi_\ell)
-					\cos(\xi_\ell))}{1+\theta^2\nu^2\psi^2(\xi_\ell)},
-	\end{align}
-	where in the last equality we used $\psi(\xi_1) = \psi(0) = 0$,  $\psi(\xi_{m/2+1}) =  0$, and the symmetry
-	of angles $\xi_\ell$ ($1 \le \ell \le m$) about the $x$-axis when $m$ is even (explicitly, the identities
-	$\sin\left(k\frac{2\pi(\ell-1)}{m}\right)=-\sin\left(k\frac{2\pi(m-\ell+1)}{m}\right)$ and
-	$\cos\left(k\frac{2\pi(\ell-1)}{m}\right)=\cos\left(k\frac{2\pi(m-\ell+1)}{m}\right)$ for positive integers
-	$k$, $\ell$ and $m$).
-	Define the function 
-	\begin{align*}
-		f(x; \theta, \nu) \coloneqq \frac{\psi(x)(\sin(x)+\theta\nu\psi(x)\cos(x))}{1+\theta^2\nu^2\psi^2(x)}.
-	\end{align*}
-	Then, we can express \eqref{M1m} by summing only over indices $\ell$ for which $0 < \xi_\ell  < \pi/2$ (and separating the case $\xi_\ell  = \pi/2$ when $m$ is divisible by 4),
-	yielding
-	\begin{align}\label{M1mnew}
-		M_{1,m} = \begin{cases}
-							\dfrac{-2\nu\psi(\pi/2)}{m\left(1+\theta^2\nu^2\psi^2(\pi/2)\right)} -
-								\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}}
-								\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) \Big),
-								& \text{if } m \equiv 0 \Mod{4}, \\[20pt]
-							-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-								\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big),
-								& \text{if } m \equiv 2 \Mod{4}.
-						\end{cases}
-	\end{align}
-	%By suitably rearranging the terms in the sum $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$ we obtain
-	We will also use the identity
-	\begin{align*}
-		&f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) = \\
-			&\frac{\Bigl(\psi(\xi_\ell) + \psi(\pi-\xi_\ell)\Bigr)
-			\Bigl(\sin(\xi_\ell) + \theta\nu\psi(\xi_\ell)\cos(\xi_\ell) +
-			\theta\nu\psi(\pi-\xi_\ell)\bigl(\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
-				{\bigl(1+\theta^2\nu^2\psi^2(\xi_\ell)\bigr)\bigl(1+\theta^2\nu^2\psi^2(\pi-\xi_\ell)\bigr)}.
-	\end{align*}
-	First, observe that $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$ in
-	\eqref{M1mnew}. Now for the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$,
-	
-	\begin{align*}
-		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad \text{and} \quad
-		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
-	\end{align*}
-	so they are all positive as well. Let us fix $\theta \in (0,1]$ arbitrarily, and notice that for each $\ell$ we can find $\nu_\ell > 0$ such that
-	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)>0$ for $\nu>\nu_\ell$. Let $\nu_0:=\max \nu_\ell$, then  
-	$f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)>0$ for $\nu>\nu_0$. Therefore, $M_{1,m} < 0$ for any $\theta \in (0,1]$ and $\nu>\nu_0$.
-%	First, observe that $\sin(\xi_\ell)$ and $\cos(\xi_\ell)$ are positive for each index $2 \le \ell \le (m+2)/4$ in
-	%\eqref{M1mnew}.
-	%Let us now fix $\theta \in (0,1]$ arbitrarily.
-	%Notice that for each $\ell$ we can find $\nu = \nu_\ell > 0$ such that
-	%$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ remains non-negative.
-	%Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mnew}.
-	%Therefore, if $\psi(x)$ is non-negative for $0< x <\pi$ and $\nu > \nu_0$, then $M_{1,m} < 0$ for any
-	%$\theta \in (0,1]$.
-
-	%For the $4^\text{th}$-order centered spatial discretization, easy calculations show that $\psi(\pi/2) = 4/3$
-	%and
-	%\begin{align*}
-%		\psi(\xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 - \cos(\xi_\ell)), \quad
-%		\psi(\pi - \xi_\ell) = \frac{1}{3}\sin(\xi_\ell)(4 + \cos(\xi_\ell)),
-%	\end{align*}
-%	are positive for each index $\ell$ that appears in \eqref{M1mnew}.
-%	Also, for a fixed $\theta \in (0,1]$ and for each $2 \le \ell \le (m+2)/4$ the expression
-%	$\theta\nu\psi(\xi_\ell)\sin(\xi_\ell)-\cos(\xi_\ell)$ is non-negative if $\nu \ge \nu_0$, where $\nu_0$
-%	depends on $m$.
-%	For instance, it can be shown that
-%	$\theta\nu_0 \in \left\{4/7, 6/31(1 + 4 \sqrt{2}), 6/55(9 + 5 \sqrt{5})\right\}$ for $m \in \{6,8,10\}$,
-%	respectively.
-%	As a result, $M_{1,m} < 0$ for $\nu > \nu_0$ and any $\theta \in (0,1]$.
-\end{proof}
-\begin{remark}%\label{6th_order_scheme}
-It is easily seen that the previous proof boils down to the fact that for the $4^\text{th}$-order centered spatial discretization we have $\psi(x)>0$ for $x\in(0,\pi)$, where
-\[
-\psi(x)=2 \left(\frac{2}{3}\sin (x)-\frac{1}{12} \sin (2 x)\right)=\frac{1}{3} \sin (x) \bigl(4-\cos (x)\bigr).
-\]
-We know from \eqref{psi} that for the $6^\text{th}$-order scheme
-\[
-\psi(x) = 2 \left(\frac{3}{4}\sin (x)-\frac{3}{20} \sin (2 x)+\frac{1}{60} \sin (3 x)\right) =
-	\frac{1}{15} \sin (x) \bigl(23-9\cos (x)+\cos (2x)\bigr),
-\]
-so we again have $\psi(x)>0$ for $x\in(0,\pi)$. Therefore, the analogue of Proposition \ref{m_even_nonpositivityFE} is true for the $6^\text{th}$-order scheme as well (c.f.~the proof of Proposition \ref{m_even_nonpositivitySpectral}).
-\end{remark}
-\begin{remark}
-	Based on the observations above Proposition~\ref{m_even_nonpositivityFE}, we conjecture the following:
-	given an arbitrary finite difference centered discretization in space coupled with the $\theta$-method, then
-	$M_{1,m} < 0$ for even $m$, and for \emph{all} values $\nu > 0$ and $\theta \in (0,1]$---that is, $\nu_0=0$ can be chosen in general.
-\end{remark}
-\item [{Case 2:} $m$ is {odd}.] In this case we have found that positivity preservation is possible for a suitable
-set of $\theta\in(0,1]$ and $\nu>0$ values; see  Figures~\ref{fig_5stencilm579} and \ref{fig_7stencilm79}.
-
-Also, if we assume $\psi(\xi_\ell) \ne 0$ for each $2\le\ell\le m$, then we can extend the asymptotic results of
-Section~\ref{sectioncentered} for an arbitrary high-order centered discretization (c.f.~the ``odd $m$'' case in Section \ref{spectrcoll}).
-\end{description}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.48\textwidth]{fig_5stencilm579.pdf}
-\caption{Non-negativity of the matrix family generated by the $4^\text{th}$-order centered discretization in space and the $\theta$-method in time; see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{5, 7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=5$, $m=7$, and $m=9$, the ``lower left corner'' point of the region has $\theta\approx 0.726106$, $\theta\approx 0.809401$, and $\theta\approx 0.853562$, respectively.}\label{fig_5stencilm579}
-\end{center}
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.48\textwidth]{fig_7stencilm79.pdf}
-\caption{Non-negativity of the matrix family generated by the $6^\text{th}$-order centered discretization in space and the $\theta$-method in time; see Section \ref{highercentered}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger). For $m=7$ and $m=9$, the ``lower left corner'' point of the region has $\theta\approx 0.807042$ and $\theta\approx 0.851437$, respectively.}\label{fig_7stencilm79}
-\end{center}
-\end{figure}
-
-\subsection{Fourier spectral collocation in space, \texorpdfstring{$\theta$}{}-method in time}\label{spectrcoll}
-Here, we consider the spectral method that results from extending the
-finite difference stencil to include the whole spatial grid.  In this section, we assume $m\ge 4$. The resulting spatial 
-semi-discretization can again be written in the form \eqref{semi-discrete}
-where the matrix $L$ takes the form \cite{trefethen,peyret}
-\begin{align*}
-	L_{i,j} = \begin{cases}
-						0 & \text{if } i = j, \\[10pt]
-						\dfrac{\pi}{m}(-1)^{i+j}\cot{\!\left(\frac{(i-j)\pi}{m}\right)} & \text{if } i \neq j,
-					\end{cases}
-\end{align*}
-for even $m$, and
-\begin{align*}
-	L_{i,j} = \begin{cases}
-						0 & \text{if } i = j, \\[10pt]
-						\dfrac{\pi}{m}(-1)^{i+j}\csc{\!\left(\frac{(i-j)\pi}{m}\right)} & \text{if } i \neq j,
-					\end{cases}
-\end{align*}
-for odd $m$.
-As in Section~\ref{sectiondiscFourier}, the spectral collocation matrices have an eigendecomposition given by
-\eqref{eigen}, with eigenvectors \eqref{eigenvectrors}, but now the entries of the diagonal matrix $\Lambda$ are
-\begin{align}\label{lambdaSCdef}
-    \imath\lambda_\ell & =
-    \begin{cases}
-        \imath\xi_\ell & 1 \le \ell < \frac{m}{2}+1, \\
-        0 & \ell = \frac{m}{2}+1 \text{ and } m \text{ is even}, \\ %\nonumber
-        \imath(\xi_\ell - 2\pi) & \frac{m}{2}+1 < \ell \le m,
-    \end{cases}
-\end{align}
-where $\xi_\ell$ has been defined in \eqref{xildef}.
-
-When this matrix $L$ is coupled with the $\theta$-method as time discretization, the full discretization
-matrix $M$ in \eqref{Mdualdef} is obtained.
-The entries of the first row of the circulant matrix $M$ are again given by \eqref{M-entries}, and now
-they take the form
-\begin{align}\label{eq51}
-	M_{1,j}  = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-  \cos((j-1)\xi_\ell) + \nu\lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2} \quad (1\le j \le m).
-\end{align}
-Similarly to the Sections~\ref{sectiondiscFourier} and \ref{highercentered}, we distinguish between even and
-odd sizes of the discretization matrices $M$.
-%Taking $\theta=1$ (backward Euler)
-%and recognizing that the imaginary part vanishes, this leads to
-%\begin{align}
-%    M_{1,j} & = \frac{1}{m} \sum_{l=1}^{m} \frac{\cos((j-1)\xi_\ell) + \nu \lambda_\ell \sin((j-1)\xi_\ell)}{1+\nu^2 \lambda_{\ell}^2} \\
-%           & = \frac{1}{m}\left(1 + 2 \sum_{\ell=2}^{(m+1)/2} \frac{\cos(j\xi_\ell) + \nu\lambda_\ell \sin(j\xi_\ell)}{1+\nu^2\lambda_\ell^2}\right).
-%\end{align}
-\begin{description}[style=unboxed,leftmargin=0cm]
-\item [{Case 1:} $m$ is {even}.]
-From \eqref{eq51} we have (also using \eqref{angle-identities}) that
-\begin{align}\label{M1mSpectral}
-	M_{1,m} = \frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-	\cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
-\end{align}
-The following proposition proves that \eqref{M1mSpectral} is negative for sufficiently large CFL number $\nu$.
-\begin{proposition}\label{m_even_nonpositivitySpectral}
-	Consider the iterative formula \eqref{M} applied to the advection equation \eqref{advection} with periodic
-	boundary condition.
-	Let the matrix $M_{m \times m}$ result from a given even spactral collocation method in space (with $m$
-	spatial grid points) and the $\theta$-method in time, $\theta \in (0,1]$.
-	Let also $\nu$ be the CFL number defined in \eqref{nudef} and $\xi_\ell$ given by \eqref{xildef}.
-	If $m \ge 4$ is \emph{even}, then the matrix $M$ has at least one negative entry for any
-	$\nu \ge \cot(\xi_2)/(\theta \xi_2)$.
-%	If $m \ge 4$ is \emph{even}, then there exists $\nu_0  >0$ such that the matrix $M$ has at least one
-%	negative entry for any $\nu > \nu_0$.
-\end{proposition}
-\begin{proof}
-%	It is sufficient to show that the entry $M_{1,m}$ is negative for all $\theta \in [0,1]$ and $\nu \ge \nu_0$,
-%	where $\nu_0 \in \rr^+$ can be chosen accordingly.
-%	Observe that by using $\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
-%	\begin{align}\label{M1mSpectral_a}
-%	\begin{split}
-%	M_{1,m} &= \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-%	\cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right) -
-%	\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \\
-%	&= -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\lambda_\ell\sin(\xi_\ell) + \theta\nu\lambda_\ell^2 \cos(\xi_\ell)}
-%	{1+\theta^2\nu^2\lambda_\ell^2}.
-%	\end{split}
-%	\end{align}
-	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}: we show that
-	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu \ge \frac{\cot(\xi_2)}{\theta \xi_2}$.
-%	The proof is similar to that of Proposition~\ref{m_even_nonpositivityFE}: we show that
-%	$M_{1,m}<0$ for all $\theta \in (0,1]$ and $\nu > \nu_0$, where $\nu_0 >0$ depends on $m$ and $\theta$.
-	
-	First, observe that by using $\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) = 0$ we can rewrite \eqref{M1mSpectral} as
-	%\begin{align}\label{M1mSpectral_a}
-	\[
-	M_{1,m} = -\frac{\nu}{m} \sum_{\ell=1}^{m} \frac{\lambda_\ell\sin(\xi_\ell) +
-		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
-	\]
-	%\end{align}
-	Now, since $\lambda_1 = \lambda_{m/2+1} = 0$, we have
-	\[
-	M_{1,m} = -\frac{\nu}{m} \sum_{\ell=2}^{m/2} \left(\frac{\lambda_\ell\sin(\xi_\ell) +
-		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{\nu}{m} \sum_{\ell=m/2+2}^{m} \left(\frac{\lambda_\ell\sin(\xi_\ell) +
-		\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right).
-	\]
-	One easily checks from \eqref{lambdaSCdef} and \eqref{xildef} that for any $\frac{m}{2}+2\le\ell\le m$ 
-	\[
-	\lambda _\ell=\xi _\ell-2 \pi =-\xi _{m+2-\ell}=-\lambda _{m+2-\ell}.
-	\]
-	This implies that 
-	%and by using the symmetry of angles
-	%$\xi_\ell$ ($1 \le \ell \le m$) about the $x$-axis when $m$ is even we have that
-	\begin{align*}
-		\sum_{\ell=2}^{m/2} \frac{\lambda_\ell\sin(\xi_\ell) + \theta\nu\lambda_\ell^2 \cos(\xi_\ell)}
-			{1+\theta^2\nu^2\lambda_\ell^2}
-		= \sum_{\ell=m/2+2}^{m} \frac{\lambda_\ell\sin(\xi_\ell) + \theta\nu\lambda_\ell^2 \cos(\xi_\ell)}
-			{1+\theta^2\nu^2\lambda_\ell^2},
-	\end{align*}
-	so %\eqref{M1mSpectral_a} can be written as
-	%\begin{align}\label{M1mSpectral_b}
-	\[
-		M_{1,m}  = -\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\lambda_\ell\sin(\xi_\ell) +
-			\theta\nu\lambda_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}.
-	\]
-	%\end{align}
-	Now notice (due to $\lambda_\ell=\xi_\ell$ for $2\le\ell\le \frac{m}{2}$) that we also have 
-	\[
-	M_{1,m}  = -\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\xi_\ell\sin(\xi_\ell) +
-			\theta\nu\xi_\ell^2 \cos(\xi_\ell)}{1+\theta^2\nu^2\xi_\ell^2},
-	\]
-	thus
-	\[
-	M_{1,m}  =-\frac{2\nu}{m} \sum_{\ell=2}^{m/2} \frac{\psi(\xi_\ell)(\sin(\xi_\ell)+\theta\nu\psi(\xi_\ell)
-					\cos(\xi_\ell))}{1+\theta^2\nu^2\psi^2(\xi_\ell)}
-	\]
-	with $\psi(x):=x$.
-	Following the proof of Proposition~\ref{m_even_nonpositivityFE}, we can express $M_{1,m}$ in the form of
-	\eqref{M1mnew},
-	where
-	\ifarxiv
-		\begin{align*}
-			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
-				\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
-				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
-					{\bigl(1+\theta^2\nu^2\xi^2_\ell\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
-		\end{align*}
-	\else
-		\begin{align*}
-			f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) &= \\
-				&\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
-				\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
-					{\bigl(1+\theta^2\nu^2\xi^2_\ell\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
-		\end{align*}
-	\fi
-	Since $\xi_\ell$, $\sin(\xi_\ell)$, $\cos(\xi_\ell)$ and $\pi-\xi_\ell$ are positive for each index $2 \le \ell \le (m+2)/4$,
-	it is enough to ensure $\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell) \ge 0$.
-	Because the function $x\mapsto\cot(x)/x$ is monotonically decreasing in the interval $(0,\frac{\pi}{2})$, 
-	$\nu \ge \frac{\cot(\xi_2)}{\theta \xi_2}$ implies $M_{1,m}<0$.
-	%Since $\psi(x)>0$ for $x\in(0,\pi)$, according to Remark \ref{6th_order_scheme}, the proof is complete.
-	%Define the function
-	%\begin{align*}
-	%	f(x; \theta, \nu) \coloneqq \frac{x\sin(x) + \theta\nu x^2\cos(x)}{1 + (\theta\nu x)^2}.
-	%\end{align*}
-	%Then, we can express \eqref{M1mSpectral_b} by summing only over indices $\ell$ for which
-	%$0 < \xi_\ell  \le \pi/2$, yielding
-	%\begin{align}\label{M1mSpectral_c}
-	%	M_{1,m} = \begin{cases}
-	%						-\dfrac{4\pi\nu}{m(4+\theta^2\nu^2\pi^2)} -
-	%							\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{m/4}}
-	%							\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) \Big),
-	%							& \text{if } m \equiv 0 \Mod{4}, \\[20pt]
-	%						-\dfrac{2\nu}{m} \displaystyle{\sum\limits_{\ell=2}^{(m+2)/4}}
-	%							\Big(f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)\Big),
-	%							& \text{if } m \equiv 2 \Mod{4}.
-	%					\end{cases}
-	%\end{align}
-	%(As usual, a sum $\sum\limits_{\ell=2}^{1}(\ldots)$, occurring for $m=4$, is understood to be 0.)
-	%By suitably rearranging $f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu)$, we obtain
-	%\ifarxiv
-	%	\begin{align}\label{functionf}
-	%		f(\xi_\ell; \theta, \nu) + f(\pi-\xi_\ell; \theta, \nu) =
-	%			\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
-	%			\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
-	%				{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
-	%	\end{align}
-	%\else
-	%	\begin{align}\label{functionf}
-	%		f(\xi_\ell; \theta, \nu) &+ f(\pi-\xi_\ell; \theta, \nu) = \\
-	%			&\frac{\pi\Bigl(\sin(\xi_\ell) + \theta\nu\xi_\ell\cos(\xi_\ell) +
-	%			\theta\nu\bigl(\pi-\xi_\ell\bigr)\bigl(\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)\bigr)\Bigr)}
-	%				{\bigl(1+\theta^2\nu^2\xi_\ell^2\bigr)\bigl(1+\theta^2\nu^2(\pi-\xi_\ell)^2\bigr)}.
-	%	\end{align}
-	%\fi
-	%Now let us fix $\theta \in (0,1]$ arbitrarily.
-	%Then, for each $\ell$ we can find $ \nu_\ell > 0$ such that 
-	%$\theta\nu\xi_\ell\sin(\xi_\ell)-\cos(\xi_\ell)>0$ for $\nu>\nu_\ell$.
-	%Let $\nu_0$ be the maximum value of all $\nu_\ell$ for each term in the sum of \eqref{M1mSpectral_c}.
-	%Since all remaining terms in \eqref{functionf} are positive, this means that $M_{1,m} < 0$ for any
-	%$\theta \in (0,1]$ and $\nu \ge \nu_0$.
-\end{proof}
-
-%----------------------------------
-%On the one hand, observe that we have
-%\begin{align*}
-% M_{1,m} & = \left(\frac{1}{m} \sum_{\ell=1}^{m} \frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-%  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)-\frac{1}{m}\sum_{\ell=1}^m \cos(\xi_\ell) \\
-%& = \frac{\nu}{m} \sum_{\ell=1}^{m} \frac{- \lambda_\ell\sin(\xi_\ell)-\theta\nu\lambda_\ell^2 \cos(\xi_\ell) }{1+\theta^2\nu^2\lambda_\ell^2},  %\label{newM1}
-%\end{align*}
-%which is negative for $\nu>0$ sufficiently \emph{small} and $\theta\in(0,1]$ arbitrary, since $\lambda_1=\lambda_{m/2+1}=0$, and $\lambda_\ell \sin(\xi_\ell)>0$ for the remaining indices $\ell$.
-%%----------------------------------
-%%The first term in this sum (proportional to $\sin(\xi_\ell)$ is negative, since $\lambda_1=\lambda_{m/2+1}=0$, and $\lambda_\ell \sin(\xi_\ell)>0$ for the remaining indices $\ell$.
-%%We now show that the remaining sum
-%%\begin{align}
-%%S := \frac{-\theta \nu^2}{m} \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \frac{\lambda^2_\ell \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}
-%%\end{align}
-%%is also negative.  Since, for $2\le \ell \le m/2$,
-%%\begin{align}
-% %   \cos(\xi_{\ell+m/2}) & = -\cos(x_\ell) & \lambda_{\ell+m/2} & = \xi_\ell - \pi,
-%%\end{align}
-%%we can write
-%%\begin{align}
-% %   S & = \frac{-\theta \nu^2}{m} \left(\sum_{\ell=2}^{m/2} \frac{\lambda^2_\ell \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2} + \sum_{\ell=m/2 + 2}^{m} \frac{\lambda^2_\ell \cos(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2} \right) \\
-%  %    & = \frac{-\theta \nu^2}{m} \sum_{\ell=2}^{m/2} \left( \frac{\lambda^2_\ell }{1+\theta^2\nu^2\lambda_\ell^2}-\frac{\lambda^2_{\ell+m/2}}{1+\theta^2\nu^2\lambda_{\ell+m/2}^2}\right) \cos(\xi_\ell) \\
-%     % & = \frac{-\pi\theta \nu^2}{m} \sum_{\ell=2}^{m/2} \frac{(2\xi_\ell-\pi)\cos(\xi_\ell)}{(1+\theta^2\nu^2\lambda_\ell^2)(1+\theta^2\nu^2(\xi_\ell-\pi)^2)}.
-%%\end{align}
-%%Since the factors $\cos(\xi_\ell)$ and $2\xi_\ell - \pi$ are both positive
-%%for $2 \le \ell < m/4+1$ and both negative for $m/4+1 < \ell \le m/2$,
-%%the last expression is term-by-term negative.
-%
-%%Thus $M_{1,m}<0$ for all $\nu>0$ and $\theta\in[0,1]$.}
-%%----------------------------------
-%
-%On the other hand, by suitably regrouping the terms, we also have the identity
-%\[
-%    M_{1,m}  = \frac{1}{m}(\cos(\xi_1)+\cos(\xi_{m/2+1})) + \frac{1}{m} \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(\frac{\left(1-\theta(1-\theta)\nu^2\lambda_\ell^2\right)
-%  \cos(\xi_\ell) - \nu\lambda_\ell\sin(\xi_\ell)}{1+\theta^2\nu^2\lambda_\ell^2}\right)
-%\]
-%\[ =  0+\left[
-% \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m  \frac{\theta-1}{m\theta}\cos(\xi_\ell)\right]+
-% \]
-%\[ \frac{1}{m\nu\theta^2}
-% \sum_{\substack{\ell=2\\ \ell\ne m/2+1}}^m \left(-\frac{\sin(\xi_\ell)}{\lambda_\ell}+\left\{\frac{\cos(\xi_\ell)}{\nu\lambda_\ell^2}+ \left(\theta(1-\theta) \cos(\xi_\ell)- \frac{ \cos(\xi_\ell)}{ \nu^2 \lambda_\ell^2}+\frac{\sin(\xi_\ell)}{\nu \lambda_\ell}\right)\frac{\nu}{1+\theta^2 \nu^2 \lambda_\ell^2}\right\}\right).
-%\]
-%Let us fix $\theta\in(0,1]$ arbitrary and consider this last expression. Then it is clear that (i) the first sum in the $[\ldots]$ bracket is 0; (ii) ${\sin(\xi_\ell)}/{\lambda_\ell}>0$ for each $\ell$ appearing in the second sum; and (iii) the expression in $\{\ldots\}$  for each $\ell$ can be made arbitrarily small in modulus by choosing $\nu>0$ suitably large. This means that for any $\theta\in(0,1]$, $M_{1,m}<0$ for \emph{large} enough $\nu>0$.
-%%----------------------------------
-
-As previously, we conjecture that $M_{1,m}<0$ for \emph{all} values of $\nu>0$ and $\theta\in(0,1]$.
-We have been able to verify this for $m\in\{4,6,8,10\}$, as follows.
-The expression $M_{1,m}$ is a rational function in $\nu$ and $\theta$, whose
-denominator is positive. By introducing a new variable $y:=\pi\theta\nu\ge 0$
-and dividing by $\nu>0$, we can write the numerator as a univariate polynomial 
-$p_m(y)$.  For example,
-$$p_8(y) = -3 \left(8+3 \sqrt{2}\right) y^4+64 y^3-32 \left(7+5 \sqrt{2}\right) y^2+256 y-256 \left(2+\sqrt{2}\right).$$
-We have confirmed with symbolic calculations that $p_m(y)<0$
-for all $y\ge 0$ in the cases $m\in\{4,6,8,10\}$. 
-\begin{remark} 
-When generating the matrix $M$ for the symbolic calculations for larger values of $m$ for the actual full discretization, it is of course computationally more efficient to use the formula $\cF R(\nu \Lambda) \cF^*$ in \eqref{Mdualdef} instead of $R(\nu L)$ (because in the latter form one would need to evaluate the inverse of a non-sparse matrix).
-\end{remark} 
-
-\item [{Case 2:} $m$ is {odd}.]
-This time we find a behavior similar to that observed in Section~\ref{sectioncentered}; see
-Figure~\ref{fig_spectral}. \\
-Moreover, since this time $\lambda_\ell\ne 0$ for $2\le\ell\le m$, the same asymptotic results hold as in the case of the
-$2^\text{nd}$-order finite difference scheme in Section~\ref{sectioncentered}. Indeed, 
-for odd $m = 2k+1 \ge 5$ we have that
-\begin{align}\label{M1,j_m=odd_spectral}
-	\begin{split}
-		M_{1,1} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{1-\theta(1-\theta)\nu^2\lambda^2_\ell}
-			{1+\theta^2\nu^2\lambda^2_\ell}\right) \\
-		M_{1,j} & = \frac{1}{m} \left(1 + \sum_{\ell=2}^{m} \frac{(1-\theta(1-\theta)\nu^2\lambda^2_\ell)
-			\cos((j-1)\xi_\ell) + \nu \lambda_\ell\sin((j-1)\xi_\ell)}{1+\theta^2\nu^2\lambda^2_\ell}
-			\right) \quad (j\ge 2).
-	\end{split}
-\end{align}
-
-Taking $\nu \to +\infty$ and $\te \in (0,1]$ fixed in \eqref{M1,j_m=odd_spectral}, yields
-\begin{align*}
-    M_{1,1}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,1} & =  1-\frac{m-1}{m\theta} \\
-    M_{1,j}^\infty \coloneqq \lim_{\nu \to +\infty} M_{1,j} & = \frac{1}{m\theta} \quad (j \ge 2).
-\end{align*}
-As a result, %by following similar arguments as in Section~\ref{sectioncentered}, 
-we conclude that
-\begin{align*}
-	M_{1,j}^\infty > 0 \text{ for all } 2\le j\le m \text{ and } \te \in (0,1],
-\end{align*}
-while
-\begin{align*}
-	M_{1,1}^\infty > 0 \quad\Longleftrightarrow \quad \theta > \frac{m-1}{m}.
-\end{align*}
-\end{description}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.48\textwidth]{fig_spectral.pdf}
-\caption{Non-negativity of the matrix family generated by the Fourier spectral collocation method in space and the $\theta$-method in time; see Section~\ref{spectrcoll}. The parameter regions in the $(\te,\nu)$ parameter plane ensuring $M(m,\te,\nu)\ge 0$ are highlighted for $m\in\{5, 7, 9\}$ (different values of $m$ are represented by different colors; the regions ``shrink'' as $m$ gets larger).}\label{fig_spectral}
-\end{center}
-\end{figure}
 
 
 \section{Conclusions}\label{conclusions}
