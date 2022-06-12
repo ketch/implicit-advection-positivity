@@ -1981,9 +1981,28 @@ $\lim_{k\to+\infty} \nur=+\infty$, so the inequality $\nur\le\nul$ can hold only
 Finally, for $\te=1$, $\nu_L(k,1)=+\infty$ and we can use Corollary \ref{cor5} (\textit{i}) with $\te=1$.
 \end{proof}
 
-\begin{remark}
-The ``lower left corner point'' of each shaded region in Figure~\ref{fig_variousk} corresponds to a pair 
-$(\te,\nu)$  for which $\nu=\nur=\nul$. This means that here the leftmost and the rightmost entries of the first row of $M(2k+1,\te,\nu)$ simultaneously vanish (and the other entries are non-negative). For $k=1$, this happens for $\te=\te_1=1/2$ and $\nu=4$; the corresponding matrix is
+\subsection{Relation to Godunov's Theorem}
+Godunov's Theorem \cite{godunov1959difference} asserts that no second-order accurate linear discretization
+of the advection equation can be monotonicity preserving (nor positivity preserving).
+A precise statement of the Theorem must explicitly exclude
+certain exceptional cases in which the CFL number is an integer; the best-known example
+of such an exception is the combination of first-order upwind differencing in space with Euler's method
+in time, which yields the exact solution when $\nu=1$.  
+%Certain other schemes, such as the Lax-Wendroff method, are also exact when $\nu=1$.
+
+In the present context, Godunov's theorem implies that $M(k,\theta=1/2,\nu)$ must have a negative entry,
+except possibly when $\nu$ is an integer.  From the results above, we see that
+there is exactly one exceptional case, corresponding to the ``lower left corner
+point'' of the largest shaded region in Figure~\ref{fig_variousk}.
+This point corresponds to $\te=\te_1=1/2$ and $\nu=4$.  In this case the corresponding
+scheme reduces to the formula
+$$
+    U^{n+1}_j - U^{n+1}_{j+1} + U^{n+1}_{j-1} = U^{n}_j + U^{n}_{j+1} - U^{n}_{j-1}.
+$$
+In the special case when $k=1$ ($m=3$), this yields
+%\begin{remark}
+%The ``lower left corner point'' of each shaded region in Figure~\ref{fig_variousk} corresponds to a pair 
+%$(\te,\nu)$  for which $\nu=\nur=\nul$. This means that here the leftmost and the rightmost entries of the first row of $M(2k+1,\te,\nu)$ simultaneously vanish (and the other entries are non-negative). For $k=1$, this happens for $\te=\te_1=1/2$ and $\nu=4$; the corresponding matrix is
 \begin{equation}\label{rem10thetahalfmatrix}
 M\left(3,\frac{1}{2},4\right)=\left(
 \begin{array}{ccc}
@@ -1991,59 +2010,63 @@ M\left(3,\frac{1}{2},4\right)=\left(
  0 & 0 & 1 \\
  1 & 0 & 0 \\
 \end{array}
-\right).
+\right),
 \end{equation}
-\end{remark}
+%\end{remark}
+which is simply the left shift operator, corresponding to the exact solution operator
+in the case of CFL number $\nu=4$ on a periodic grid with 3 points.
+This ``exception" to Godunov's Theorem is unusual in that it holds only for
+a particular spatial grid.
 
 
 
-\section{Conclusions}\label{conclusions}
-
-In this work, we have studied the positivity preservation of certain fundamental
-discretizations of the advection equation with periodic boundary condition \eqref{advection}. 
-%The full discretization has been obtained by combining a finite difference spatial semi-discretization with the $\theta$-method as time discretization. 
-Our detailed investigations in Sections~\ref{sectiondiscFourier}--\ref{section3}
-were devoted to the  full discretization obtained by coupling the second-order centered
-differences in space with the $\theta$-method in time.  
- Rather than using SSP theory \cite{SSPbook}, 
-we have employed a direct
-%algebraic 
-approach, first based on discrete Fourier analysis and then
-on a polynomial representation of the entries of the full discretization matrix.
-The characterization of the %full discretization
-matrix entries, %for this case, 
-along with the related trigonometric identities
-presented in Corollary \ref{corollary1}, may be of independent interest.
-In Section \ref{otherdisc}, we considered higher-order centered
-differences or Fourier spectral collocation in space, and again the $\theta$-method in time. 
-
-For all full discretizations constructed this way, we have found similar behavior.
-If the number of spatial grid points $m$ is even, no method is positivity
-preserving, while if $m$ is odd, some methods may be positivity
-preserving.  Positivity is generally enhanced by taking larger values
-of the CFL number $\nu>0$, larger values of the time-discretization parameter $\theta\in [0,1]$, or smaller
-values of the spatial grid points $m\in\mathbb{N}^+$.  These tendencies, and more specific results, are described
-in Theorem~\ref{thm2}, and can be seen
-in Figures~\ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
-and \ref{fig_spectral}.
-Our positive results about the full discretizations are perhaps unexpected, since neither of the underlying spatial semi-discretizations preserves positivity.
-%the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section~\ref{highercentered}, and also for the ones in Section~\ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
-
-Although some of the spatial discretizations considered above have high order, the $\theta$-method as time discretization typically has order only 1 (order 2 occurs only for $\theta=1/2$). Therefore, we emphasize that our goal in this work is not to provide efficient discretizations but rather
-to understand the behavior of these simple building blocks, as a means
-of gaining insight and understanding the positivity of more complicated
-discretizations that may not be amenable to a thorough analysis.
-
-
-There are several possible future directions for research building on this
-work.  Other finite difference spatial discretizations could be studied
-using similar techniques, and higher-order one-step time discretizations could
-easily be incorporated via \eqref{Mdualdef}.  Similarly, finite difference
-discretizations of other linear partial differential equations could be analyzed with the same techniques.
-Further areas for extension might 
-%incorporate LL: due to word repetition
-include other boundary conditions or
-multidimensional problems.
+%\section{Conclusions}\label{conclusions}
+%
+%In this work, we have studied the positivity preservation of certain fundamental
+%discretizations of the advection equation with periodic boundary condition \eqref{advection}. 
+%%The full discretization has been obtained by combining a finite difference spatial semi-discretization with the $\theta$-method as time discretization. 
+%Our detailed investigations in Sections~\ref{sectiondiscFourier}--\ref{section3}
+%were devoted to the  full discretization obtained by coupling the second-order centered
+%differences in space with the $\theta$-method in time.  
+% Rather than using SSP theory \cite{SSPbook}, 
+%we have employed a direct
+%%algebraic 
+%approach, first based on discrete Fourier analysis and then
+%on a polynomial representation of the entries of the full discretization matrix.
+%The characterization of the %full discretization
+%matrix entries, %for this case, 
+%along with the related trigonometric identities
+%presented in Corollary \ref{corollary1}, may be of independent interest.
+%In Section \ref{otherdisc}, we considered higher-order centered
+%differences or Fourier spectral collocation in space, and again the $\theta$-method in time. 
+%
+%For all full discretizations constructed this way, we have found similar behavior.
+%If the number of spatial grid points $m$ is even, no method is positivity
+%preserving, while if $m$ is odd, some methods may be positivity
+%preserving.  Positivity is generally enhanced by taking larger values
+%of the CFL number $\nu>0$, larger values of the time-discretization parameter $\theta\in [0,1]$, or smaller
+%values of the spatial grid points $m\in\mathbb{N}^+$.  These tendencies, and more specific results, are described
+%in Theorem~\ref{thm2}, and can be seen
+%in Figures~\ref{fig_variousk}, \ref{fig_5stencilm579}, \ref{fig_7stencilm79},
+%and \ref{fig_spectral}.
+%Our positive results about the full discretizations are perhaps unexpected, since neither of the underlying spatial semi-discretizations preserves positivity.
+%%the corresponding matrix $L$ always has at least one negative off-diagonal entry (which is clear for all matrices $L$ in Section~\ref{highercentered}, and also for the ones in Section~\ref{spectrcoll} due to $L_{1,2}=-L_{2,1}\ne 0$).
+%
+%Although some of the spatial discretizations considered above have high order, the $\theta$-method as time discretization typically has order only 1 (order 2 occurs only for $\theta=1/2$). Therefore, we emphasize that our goal in this work is not to provide efficient discretizations but rather
+%to understand the behavior of these simple building blocks, as a means
+%of gaining insight and understanding the positivity of more complicated
+%discretizations that may not be amenable to a thorough analysis.
+%
+%
+%There are several possible future directions for research building on this
+%work.  Other finite difference spatial discretizations could be studied
+%using similar techniques, and higher-order one-step time discretizations could
+%easily be incorporated via \eqref{Mdualdef}.  Similarly, finite difference
+%discretizations of other linear partial differential equations could be analyzed with the same techniques.
+%Further areas for extension might 
+%%incorporate LL: due to word repetition
+%include other boundary conditions or
+%multidimensional problems.
 
 
 %... various spatial discretizations have been coupled with the simplest family of time discretizations, and the sign patterns of the resulting full-discretization matrices are analyzed.
